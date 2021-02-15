@@ -1,5 +1,5 @@
 [[section-architecture-constraints]]
-== Architecture Constraints
+== Restricciones de la Arquitectura
 
 
 [role="arc42help"]
@@ -17,3 +17,17 @@ If needed you can subdivide them into
 technical constraints, organizational and political constraints and
 conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
 ****
+
+[options="header",cols="2,2"]
+|===
+|Restricción|Explicación
+| Uso del framework React | Es una biblioteca de JavaScript de código abierto que facilita
+                            la creación de interfaces de usuario cuando se desarrollan aplicaciones web.
+| Uso de la tecnología SOLID | Se trata de un sistema de persistencia mediante PODs descentralizados.
+| Uso de Node.js | Es un entorno en tiempo de ejecución multiplataforma, de código abierto, para la capa
+                   del servidor basado en el lenguaje de programación JavaScript.
+| Uso de Git | Se trata de un software de control de versiones que permite la gestión y la evolución del
+                proyecto de forma correcta, con la ayuda del repositorio remoto que ofrece GitHub.
+| Idioma | Se hará uso del castellano en la realización del proyecto y en la comunicación entre los miembros
+            del equipo.
+|===
