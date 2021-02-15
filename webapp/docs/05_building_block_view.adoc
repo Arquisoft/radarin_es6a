@@ -34,6 +34,8 @@ Thus it contains the white box description of selected building blocks of level 
 *Level 3* zooms into selected building blocks of level 2, and so on.
 ****
 
+Esta sección consiste en la descomposición de nuestro sistema en bloques de construcción mostrando sus dependencias
+
 === Whitebox Overall System
 
 [role="arc42help"]
@@ -56,6 +58,9 @@ Since there are so many ways to specify interfaces why do not provide a specific
 In the best case you will get away with examples or simple signatures.
 
 ****
+Comenzamos la descomposición mostrando un cuadro en blanco en nuestra aplicación Radarin. En el que encontramos cajas negras.
+
+
 
 _**<Overview Diagram>**_
 
