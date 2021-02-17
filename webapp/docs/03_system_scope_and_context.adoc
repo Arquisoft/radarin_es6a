@@ -4,6 +4,7 @@
 
 [role="arc42help"]
 ****
+
 ****
 
 
@@ -11,8 +12,12 @@
 
 [role="arc42help"]
 ****
+
+****
 La aplicación permite a sus usuarios identificarse y añadir amigos, además conocerá la información de la ubicación del usuario y cuando el mismo esté cerca de 
 uno de sus amigos, mandará una notificación a ambos para que puedan verse. 
+
+
 
 image:contextodenegocio.png["Contexto de negocio"]
 
@@ -20,6 +25,7 @@ image:contextodenegocio.png["Contexto de negocio"]
 === Contexto técnico
 
 [role="arc42help"]
+****
 ****
 .Contents
 Technical interfaces (channels and transmission media) linking your system to its environment. In addition a mapping of domain specific input/output to the channels, i.e. an explanation with I/O uses which channel.
@@ -31,7 +37,6 @@ Many stakeholders make architectural decision based on the technical interfaces 
 E.g. UML deployment diagram describing channels to neighboring systems,
 together with a mapping table showing the relationships between channels and input/output.
 
-****
 
 **<Diagram or Table>**
 
