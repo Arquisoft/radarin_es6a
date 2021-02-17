@@ -30,28 +30,24 @@ There are many notations for describing scenarios, e.g.
 
 ****
 
-=== <Runtime Scenario 1>
+=== Escenario 1: peticion de ubicación
 
 
-* _<insert runtime diagram or textual description of the scenario>_
-* _<insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.>_
+* El usuario 1 accede a la ubicación del usuario 2 y posteriormente el usuario 2 accede a la del 1.
+* Tras la peticion del usuario 1 por la ubicacion del usuario 2, se recive una respuesta con la ubicacion y posteriormente se almacena la ubicación en el pod del usuario 2. Lo mismo ocurre cuando el usuario 2 lleva a cabo la petición por la ubicación del usuario 1.
 
-It is possible to use a sequence diagram:
+El diagrama de secuencia es el siguiente:
 
 [plantuml,"Sequence diagram",png]
 ----
-actor Alice
-actor Bob
-database Pod as "Bob's Pod"
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-Alice  --> Pod: Store route
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+actor "Usuario 1"
+actor "Usuario 2"
+database Pod as "Pod de Usuario 1"
+database Pod2 as "Pod de Usuario 2"
+"Usuario 1" -> "Usuario 2": Solicita ubicación
+"Usuario 2" --> "Usuario 1": Se responde a la petición
+"Usuario 1"  --> Pod2: Se almacena la ubicación
+"Usuario 2" -> "Usuario 1": Solicita ubicación
+"Usuario 2" <-- "Usuario 1": Se responde a la petición
+"Usuario 2"  --> Pod: Se almacena la ubicación
 ----
-=== <Runtime Scenario 2>
-
-=== ...
-
-=== <Runtime Scenario n>
