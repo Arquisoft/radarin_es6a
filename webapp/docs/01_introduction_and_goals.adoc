@@ -30,13 +30,13 @@ Radarin tiene como objetivo facilitar encuentros entre amigos, accediendo a la i
 
 === Stakeholders
 
-[options="header",cols="1,2,2"]
+[options="header",cols="1,2"]
 |===
-|Role/Name|Contact|Expectations
-|Usuarios experimentados | _<Contact-1>_ |Mejorar su experiencia anterior con aplicaciones similares a Radarin
-|Nuevos usuarios | _<Contact-2>_ |Usar la aplicación con facilidad a pesar de ser personas no técnicas.
-|Equipo de desarrollo||Hacer de Radarin un sistema seguro que respete la privacidad de los usuarios y que cumpla con su cometido (facilitar encuentros entre amigos) de la mejor manera posible, pudiendo ser usado por cualquier tipo de usuario.
-|SOLID||Dar visibilidad a las tecnologías descentralizadas y respetar los principios de SOLID a la hora de almacenar la información de los usuarios.
-|Profesores de la asignatura||Un sistema fácilmente usable por personas no técnicas, que facilite encuentros entre amigos, accediendo a la información de la localización del usuario, siempre respetando la privacidad de este y siguiendo una arquitectura descentralizada. 
+|Role/Name|Expectations
+|Usuarios experimentados|Mejorar su experiencia anterior con aplicaciones similares a Radarin
+|Nuevos usuarios |Usar la aplicación con facilidad a pesar de ser personas no técnicas.
+|Equipo de desarrollo|Hacer de Radarin un sistema seguro que respete la privacidad de los usuarios y que cumpla con su cometido (facilitar encuentros entre amigos) de la mejor manera posible, pudiendo ser usado por cualquier tipo de usuario.
+|SOLID|Dar visibilidad a las tecnologías descentralizadas y respetar los principios de SOLID a la hora de almacenar la información de los usuarios.
+|Profesores de la asignatura|Un sistema fácilmente usable por personas no técnicas, que facilite encuentros entre amigos, accediendo a la información de la localización del usuario, siempre respetando la privacidad de este y siguiendo una arquitectura descentralizada. 
 
 |===
