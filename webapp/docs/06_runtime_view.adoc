@@ -30,28 +30,41 @@ There are many notations for describing scenarios, e.g.
 
 ****
 
-=== <Runtime Scenario 1>
+=== Escenario 1: Solicitar información personal
 
 
-* _<insert runtime diagram or textual description of the scenario>_
-* _<insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.>_
+* El usuario desea acceder a su lista de amigos.
+* Dado que el usuario desea acceder a la lista de sus amigos, la cual está almacenada en su pod; se lleva a cabo una petición por dicha información. 
+Seguidamente el pod responde a dicha petición con la lista de amigos del usuario.
 
-It is possible to use a sequence diagram:
+El diagrama de secuencia es el siguiente:
 
 [plantuml,"Sequence diagram",png]
 ----
-actor Alice
-actor Bob
-database Pod as "Bob's Pod"
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-Alice  --> Pod: Store route
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+actor "Usuario"
+database Pod as "Pod del Usuario"
+"Usuario" -> "Pod": Solicita lista de amigos
+"Pod" --> "Usuario": Se devuelve la lista de amigos
 ----
-=== <Runtime Scenario 2>
 
-=== ...
+=== Escenario 2: Notificación amigo cerca
 
-=== <Runtime Scenario n>
+
+* Proceso para que un usario sea notificado de que un amigo esta cerca suyo.
+* El usuario manda su ubicación a la aplicación web. Posteriormente este usuario comprueba su lista de amigos y lleva a cabo una petición a la aplicación web 
+para saber cuales de sus amigos están cerca de él. Tras la respuesta, si alguno de sus amigos está cerca de él, se notifica al usuario.
+
+El diagrama de secuencia es el siguiente:
+
+[plantuml,"Sequence diagram 2",png]
+----
+actor Usuario
+database Pod as "Pod del Usuario"
+database Server as "Aplicación web"
+Usuario --> Server: Guardar ubicación actual
+Usuario -> Pod: Solicita lista de amigos
+Pod --> Usuario: Se devuelve la lista de amigos
+Usuario -> Server: Comprueba amigos cerca
+Server --> Usuario: Respuesta con lista de amigos cerca
+Usuario -> Usuario: Notificación amigo cerca
+----
