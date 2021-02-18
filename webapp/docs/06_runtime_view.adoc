@@ -30,7 +30,7 @@ There are many notations for describing scenarios, e.g.
 
 ****
 
-=== Escenario 1: peticion de ubicación
+=== Escenario 1: Peticón de ubicación
 
 
 * El usuario 1 accede a la ubicación del usuario 2 y posteriormente el usuario 2 accede a la del 1.
@@ -42,12 +42,28 @@ El diagrama de secuencia es el siguiente:
 ----
 actor "Usuario 1"
 actor "Usuario 2"
-database Pod as "Pod de Usuario 1"
-database Pod2 as "Pod de Usuario 2"
+database Pod as "Pod del Usuario 1"
+database Pod2 as "Pod del Usuario 2"
 "Usuario 1" -> "Usuario 2": Solicita ubicación
 "Usuario 2" --> "Usuario 1": Se responde a la petición
 "Usuario 1"  --> Pod2: Se almacena la ubicación
 "Usuario 2" -> "Usuario 1": Solicita ubicación
 "Usuario 2" <-- "Usuario 1": Se responde a la petición
 "Usuario 2"  --> Pod: Se almacena la ubicación
+----
+
+=== Escenario 2: Solicitar información personal
+
+
+* El usuario desea acceder a su lista de amigos.
+* Dado que el usuario desea acceder a la lista de sus amigos, la cual está almacenada en su pod; se lleva a cabo una petición por dicha información. Seguidamente el pod responde a dicha petición con la lista de amigos del usuario.
+
+El diagrama de secuencia es el siguiente:
+
+[plantuml,"Sequence diagram 2",png]
+----
+actor "Usuario"
+database Pod as "Pod del Usuario"
+"Usuario" -> "Pod": Solicita lista de amigos
+"Pod" --> "Usuario": Se devuelve la lista de amigos
 ----
