@@ -55,7 +55,7 @@ database Pod as "Pod del Usuario"
 para saber cuales de sus amigos están cerca de él. Tras la respuesta, si alguno de sus amigos está cerca de él, se notifica al usuario.
 
 El diagrama de secuencia es el siguiente:
-
+ 
 [plantuml,"Sequence diagram 2",png]
 ----
 actor Usuario
