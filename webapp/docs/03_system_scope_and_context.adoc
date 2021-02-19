@@ -22,7 +22,7 @@ uno de sus amigos, mandará una notificación a ambos para que puedan verse.
 image:contextodenegocio.png["Contexto de negocio"]
 
 
-=== Contexto técnico
+=== Contexto Técnico
 
 [role="arc42help"]
 ****
@@ -37,9 +37,19 @@ Many stakeholders make architectural decision based on the technical interfaces 
 E.g. UML deployment diagram describing channels to neighboring systems,
 together with a mapping table showing the relationships between channels and input/output.
 
+****
+Como hemos comentado nuestro sistema está basado en SOLID, el cuál nos permite la descentralización de la web.Así mismo nos suministra el llamado POD;
+dicho POD nos permite guardar información,como por ejemplo almacenar la localización del usuario de manera segura,por otro lado cada usuario tendrá un POD individualizado.
 
-**<Diagram or Table>**
+Todo esto estará integrado a través del framework React, el cuál es una librería de JavaScript, que nos facilita y permite construir la interfaz de usuario.
 
-**<optionally: Explanation of technical interfaces>**
+[%header,cols="2*"]
+|===
+|Interfaz técnica|Descripción
+| _Solid_ | Base general de la aplicación
+| _POD_ | Cada uno de estos usuarios posee un POD, que mantiene la información de este
+| _React_ | Permite generar la interfaz de la aplicación
+|===
+image::contextoTecnicoDiagrama.PNG[Technical context diagram]
 
 **<Mapping Input/Output to Channels>**
