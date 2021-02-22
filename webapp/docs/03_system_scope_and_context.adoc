@@ -51,5 +51,3 @@ Todo esto estará integrado a través del framework React, el cuál es una libre
 | _React_ | Permite generar la interfaz de la aplicación
 |===
 image::contextoTecnicoDiagrama.PNG[Technical context diagram]
-
-**<Mapping Input/Output to Channels>**
