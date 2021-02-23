@@ -1,6 +1,15 @@
 [[section-design-decisions]]
-== Design Decisions
+== Decisiones de Diseño
 
+[%header,cols="2*"]
+|===
+|Decisión|Descripción      
+|*React*| Es la libreria de javascrit que elegimos para desarrollar las interfaces de usuario.
+| *Pods*| Aquí se almacenaran los datos de registro(nombre, apellidos...) y amigos.
+|*GitHub*| Aquí es donde se ubica el repositorio del proyecto.
+|*Mongo*| Es una bases de datos donde vamos a almacenar las rutas y un identificador del pod.
+|*Arc42*| Proporciona una  plantilla de documentación y comunicación para el desarrollo del proyecto.
+|==
 
 [role="arc42help"]
 ****
@@ -24,12 +33,3 @@ Various options:
 * more detailed in form of separate sections per decision
 * ADR (architecture decision record) for every important decision
 ****
-[%header,cols="2*"]
-|===
-|Decisión|Descripción      
- *React* | Es la libreria de javascrit que elegimos para desarrollar las interfaces de usuario.
- *Pods*  | Aquí se almacenaran los datos de registro(nombre, apellidos...) y amigos.
- *GitHub*| Aquí es donde se ubica el repositorio del proyecto .
- *Mongo*| Es una bases de datos donde vamos a almacenar las rutas y un identificador del pod.
- *Arc42*| Proporciona una  plantilla de documentación y comunicación para el desarrollo del proyecto.
-|==
