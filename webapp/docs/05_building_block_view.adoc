@@ -1,7 +1,7 @@
 [[section-building-block-view]]
 
 
-== Building Block View
+== Vista del bloque de construcción
 
 [role="arc42help"]
 ****
@@ -36,7 +36,11 @@ Thus it contains the white box description of selected building blocks of level 
 
 Esta sección consiste en la descomposición de nuestro sistema en bloques de construcción mostrando sus dependencias
 
-=== Whitebox Overall System
+=== Diagrama general del sistema
+
+image:05_bloque_construccion-ES.png[arc42] 
+
+=== Sistema general de caja blanca (Nivel 1)
 
 [role="arc42help"]
 ****
@@ -60,9 +64,16 @@ In the best case you will get away with examples or simple signatures.
 ****
 Comenzamos la descomposición mostrando un cuadro en blanco en nuestra aplicación Radarin. En el que encontramos cajas negras.
 
+[options="header",cols="2,2"]
+|===
+|Nombre|Responsabilidad
+| Radarin | Aplicación que interactúa con el usuario y el POD.
+| POD | Infraestructura que almacena la información del usuario necesaria para la aplicación.
+|===
 
-
-_**<Overview Diagram>**_
+[role="arc42help"]
+****
+_**<Overview Diagram>**
 
 Motivation::
 
@@ -74,6 +85,7 @@ _<Description of contained building block (black boxes)>_
 
 Important Interfaces::
 _<Description of important interfaces>_
+****
 
 [role="arc42help"]
 ****
@@ -90,13 +102,26 @@ responsibility according to the following schema:
 |===
 
 
-
 If you use a list of black box descriptions then you fill in a separate black box template for every important building block .
 Its headline is the name of the black box.
 ****
 
+=== Nivel 2
 
+[options="header",cols="2,2"]
+|===
+|Nombre|Responsabilidad
+| Radarin Web | Aplicación Web que interactúa con el usuario y SOLID / Servidor Web.
+| Radarin App | Aplicación móvil que interactúa con el usuario y SOLID / Servidor Web.
+| SOLID | Servidor que guarda los PODs.
+| Servidor web | Infraestructura necesaria para acceder a una base de datos con información no almacenada
+                  en el POD.
+|===
+
+[role="arc42help"]
+****
 ==== <Name black box 1>
+****
 
 [role="arc42help"]
 ****
@@ -112,6 +137,11 @@ according the the following black box template:
 
 ****
 
+
+
+
+[role="arc42help"]
+****
 _<Purpose/Responsibility>_
 
 _<Interface(s)>_
@@ -123,10 +153,11 @@ _<(Optional) Directory/File Location>_
 _<(Optional) Fulfilled Requirements>_
 
 _<(optional) Open Issues/Problems/Risks>_
+****
 
 
-
-
+[role="arc42help"]
+****
 ==== <Name black box 2>
 
 _<black box template>_
@@ -141,10 +172,12 @@ _<black box template>_
 ...
 
 ==== <Name interface m>
+****
 
-
-
+[role="arc42help"]
+****
 === Level 2
+****
 
 [role="arc42help"]
 ****
@@ -154,14 +187,18 @@ You have to decide which building blocks of your system are important enough to 
 Please prefer relevance over completeness. Specify important, surprising, risky, complex or volatile building blocks.
 Leave out normal, simple, boring or standardized parts of your system
 ****
-
+[role="arc42help"]
+****
 ==== White Box _<building block 1>_
+****
 
 [role="arc42help"]
 ****
 ...describes the internal structure of _building block 1_.
 ****
 
+[role="arc42help"]
+****
 _<white box template>_
 
 ==== White Box _<building block 2>_
@@ -175,10 +212,12 @@ _<white box template>_
 
 
 _<white box template>_
+****
 
-
-
+[role="arc42help"]
+****
 === Level 3
+****
 
 [role="arc42help"]
 ****
@@ -188,15 +227,18 @@ When you need more detailed levels of your architecture please copy this
 part of arc42 for additional levels.
 ****
 
-
+[role="arc42help"]
+****
 ==== White Box <_building block x.1_>
+****
 
 [role="arc42help"]
 ****
 Specifies the internal structure of _building block x.1_.
 ****
 
-
+[role="arc42help"]
+****
 _<white box template>_
 
 
@@ -209,3 +251,4 @@ _<white box template>_
 ==== White Box <_building block y.1_>
 
 _<white box template>_
+****
