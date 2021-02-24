@@ -1,67 +1,64 @@
 [[section-concepts]]
-== Cross-cutting Concepts
+== Conceptos transversales
 
 
-[role="arc42help"]
-****
-.Content
-This section describes overall, principal regulations and solution ideas that are
-relevant in multiple parts (= cross-cutting) of your system.
-Such concepts are often related to multiple building blocks.
-They can include many different topics, such as
 
-* domain models
-* architecture patterns or design patterns
-* rules for using specific technology
-* principal, often technical decisions of overall decisions
-* implementation rules
-
-.Motivation
-Concepts form the basis for _conceptual integrity_ (consistency, homogeneity)
-of the architecture. Thus, they are an important contribution to achieve inner qualities of your system.
-
-Some of these concepts cannot be assigned to individual building blocks
-(e.g. security or safety). This is the place in the template that we provided for a
-cohesive specification of such concepts.
-
-.Form
-The form can be varied:
-
-* concept papers with any kind of structure
-* cross-cutting model excerpts or scenarios using notations of the architecture views
-* sample implementations, especially for technical concepts
-* reference to typical usage of standard frameworks (e.g. using Hibernate for object/relational mapping)
-
-.Structure
-A potential (but not mandatory) structure for this section could be:
-
-* Domain concepts
-* User Experience concepts (UX)
-* Safety and security concepts
-* Architecture and design patterns
-* "Under-the-hood"
-* development concepts
-* operational concepts
-
-Note: it might be difficult to assign individual concepts to one specific topic
-on this list.
-
-image:08-Crosscutting-Concepts-Structure-EN.png["Possible topics for crosscutting concepts"]
-****
-
-
-=== Domain model
+=== Modelo de dominio
+A continuación mostramos el modelo de dominio de la aplicación
 
 image:UmlDiagram.png["Example UML Diagram"]
 
+=== Conceptos de experiencia de usuario (UX)
+El objetivo de esta aplicacion es proporcionar una experiencia de usuario amigable.Para ello creareos  menus con las opciones más importantes y/o usadas de la aplicacion.Tambien proporcionaremos un diseño atractivo e intuitivo visualmente.
 
 
-=== _<Concept 2>_
+=== Conceptos de seguridad y protección
 
-_<explanation>_
+Tanto la seguridad como la proteción son nuestros objetivos fundamentales de calidad; Los datos del usuario se almacenaran en su POD,proporcionando así, a su propietario un total control sobre su informacion,pudiendo este decidir que organizaciones,personas o cualesquiera accedan a sus información,así como revocar estos permisos.
 
-...
+=== Patrones de arquitectura o patrones de diseño
+Como patron de arquitectura hemos escogido el patrón de arquitectura por capas, se divide en :
 
-=== _<Concept n>_
+* 1.Capa de presentacion, contiene la interfaz  mostrada al usuario.
+* 2. Capa de negocio, contiene la lógica de negocio de la aplicación.Es decir, resolverá las peticiones que se hagan contra el servidor o cualquier otro servicio
+* 3. Capa de persitencia, recibir las peticiones de acceso a datos, tanto de la base de datos como de servicios externos
 
-_<explanation>_
+El objetivo que se  busca con el uso de esta arquitectura es el desacoplamiento total entre capas, puediendo tener una aplicación mantenible y con alto grado de flexibilidad
+[ditaa,asciidoctor-diagram-process]
+....
+    /---------------\
+    |               |
+    |   Capa de     |
+    |  presentación |
+    |               |
+    \---------------/
+            +
+            |
+            |
+            v
+    /---------------\
+    |               |
+    |   Capa de     |
+    |   negocio     |
+    |               |
+    \---------------/
+            +
+            |
+            |
+            v
+    /---------------\
+    |               |
+    |   Capa de     |
+    |  persistencia |
+    |               |
+    \---------------/
+....
+Cada capa poroporciona servicios a la inmediatamente superior
+
+Por otro lado tenemos los patrones de diseño, hemos usado;
+AÑADIR durante la práctica
+
+
+=== Conceptos de desarrollo
+Desarollo: La aplicación estará basada en el framework React y el uso del proyecto SOLID, además de Node,js,MongoDb y librerias adicionales de componentes
+Pruebas unitarias : Para comprobar el correcto funcionameinto de radarin realizaremos pruebas unitarias en el framework Jest 
