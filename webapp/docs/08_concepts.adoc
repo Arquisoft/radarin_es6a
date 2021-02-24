@@ -6,22 +6,22 @@
 === Modelo de dominio
 A continuación mostramos el modelo de dominio de la aplicación
 
-image:UmlDiagram.png["Example UML Diagram"]
+image:Diagrama-uml.png["Diagrma de radarin"]
 
 === Conceptos de experiencia de usuario (UX)
-El objetivo de esta aplicacion es proporcionar una experiencia de usuario amigable.Para ello creareos  menus con las opciones más importantes y/o usadas de la aplicacion.Tambien proporcionaremos un diseño atractivo e intuitivo visualmente.
+El objetivo de esta aplicacion es proporcionar una experiencia de usuario amigable.Para ello crearemos menus con las opciones más importantes y/o usadas de la aplicacion.Tambien proporcionaremos un diseño atractivo e intuitivo visualmente.
 
 
 === Conceptos de seguridad y protección
 
-Tanto la seguridad como la proteción son nuestros objetivos fundamentales de calidad; Los datos del usuario se almacenaran en su POD,proporcionando así, a su propietario un total control sobre su informacion,pudiendo este decidir que organizaciones,personas o cualesquiera accedan a sus información,así como revocar estos permisos.
+Tanto la seguridad como la protección son nuestros objetivos fundamentales de calidad; Los datos del usuario se almacenaran en su POD, proporcionando así, a su propietario un total control sobre su informacion, pudiendo este decidir que organizaciones, personas o cualesquiera accedan a sus información, así como revocar estos permisos.
 
-=== Patrones de arquitectura o patrones de diseño
-Como patron de arquitectura hemos escogido el patrón de arquitectura por capas, se divide en :
+=== Patrones de arquitectura 
+Hemos escogido el patrón de arquitectura por capas, este se divide en :
 
-* 1.Capa de presentacion, contiene la interfaz  mostrada al usuario.
+* 1. Capa de presentacion, contiene la interfaz  mostrada al usuario.
 * 2. Capa de negocio, contiene la lógica de negocio de la aplicación.Es decir, resolverá las peticiones que se hagan contra el servidor o cualquier otro servicio
-* 3. Capa de persitencia, recibir las peticiones de acceso a datos, tanto de la base de datos como de servicios externos
+* 3. Capa de persistencia, recibirá las peticiones de acceso a datos, tanto de la base de datos como de servicios externos
 
 El objetivo que se  busca con el uso de esta arquitectura es el desacoplamiento total entre capas, puediendo tener una aplicación mantenible y con alto grado de flexibilidad
 [ditaa,asciidoctor-diagram-process]
@@ -55,10 +55,11 @@ El objetivo que se  busca con el uso de esta arquitectura es el desacoplamiento 
 ....
 Cada capa poroporciona servicios a la inmediatamente superior
 
+=== Patrones de diseño
 Por otro lado tenemos los patrones de diseño, hemos usado;
 AÑADIR durante la práctica
 
 
 === Conceptos de desarrollo
-Desarollo: La aplicación estará basada en el framework React y el uso del proyecto SOLID, además de Node,js,MongoDb y librerias adicionales de componentes
-Pruebas unitarias : Para comprobar el correcto funcionameinto de radarin realizaremos pruebas unitarias en el framework Jest 
+* Desarollo: La aplicación estará basada en el framework React y el proyecto SOLID, además de Node.js, MongoDb y librerías adicionales de componentes
+* Pruebas unitarias : Para comprobar el correcto funcionamiento de Radarin realizaremos pruebas unitarias en el framework Jest 
