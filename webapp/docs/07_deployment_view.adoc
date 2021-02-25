@@ -4,7 +4,7 @@
 == Deployment View
 En esta sección, se describe la arquitectura de Radarin, incluyendo la infraestructura de hardware y software para ejecutarla, así como el entorno de ejecución y el middleware que los comunica.
 
-image:diagramaInfraestructura.PNG 
+image:diagramaInfraestructura.png[diagrama Infraestructura] 
 
 === Dispositivo móvil
 Dispositivo desde el que los usuarios accederán a la aplicación móvil.
