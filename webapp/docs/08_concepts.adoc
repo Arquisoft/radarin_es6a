@@ -6,7 +6,7 @@
 === Modelo de dominio
 A continuación mostramos el modelo de dominio de la aplicación
 
-image:Diagrama-uml.png["Diagrma de radarin"]
+image:Digrama-uml.png["Diagrama de radarin"]
 
 === Conceptos de experiencia de usuario (UX)
 El objetivo de esta aplicacion es proporcionar una experiencia de usuario amigable.Para ello crearemos menus con las opciones más importantes y/o usadas de la aplicacion.Tambien proporcionaremos un diseño atractivo e intuitivo visualmente.
