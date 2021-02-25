@@ -16,7 +16,7 @@ This should be your motto for systematic detection and evaluation of risks and t
 List of risks and/or technical debts, probably including suggested measures to minimize, mitigate or avoid risks or reduce technical debts.
 ****
 
-[options="header"]
+[%header,cols="2*"]
 |===
 |Riesgo | Solución
 |*ARC42*: No estamos acostumbrados a documentar nuestros proyectos y nunca hemos utilizado Arc42 por lo que supone un riesgo.| Intentaremos aprender todo lo posible sobre el tema para llevarlo lo mejor que podamos.

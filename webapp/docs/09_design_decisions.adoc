@@ -9,7 +9,7 @@
 |*GitHub*| Aquí es donde se ubica el repositorio del proyecto.
 |*Mongo*| Es una bases de datos donde vamos a almacenar las rutas y un identificador del pod.
 |*Arc42*| Proporciona una  plantilla de documentación y comunicación para el desarrollo del proyecto.
-|==
+|===
 
 [role="arc42help"]
 ****
