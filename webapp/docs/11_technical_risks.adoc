@@ -1,5 +1,5 @@
 [[section-technical-risks]]
-== Risks and Technical Debts
+== Riesgos y Deudas Técnicas
 
 
 [role="arc42help"]
@@ -15,3 +15,13 @@ This should be your motto for systematic detection and evaluation of risks and t
 .Form
 List of risks and/or technical debts, probably including suggested measures to minimize, mitigate or avoid risks or reduce technical debts.
 ****
+
+[%header,cols="2*"]
+|===
+|Riesgo | Solución
+|*ARC42*: No estamos acostumbrados a documentar nuestros proyectos y nunca hemos utilizado Arc42 por lo que supone un riesgo.| Intentaremos aprender todo lo posible sobre el tema para llevarlo lo mejor que podamos.
+|*REACT*: Tenemos unos conceptos muy básicos de Javascript y React es una biblioteca basada en Javascript por lo que podemos tener algún que otro problema. | Tendremos que leer y documentarnos mucho acerca de Javascript y de todos los componentes de React.
+|*SOLID*: Es un campo totalmente nuevo y desconocido para nosotros, ningún miembro del equipo ha trabajado antes con estos principios y existe poca documentación en internet sobre el tema. |  Trataremos de informarnos lo mejor posible a través de internet o proyectos de otros años donde lo han utilizado para aprender a trabajar con SOLID.
+|*EQUIPO*: No nos conocemos de nada entre nosotros y ya ha abandonado un miembro del equipo, puede ser un gran riesgo si no nos organizamos de la manera adecuada y no nos coordinamos bien. | Intentaremos aportar cada uno nuestro grano de arena al proyecto, nos intentaremos organizar de la mejor manera posible y que no haya discusiones dentro del equipo.
+|*SEGURIDAD DE LA APLICACIÓN*: Proteger la información sensible que hay en los PODS de los usuarios es una actividad imprescindible y por ello supone un riesgo no hacerlo. | Estudiaremos la mejor manera de hacer nuestra aplicación lo más segura posible para que no existan accesos no deseables y robos de información sensible.
+|===

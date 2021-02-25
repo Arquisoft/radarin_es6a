@@ -1,57 +1,41 @@
 [[section-runtime-view]]
-== Runtime View
+== Vista en tiempo de ejecución
+
+=== Escenario 1: Solicitar información personal
 
 
-[role="arc42help"]
-****
-.Contents
-The runtime view describes concrete behavior and interactions of the system’s building blocks in form of scenarios from the following areas:
+* El usuario desea acceder a su lista de amigos.
+* Dado que el usuario desea acceder a la lista de sus amigos, la cual está almacenada en su pod; se lleva a cabo una petición por dicha información. 
+Seguidamente el pod responde a dicha petición con la lista de amigos del usuario.
 
-* important use cases or features: how do building blocks execute them?
-* interactions at critical external interfaces: how do building blocks cooperate with users and neighboring systems?
-* operation and administration: launch, start-up, stop
-* error and exception scenarios
-
-Remark: The main criterion for the choice of possible scenarios (sequences, workflows) is their *architectural relevance*. It is *not* important to describe a large number of scenarios. You should rather document a representative selection.
-
-.Motivation
-You should understand how (instances of) building blocks of your system perform their job and communicate at runtime.
-You will mainly capture scenarios in your documentation to communicate your architecture to stakeholders that are less willing or able to read and understand the static models (building block view, deployment view).
-
-.Form
-There are many notations for describing scenarios, e.g.
-
-* numbered list of steps (in natural language)
-* activity diagrams or flow charts
-* sequence diagrams
-* BPMN or EPCs (event process chains)
-* state machines
-* ...
-
-****
-
-=== <Runtime Scenario 1>
-
-
-* _<insert runtime diagram or textual description of the scenario>_
-* _<insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.>_
-
-It is possible to use a sequence diagram:
+El diagrama de secuencia es el siguiente:
 
 [plantuml,"Sequence diagram",png]
 ----
-actor Alice
-actor Bob
-database Pod as "Bob's Pod"
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-Alice  --> Pod: Store route
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+actor "Usuario"
+database Pod as "Pod del Usuario"
+"Usuario" -> "Pod": Solicita lista de amigos
+"Pod" --> "Usuario": Se devuelve la lista de amigos
 ----
-=== <Runtime Scenario 2>
 
-=== ...
+=== Escenario 2: Notificación amigo cerca
 
-=== <Runtime Scenario n>
+
+* Proceso para que un usario sea notificado de que un amigo esta cerca suyo.
+* El usuario manda su ubicación a la aplicación web. Posteriormente este usuario comprueba su lista de amigos y lleva a cabo una petición a la aplicación web 
+para saber cuales de sus amigos están cerca de él. Tras la respuesta, si alguno de sus amigos está cerca de él, se notifica al usuario.
+
+El diagrama de secuencia es el siguiente:
+ 
+[plantuml,"Sequence diagram 2",png]
+----
+actor Usuario
+database Pod as "Pod del Usuario"
+database Server as "Aplicación web"
+Usuario --> Server: Guardar ubicación actual
+Usuario -> Pod: Solicita lista de amigos
+Pod --> Usuario: Se devuelve la lista de amigos
+Usuario -> Server: Comprueba amigos cerca
+Server --> Usuario: Respuesta con lista de amigos cerca
+Usuario -> Usuario: Notificación amigo cerca
+----
