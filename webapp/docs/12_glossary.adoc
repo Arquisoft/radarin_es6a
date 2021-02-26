@@ -1,5 +1,5 @@
 [[section-glossary]]
-== Glossary
+== Glosario
 
 
 
@@ -20,12 +20,15 @@ You should clearly define your terms, so that all stakeholders
 A table with columns <Term> and <Definition>.
 
 Potentially more columns in case you need translations.
-
 ****
 
-[options="header"]
+
+[options="header",cols="2,2"]
 |===
-| Term         | Definition
-| <Term-1>     | <definition-1>
-| <Term-2>     | <definition-2>
+|Nombre|Responsabilidad
+| *SOLID* | SOLID es una especificación que permite a las personas almacenar sus datos de forma segura en almacenes de datos descentralizados llamados PODS.
+| *POD* | Los PODS son servidores web personales seguros para almacenar datos. Cuando los datos se almacenan en el POD de una persona, esta controla qué personas y aplicaciones pueden acceder a ellos.
+| *Arc42* | Arc42 es una plantilla usada para llevar a cabo la documentación del proyecto. En ella se detalla la arquitectura del proyecto en 12 puntos diferentes.
+| *React* | React es una biblioteca de JavaScript usada para realizar la página web de Radarin.
+| *MongoDB* | MongoDB es una base de datos donde se almacenará la información de las ubicaciones de los usuarios. 
 |===

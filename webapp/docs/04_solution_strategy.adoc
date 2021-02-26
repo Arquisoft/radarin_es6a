@@ -1,24 +1,25 @@
 [[section-solution-strategy]]
-== Solution Strategy
+== Estrategia de solución
 
+La aplicación Radarin estará basada en el framework React y en el proyecto de descentralizacion de datos SOLID. En la siguiente tabla podremos obesrvar las deciones tecnológicas adoptadas así como su propósito
 
-[role="arc42help"]
-****
-.Contents
-A short summary and explanation of the fundamental decisions and solution strategies, that shape the system's architecture. These include
+[options="header",cols="1,2"]
+|===
+|Tecnología usada | Propósito
 
-* technology decisions
-* decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern
-* decisions on how to achieve key quality goals
-* relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.
+| GitHub |Facilitar el control de versiones, así como el trabajo en equipo  
+| Asciidoctor | Realizar de la documentacion del proyecto de una forma sencilla  |
+Solid POD | Aumenta la seguridad del usuario haciendo que la informacion se almacene en un POD de forma descentralizada.Permitiendo así que el usuario decida quién accede a sus datos, o con quién los comparte |
+ Node.js |Framework de javascript para el desarollo del back end de nuestra aplicación
+|Mongo DB |  |
+React.js|Framework basado en javascript para el desarollo del front end de nuestra aplicacón|
 
-.Motivation
-These decisions form the cornerstones for your architecture. They are the basis for many other detailed decisions or implementation rules.
+|===
+.Alcanzando los atributos de calidad
+Teniendo en cuenta los atributos de calidad de este proyecto:
 
-.Form
-Keep the explanation of these key decisions short.
+* Seguridad: Mediante el uso del POD de usuario basado en el proyecto Solid proporcionamos al usuario el control en todo momento de su información de forma descentrlaizada
 
-Motivate what you have decided and why you decided that way,
-based upon your problem statement, the quality goals and key constraints.
-Refer to details in the following sections.
-****
+*Privacidad: El usuario decidira en todo momento si desea compartir su ubicación para ser notificado, en el caso de que un amigo cercano se encuentre cerca
+
+*Usabilidad Mediante el uso de React.js además de algunas librerias obtendremos una aplicación sencilla para usuarios no técnicos
