@@ -6,7 +6,7 @@
 = image:LogoASW.png[arc42] Radarin 6a
 // toc-title definition MUST follow document title without blank line!
 :toc: left
-:toc-title: Table of Contents
+:toc-title: Tabla de contenidos
 :imagesdir: ./images
 
 

@@ -1,8 +1,8 @@
 [[section-introduction-and-goals]]
-== Introduction and Goals 
+== Introducción y objetivos 
 Radarin tiene como objetivo facilitar encuentros entre amigos, accediendo a la información de localización de los dispositivos móviles de aquellos usuarios que la tengan activada, de manera que los amigos de dichos usuarios puedan saber cuando están cerca. Además, el sistema no almacenará información personal de manera centralizada sin el consentimiento de los usuarios, de acuerdo con los principios SOLID.
 
-=== Requirements Overview
+=== Resumen de requisitos
 
 
 [options="header",cols="1,2"]
@@ -17,7 +17,7 @@ Radarin tiene como objetivo facilitar encuentros entre amigos, accediendo a la i
 |===
 
 
-=== Quality Goals
+=== Objetivos de calidad
 
 [options="header",cols="1,2"]
 |===
