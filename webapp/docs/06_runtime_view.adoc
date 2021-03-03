@@ -5,37 +5,45 @@
 
 
 * El usuario desea acceder a su lista de amigos.
-* Dado que el usuario desea acceder a la lista de sus amigos, la cual está almacenada en su pod; se lleva a cabo una petición por dicha información. 
-Seguidamente el pod responde a dicha petición con la lista de amigos del usuario.
+* Dado que el usuario desea acceder a la lista de sus amigos, la cual está almacenada en su pod; la app de Radarin lleva a cabo una petición por dicha información. 
+Seguidamente el pod responde a dicha petición con la lista de amigos del usuario y la app muestra dicha información al usuario.
 
 El diagrama de secuencia es el siguiente:
 
 [plantuml,"Sequence diagram",png]
 ----
-actor "Usuario"
+actor Usuario as "Usuario"
+entity App as "RADARIN App"
 database Pod as "Pod del Usuario"
-"Usuario" -> "Pod": Solicita lista de amigos
-"Pod" --> "Usuario": Se devuelve la lista de amigos
+Usuario -> App: Consulta lista de amigos
+App -> Pod: Se solicita lista de amigos
+Pod --> App: Se devuelve la lista de amigos
+App --> Usuario: Se muestra la lista de amigos
 ----
 
 === Escenario 2: Notificación amigo cerca
 
 
 * Proceso para que un usario sea notificado de que un amigo esta cerca suyo.
-* El usuario manda su ubicación a la aplicación web. Posteriormente este usuario comprueba su lista de amigos y lleva a cabo una petición a la aplicación web 
-para saber cuales de sus amigos están cerca de él. Tras la respuesta, si alguno de sus amigos está cerca de él, se notifica al usuario.
+* El usuario inicia la app móvil y esta comienza a mandar la ubicación del dispositivo al servidor web. Posteriormente este usuario comprueba su 
+lista de amigos y de forma paralela la app lleva a cabo una petición al servidor web para saber cuales de sus amigos están cerca de él. Tras la respuesta
+del servidor, si alguno de sus amigos está cerca de él, la app móvil notificará al usuario.
 
 El diagrama de secuencia es el siguiente:
  
 [plantuml,"Sequence diagram 2",png]
 ----
 actor Usuario
+entity App as "RADARIN App"
 database Pod as "Pod del Usuario"
-database Server as "Aplicación web"
-Usuario --> Server: Guardar ubicación actual
-Usuario -> Pod: Solicita lista de amigos
-Pod --> Usuario: Se devuelve la lista de amigos
-Usuario -> Server: Comprueba amigos cerca
-Server --> Usuario: Respuesta con lista de amigos cerca
-Usuario -> Usuario: Notificación amigo cerca
+database Server as "Servidor RADARIN"
+Usuario -> App: Iniciar app
+App --> Server: Guardar ubicación actual del dispositivo
+Usuario -> App: Consulta lista de amigos
+App -> Pod: Se solicita lista de amigos
+Pod --> App: Se devuelve la lista de amigos
+App --> Usuario: Se muestra la lista de amigos
+App -> Server: Comprueba amigos cerca
+Server --> App: Respuesta con lista de amigos cerca
+App -> Usuario: Notificación amigo cerca
 ----
