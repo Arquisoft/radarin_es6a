@@ -1,9 +1,15 @@
 const mongoose = require("mongoose")
+const Location = require("./locations")
 
-
-const schema = mongoose.Schema({
+const schemaUser = mongoose.Schema({
     name: String,
-    email: String
+    email: String,
+    locations : [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "schemaLocation"
+        }
+    ]
 })
 
-module.exports = mongoose.model("User", schema)
+module.exports = mongoose.model("User", schemaUser)
