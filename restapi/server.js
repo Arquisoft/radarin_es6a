@@ -25,7 +25,7 @@ function connect(){
         })
 
         //Descomentar el siguiente código para borrar la collección pasada en collectionsName
-        /*mongoose.connection.collections['collectionsName'].drop( function(err) {
+        /*mongoose.connection.collections['locations'].drop( function(err) {
             console.log('collection dropped');
         });*/
     })
