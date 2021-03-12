@@ -1,51 +1,19 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Button,
-} from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-import GetLocation from 'react-native-get-location';
+import { Button, SafeAreaView, StyleSheet, View } from 'react-native';
+import { startBackgroundFunction, stopBackgroundFunction, setBackgroundInterval } from './scripts/Background'
 
 const App: () => React$Node = () => {
-
-  const getPosition = () => {
-    GetLocation.getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 15000,
-    })
-      .then(location => {
-        console.log(location);
-      })
-      .catch(error => {
-        const { code, message } = error;
-        console.warn(code, message);
-      });
-  };
-
   return (
     <SafeAreaView style={styles.container}>
-      <Button title="Localizate" onPress={getPosition}></Button>
+      <View style={styles.main}>
+
+      </View>
+      <View style={styles.buttons}>
+        <Button title="Iniciar" onPress={startBackgroundFunction} />
+        <Button title="Parar" onPress={stopBackgroundFunction} />
+        <Button title="3s" onPress={() => setBackgroundInterval(3)} />
+        <Button title="10s" onPress={() => setBackgroundInterval(10)} />
+      </View>
     </SafeAreaView>
   );
 };
@@ -54,9 +22,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  }, main: {
+    flex: 7,
+    backgroundColor: '#ddd',
+    borderColor: '#000',
+    borderBottomWidth: 2
+  }, buttons: {
+    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+    justifyContent: 'space-around',
+  }
 });
 
 export default App;
