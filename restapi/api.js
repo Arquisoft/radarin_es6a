@@ -30,7 +30,7 @@ router.post("/users/add", async (req, res) => {
 
 //Borrar usuario por email
 router.get("/users/delete/:email", async (req, res) => {
-    //Comprobar si el usuario ya está registrado
+    //Comprobar si el usuario está registrado
     let user = await User.findOne({ email: req.params.email })
     console.log(user);
     if (!user)
@@ -146,12 +146,62 @@ router.get("/users/:latitud/:longitud/:radio/:fechaMin/:fechaMax", async (req, r
     locations_ids.forEach(element => {
         locs.push(element._id)
         console.log(element._id)   
-    }
-    )
+    })
     
     criterio = {locations : { $in: locs} }
     let users = await User.find(criterio).sort('-_id') //En orden inverso
 	res.send(users);
+})
+
+//Agregar un nuevo amigo
+router.post("/users/friends/add/:email1/:email2", async (req, res) => {
+    console.log("Emisor: ", req.params.email1);
+    console.log("Receptor: ", req.params.email2);
+    let email1 = req.params.email1;
+    let email2 = req.params.email2;
+
+    let emisor = await User.findOne({ email: email1 })
+        if(!emisor) {
+            res.send({error:"Error: El emisor no existe"})
+        }
+
+    let receptor = await User.findOne({ email: email2 })
+        if(!receptor) {
+            res.send({error:"Error: El emisor no existe"})
+        }
+    
+    let user = await User.find(emisor).sort('-_id') //En orden inverso
+
+    let friends = user[0].friends;
+
+    //Registrar un amigo (receptor) para el usuario (emisor)
+    await User.findByIdAndUpdate(emisor._id, 
+        {$push: {friends : receptor._id}}, {new: true, userfindAndModify:false})
+    
+    res.send(emisor);
+})
+
+//Obtener los amigos de un usuario
+router.get("/users/friends/list/:email1", async (req, res) => {
+    console.log("Emisor: ", req.params.email1);
+    let email1 = req.params.email1;
+
+    let emisor = await User.findOne({ email: email1 })
+        if(!emisor) {
+            res.send({error:"Error: El emisor no existe"})
+        }
+    
+    let user = await User.find(emisor).sort('-_id') //En orden inverso
+
+    let friends = user[0].friends;
+
+    friends.forEach(x => console.log(x))
+    
+    let criterio = {'_id': { $in: friends}}
+    
+    friends = await User.find(criterio);
+    
+    res.send(friends);
 })
 
 module.exports = router

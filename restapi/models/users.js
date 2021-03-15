@@ -9,6 +9,12 @@ const schemaUser = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "schemaLocation"
         }
+    ],
+    friends : [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "schemaUser"
+        }
     ]
 })
 
