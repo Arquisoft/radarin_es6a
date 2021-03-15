@@ -21,7 +21,7 @@ class App extends React.Component{
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo"/>
-          <Welcome name="ASW students"/>
+          <Welcome name="ASW Students"/>
         </header>
         <div className="App-content">
           <EmailForm refreshUsers={this.refreshUsers.bind(this)}/>
