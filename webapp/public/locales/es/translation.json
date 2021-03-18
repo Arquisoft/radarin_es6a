@@ -48,6 +48,7 @@
   "navBar": {
     "welcome": "Bienvenida",
     "formModel": "Form Model",
+    "FriendMap":"Mapa",
     "logOut": "Cerrar Sesión",
     "profile": "Perfil",
     "formModelRender": "Form Model Render",
