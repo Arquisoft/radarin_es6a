@@ -23,6 +23,11 @@ function connect(){
         app.listen(process.env.PORT || 5000, () => {
             console.log("Server has started! Using db in "+mongo_uri)
         })
+
+        //Descomentar el siguiente código para borrar la collección pasada en collectionsName
+        /*mongoose.connection.collections['locations'].drop( function(err) {
+            console.log('collection dropped');
+        });*/
     })
 }
 
