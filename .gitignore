@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+/node_modules
 webapp/node_modules
 /.pnp
 .pnp.js
@@ -19,3 +20,18 @@ restapi/node_modules
 restapi/data
 
 .eslintcache
+
+#mobile app
+mobileapp/node_modules/**/*
+mobileapp/.expo/*
+mobileapp/npm-debug.*
+mobileapp/*.jks
+mobileapp/*.p8
+mobileapp/*.p12
+mobileapp/*.key
+mobileapp/*.mobileprovision
+mobileapp/*.orig.*
+mobileapp/web-build/
+
+# mobile app macOS
+mobileapp/.DS_Store
