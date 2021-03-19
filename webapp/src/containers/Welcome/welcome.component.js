@@ -48,6 +48,7 @@ export const WelcomePageContent = props => {
                 },
                 onError: error => {
                   if (error && error.statusText) {
+                    
                     errorToaster(error.statusText, t('welcome.errorTitle'));
                   }
                 },
