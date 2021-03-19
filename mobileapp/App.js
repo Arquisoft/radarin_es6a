@@ -1,22 +1,35 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { TapGestureHandler } from 'react-native-gesture-handler';
-import { Home, Profile, Geo } from './screens/BasicScreens'
+import React from 'react';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Notifications } from './screens/Notifications';
+import { Friends } from './screens/Friends';
+import { Home } from './screens/Home';
+import { Profile } from './screens/Profile';
+import { Settings } from './screens/Settings';
 
 const Tabs = createBottomTabNavigator();
-const GeoStack = createStackNavigator();
+const NotificationsStack = createStackNavigator();
+const FriendsStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
+const SettingsStack = createStackNavigator();
 
-const GeoStackScreen = () => {
+const NotificationsStackScreen = () => {
   return (
-    <GeoStack.Navigator>
-      <GeoStack.Screen name="Geolocalización" component={Geo} />
-    </GeoStack.Navigator>
+    <NotificationsStack.Navigator>
+      <NotificationsStack.Screen name="Notificaciones" component={Notifications} />
+    </NotificationsStack.Navigator>
+  );
+}
+
+const FriendsStackScreen = () => {
+  return (
+    <FriendsStack.Navigator>
+      <FriendsStack.Screen name="Amigos" component={Friends} />
+    </FriendsStack.Navigator>
   );
 }
 
@@ -36,41 +49,49 @@ const ProfileStackScreen = () => {
   );
 }
 
+const SettingsStackScreen = () => {
+  return (
+    <SettingsStack.Navigator>
+      <SettingsStack.Screen name="Ajustes" component={Settings} />
+    </SettingsStack.Navigator>
+  );
+}
+
 export default function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <NavigationContainer>
         <Tabs.Navigator initialRouteName="Inicio">
-          <Tabs.Screen
-            name="Geo"
-            component={GeoStackScreen}
-            options={{
-              tabBarLabel: 'Geo',
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="earth" color={color} size={size} />
-              ),
-            }}
-          />
-          <Tabs.Screen
-            name="Inicio"
-            component={HomeStackScreen}
-            options={{
-              tabBarLabel: 'Inicio',
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="home" color={color} size={size} />
-              ),
-            }}
-          />
-          <Tabs.Screen
-            name="Perfil"
-            component={ProfileStackScreen}
-            options={{
-              tabBarLabel: 'Perfil',
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="account" color={color} size={size} />
-              ),
-            }}
-          />
+          <Tabs.Screen name="Notificaciones" component={NotificationsStackScreen} options={{
+            tabBarLabel: 'Notificaciones',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="bell" color={color} size={size} />
+            )
+          }} />
+          <Tabs.Screen name="Amigos" component={FriendsStackScreen} options={{
+            tabBarLabel: 'Amigos',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="friends" color={color} size={size} />
+            )
+          }} />
+          <Tabs.Screen name="Inicio" component={HomeStackScreen} options={{
+            tabBarLabel: 'Inicio',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            )
+          }} />
+          <Tabs.Screen name="Perfil" component={ProfileStackScreen} options={{
+            tabBarLabel: 'Perfil',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="account" color={color} size={size} />
+            )
+          }} />
+          <Tabs.Screen name="Ajustes" component={SettingsStackScreen} options={{
+            tabBarLabel: 'Ajustes',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="settings" color={color} size={size} />
+            )
+          }} />
         </Tabs.Navigator>
       </NavigationContainer>
     </SafeAreaView>
