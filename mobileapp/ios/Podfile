@@ -10,6 +10,8 @@ target 'mobileapp' do
 
   pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'mobileappTests' do
     inherit! :complete
     # Pods for testing
