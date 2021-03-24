@@ -80,6 +80,7 @@ const NavBar = (props: Props) => {
           </Fragment>
         )}
         <HamburgerButton toggleMobileMenu={toggleMobileMenu} />
+
       </section>
     </header>
   );
