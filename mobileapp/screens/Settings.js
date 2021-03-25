@@ -28,7 +28,7 @@ export const Settings = ({ navigation }) => {
                     <Switch
                         style={styles.botton}
                         trackColor={{ false: "#767577", true: "#81b0ff" }}
-                        thumbColor={isEnabled2 ? "#f5dd4b" : "#f4f3f4"}
+                        thumbColor={isEnabled2 ? "#7ca8f2" : "#f4f3f4"}
                         onValueChange={toggleSwitch2}
                         value={isEnabled2}
                     />
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: "flex-start",
         justifyContent: "center",
-        padding: 10
+        padding: 15
     },
     text: {
         flex: 5,
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     },
     botton: {
         flex: 2,
-        marginTop: 10
+        marginTop: 12,
+        marginRight: 10
     }
 });
