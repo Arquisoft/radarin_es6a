@@ -1,6 +1,7 @@
 const express = require("express")
 const User = require("./models/users")
 const Location = require("./models/locations")
+var config = require('./config');
 
 const router = express.Router()
 
@@ -55,29 +56,41 @@ router.post("/locations/add", async (req, res) => {
     let email = req.body.email;
     console.log("Creando una localización (" + longitud + "," + latitud + ")" + " y fecha: " + fecha + " para " + email);
     //Comprobar si ya existe una localización con las mismas coordenadas y la misma fecha
-    let location = await Location.findOne({ longitud: longitud,
-                                         latitud: latitud,
-                                         fecha: fecha})
-    console.log(location);
-    if (location)
-        res.send({error:"Error: La localización ya existe"})
-    else{
-        location = new Location({
-            longitud: longitud,
-            latitud: latitud,
-            fecha: fecha,
-        })
-        await location.save()
-        let user = await User.findOne({ email: email })
-        if(!user) {
-            res.send({error:"Error: El usuario no existe"})
-        }
-        //Registrar la localización para el usuario
-        //Usuario y localización tienen una relación Many to One
-        await User.findByIdAndUpdate(user._id, 
-            {$push: {locations : location._id}}, {new: true, userfindAndModify:false})
-        res.send(location)
+   
+    let user = await User.find({email}) //En orden inverso
+    if(!user) {
+        res.send({error:"Error: El usuario no existe"})
+        return;
     }
+    console.log("Núm locations=" + user[0].locations.length);
+    if (user[0].locations.length >= config.MAX_LOCATIONS) {
+        
+        let idlocBorrar = user[0].locations[0];
+        console.log("Borrar location " + idlocBorrar);
+        await Location.deleteOne({ _id: idlocBorrar })
+        await User.update(
+            {user: user._id}, 
+            {$pull: {locations : idlocBorrar}})
+    }
+    
+    let location = new Location({
+        longitud: longitud,
+        latitud: latitud,
+        fecha: fecha,
+    })
+    
+    await location.save()
+
+    //Registrar la localización para el usuario
+    //Usuario y localización tienen una relación Many to One
+    await User.update(
+        {user: user._id}, 
+        {$push: {locations : location._id}})
+
+   
+    res.send(location)
+        
+    
 })
 
 // Obtener las localizaciones para un usuario (email) y una fecha opcional

@@ -47,6 +47,7 @@
   },
   "navBar": {
     "welcome": "Bienvenida",
+    "myfriends": "Mis amigos",
     "formModel": "Form Model",
     "logOut": "Cerrar Sesión",
     "profile": "Perfil",

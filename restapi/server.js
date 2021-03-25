@@ -3,6 +3,7 @@ const promBundle = require("express-prom-bundle");
 const cors = require('cors');
 const mongoose = require("mongoose")
 const api = require("./api") 
+const MAX_LOCATIONS = 5
 
 function connect(){
     //The MONGO_URI variable is the connection string to MongoDB Atlas (for production). This env variable is created in heroku.
@@ -24,8 +25,8 @@ function connect(){
             console.log("Server has started! Using db in "+mongo_uri)
         })
 
-        //Descomentar el siguiente código para borrar la collección pasada en collectionsName
-        /*mongoose.connection.collections['locations'].drop( function(err) {
+        //Descomentar el siguiente código para borrar la collección pasada
+        /*mongoose.connection.collections['users'].drop( function(err) {
             console.log('collection dropped');
         });*/
     })
