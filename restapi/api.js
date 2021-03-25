@@ -17,8 +17,10 @@ router.post("/users/add", async (req, res) => {
     let email = req.body.email;
     //Comprobar si el usuario ya está registrado
     let user = await User.findOne({ email: email })
-    if (user)
+    if (user){
         res.send({error:"Error: El usuario ya está registrado"})
+    }
+        
     else{
         user = new User({
             name: name,
