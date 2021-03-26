@@ -47,6 +47,8 @@
   },
   "navBar": {
     "welcome": "Welcome",
+    "myfriends": "My Friends",
+    "locations": "Locations",
     "logOut": "Log out",
     "profile": "Profile",
     "formModelRender": "Form Model Render",
@@ -101,6 +103,11 @@
       "maximumFiles": "Sorry, you have exceeded the maximum number of files allowed per upload"
     }
   },
+  "locations": {
+		"title": "Locations",
+		"date": "Date",
+		"btnLocations": "Show"
+	},
   "profile": {
     "successCallback": "Pod updated successfully",
     "successTitle": "Success",

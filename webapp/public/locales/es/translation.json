@@ -48,6 +48,7 @@
   "navBar": {
     "welcome": "Bienvenida",
     "myfriends": "Mis amigos",
+    "locations": "Localizaciones",
     "formModel": "Form Model",
     "logOut": "Cerrar Sesión",
     "profile": "Perfil",
@@ -103,6 +104,11 @@
       "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
     }
   },
+  "locations": {
+		"title": "Localizaciones",
+		"date": "Fecha",
+		"btnLocations": "Buscar"
+	},
   "profile": {
     "successCallback": "Pod actualizado satisfactoriamente",
     "successTitle": "Éxito",
