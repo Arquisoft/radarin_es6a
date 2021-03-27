@@ -17,8 +17,10 @@ router.post("/users/add", async (req, res) => {
     let email = req.body.email;
     //Comprobar si el usuario ya está registrado
     let user = await User.findOne({ email: email })
-    if (user)
+    if (user){
         res.send({error:"Error: El usuario ya está registrado"})
+    }
+        
     else{
         user = new User({
             name: name,
@@ -62,16 +64,20 @@ router.post("/locations/add", async (req, res) => {
         res.send({error:"Error: El usuario no existe"})
         return;
     }
-    console.log("Núm locations=" + user[0].locations.length);
-    if (user[0].locations.length >= config.MAX_LOCATIONS) {
+    if(user[0].locations) {
         
-        let idlocBorrar = user[0].locations[0];
-        console.log("Borrar location " + idlocBorrar);
-        await Location.deleteOne({ _id: idlocBorrar })
-        await User.update(
-            {user: user._id}, 
-            {$pull: {locations : idlocBorrar}})
+        console.log("Núm locations=" + user[0].locations.length);
+        if (user[0].locations.length >= config.MAX_LOCATIONS) {
+        
+            let idlocBorrar = user[0].locations[0];
+            console.log("Borrar location " + idlocBorrar);
+            await Location.deleteOne({ _id: idlocBorrar })
+            await User.update(
+                {user: user._id}, 
+                {$pull: {locations : idlocBorrar}})
+        }
     }
+    
     
     let location = new Location({
         longitud: longitud,
