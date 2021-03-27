@@ -4,7 +4,7 @@ import { log } from './Log';
 
 //Configuración por defecto
 const func = location;
-var sec = 10;
+var sec = 5;
 //Datos de la tarea
 var running = false;
 

@@ -1,7 +1,7 @@
 import GetLocation from 'react-native-get-location';
 import { log, error } from './Log';
 
-const uri = "http://10.0.2.2:5000/api/locations/add"
+const uri = "http://10.0.2.2:5000/api/locations/addbyid"
 
 /**
  * Funcion para manejar la localización
@@ -17,8 +17,7 @@ function handleLocation(location) {
         }, body: JSON.stringify({
             longitud: location.longitude,
             latitud: location.latitude,
-            fecha: new Date().getDate(),
-            email: 'admin'
+            id: '605f53998a7ec5322c089257'
         })
     })
         .then(response => log('Coordenadas enviadas correctamente.'))
