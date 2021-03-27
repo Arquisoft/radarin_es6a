@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
 
 export const Profile = ({ navigation }) => {

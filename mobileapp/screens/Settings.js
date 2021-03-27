@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
+import { startBackgroundFunction, stopBackgroundFunction } from './scripts/Background';
 
 
 export const Settings = ({ navigation }) => {
 
     const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const toggleSwitch = () => {
+        setIsEnabled(previousState => !previousState);
+        if (!isEnabled)
+            startBackgroundFunction();
+        else
+            stopBackgroundFunction();
+    };
     const [isEnabled2, setIsEnabled2] = useState(false);
     const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
 
