@@ -3,9 +3,27 @@ import { Loader } from "@util-components";
 import { errorToaster, successToaster } from "@utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import locationsHelper from "./LocationsHelper";
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 import { Header,
-	 LocationsWrapper, TextArea, DivForms, LabelInput, TitleLocations, Button, LocationsForm, ResultLocations } from "./locations.style";
+	 LocationsWrapper,
+	 TextArea,
+	 DivForms,
+	 LabelInput,
+	 TitleLocations,
+	 Button,
+	 LocationsForm,
+	 ResultLocations ,
+	 FormRenderContainer
+	} 
+from "./locations.style";
 
 import i18n from "i18n";
 
@@ -29,22 +47,6 @@ class Locations extends React.Component {
 		};
 	}
 
-	componentDidMount() {
-		
-		/* let email = this.webID.replace("https://", "");
-		email = email.replace(".solid.community/profile/card#me", "");
-		email = email.replace("/profile/card#me", "");
-
-		this._asyncRequest = locationsHelper.getLocations(email).then((data) => {
-			this._asyncRequest = null;
-			this.setState({
-				data: data,
-				original: data
-			});
-			console.log("this.state.data=" , this.state.data);
-		}); */
-		
-	}
 	componentWillUnmount() {}
 	handleChange(event) {
 		this.setState({ value: event.target.value });
@@ -56,13 +58,12 @@ class Locations extends React.Component {
 	}
 
 	async handleShow(event) {
-		
 
 			let email = this.webID.replace("https://", "");
 			email = email.replace(".solid.community/profile/card#me", "");
 			email = email.replace("/profile/card#me", "");
 
-			this._asyncRequest = locationsHelper.getLocations(email).then((data) => {
+			this._asyncRequest = locationsHelper.getLocations(email, this.locations_date.current.value).then((data) => {
 				this._asyncRequest = null;
 				this.setState({
 					data: data,
@@ -74,8 +75,8 @@ class Locations extends React.Component {
 			
 		}
 		
-
 	render(): React.ReactNode {
+		
 		return (
 			<LocationsWrapper data-testid="locations-component">
 				<Header data-testid="locations-header">
@@ -90,28 +91,68 @@ class Locations extends React.Component {
 						
 					</LocationsForm>
 					<DivForms>
-						{/* <MultimediaComponent id="input-img" webId={`[${this.webId}]`} image="" /> */}
-						<hr />
 						<Button id="search_locations" form="locationsf" type="submit" onClick={(e) => this.handleSubmit(e)}>
 							<FontAwesomeIcon icon="street-view" className="street-view" title={i18n.t("locations.btnLocations")} />
 							{"	" + i18n.t("locations.btnLocations")}
 						</Button>
 					</DivForms>
 				</Header>
-{/* 
-				<Map parentCallBack={this.callBackFunction} zoom={13} /> */}
-				<ResultLocations>
-					<div>
-						<ul>
-						{ this.state.data.length && this.state.data.map(m => 
-						<li key={m._id}>{m.longitud} - {m.latitud} - {m.fecha} </li>) }
-		
-						</ul>
-					</div>
-					
-				 </ResultLocations>
+
+				
+				{this.getList()}
+				
 			</LocationsWrapper>
 		);
+	}
+
+	getList() {
+		if (this.state.data !== null && this.state.data.length > 0) {
+				return (
+				<ResultLocations>
+					<TableContainer component={Paper}>
+						<Table aria-label="simple table">
+							<TableHead>
+							<TableRow>
+								<TableCell align="center">{i18n.t("locations.longitud")}</TableCell>
+								<TableCell align="center">{i18n.t("locations.latitud")}</TableCell>
+								<TableCell align="center">{i18n.t("locations.fecha")}</TableCell>
+							</TableRow>
+							</TableHead>
+							<TableBody>
+									{this.state.data.length && this.state.data.map(m => {
+										if(this.state.data.length > 0) {
+											return (
+												<TableRow>
+													<TableCell align="center">{m.longitud}</TableCell>
+													<TableCell align="center">{m.latitud}</TableCell>
+													<TableCell align="center">{m.fecha}</TableCell>
+												</TableRow>
+												
+													)} else{
+														return (<TableRow>
+															<TableCell align="center">{m.longitud}</TableCell>
+														</TableRow>);
+													}
+												}
+											)
+										}
+									
+							</TableBody>
+						</Table>
+					</TableContainer>
+				</ResultLocations>
+			);
+		} else {
+			return (
+				<ResultLocations>
+					<FormRenderContainer id="empty">
+						<h5 align="center">
+							{i18n.t("locations.noLocations")}
+						</h5>
+					</FormRenderContainer>	
+				</ResultLocations>
+			);
+		}
 	}
 }
 

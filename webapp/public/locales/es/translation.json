@@ -107,7 +107,11 @@
   "locations": {
 		"title": "Localizaciones",
 		"date": "Fecha",
-		"btnLocations": "Buscar"
+		"btnLocations": "Buscar",
+    "longitud": "Longitud",
+    "latitud": "Latitud",
+    "fecha": "Fecha",
+    "noLocations": "No hay localizaciones disponibles. Por favor inicie una búsqueda."
 	},
   "profile": {
     "successCallback": "Pod actualizado satisfactoriamente",

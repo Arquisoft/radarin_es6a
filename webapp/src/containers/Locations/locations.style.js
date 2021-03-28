@@ -146,4 +146,33 @@ export const ResultLocations = styled.div`
 	background: rgb(0, 77, 134);
 	background: linear-gradient(180deg,  rgba(227, 222, 222, 1) 0%, rgba(0, 77, 134, 1) 92%);
 `;
+export const FormRenderContainer = styled.div`
+  border: 1px solid #dae0e6;
+  min-height: 40px;
+  padding: 5px;
+  background-image: url('img/pattern-geo.png'),
+  background-color: white;
+  background-repeat: repeat, no-repeat;
+  padding: 30px 20px;
+  .inrupt-form-group {
+    border: 1px solid #c0c0c0;
+    background-color: #f9f9f9;
+    margin: 15px 0;
+  }
+  .input-wrap {
+    margin: 0;
+  }
+  input {
+    margin-left: 0;
+  }
+  #mapa{
+    width: 570px;
+    height: 350px;
+    padding: 0px !IMPORTANT;
+  }
+  #shareRoute{
+    display: contents;
+	}
+`;
+
 	
