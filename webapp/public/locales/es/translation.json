@@ -244,5 +244,13 @@
     "load": "Cargar",
     "save": "Guardar",
     "grantAccess": "Dar Acceso"
+  },
+  "friends":{
+    "title": "AMIGOS",
+    "addTitle": "Añadir Amigo",
+    "add": "Añadir",
+    "deleteTitle": "Eliminar Amigo",
+    "delete": "Eliminar"
+
   }
 }

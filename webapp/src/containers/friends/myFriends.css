@@ -1,3 +1,10 @@
+.amigos{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .correct-margin {
     margin-left: 2em;
 }
@@ -23,9 +30,8 @@
 
 .modal-app{
     border: solid #cbcbcb 1px;
-    border-radius: .2em;
+    border-radius: auto;
     background: #fff;
-    margin-top: 2em;
-    margin-left: 5em;
-    margin-right: 1em;
+    
 }
+

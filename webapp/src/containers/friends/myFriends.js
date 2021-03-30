@@ -96,6 +96,7 @@ export const myFriends = ({ myWebId, service }) => {
   }
 
   return (
+    <center>
     <div data-testid="friendsTest">
       <div className="modal-app">
         <div className="modal-header">
@@ -125,6 +126,7 @@ export const myFriends = ({ myWebId, service }) => {
       </div>
       <NotificationContainer/>
     </div>
+    </center>
   );
 };
 

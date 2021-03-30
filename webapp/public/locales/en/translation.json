@@ -243,5 +243,12 @@
     "load": "Load",
     "save": "Save",
     "grantAccess": "Grant Access"
+  },
+  "friends":{
+    "title": "FRIENDS",
+    "addTitle": "Add Friend",
+    "add": "Add",
+    "deleteTitle": "Delete Friend",
+    "delete": "Delete"
   }
 }
