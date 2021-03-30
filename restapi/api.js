@@ -2,6 +2,7 @@ const express = require("express")
 const User = require("./models/users")
 const Location = require("./models/locations")
 var config = require('./config');
+const { MIN_HOUR, MAX_HOUR } = require("./config");
 
 const router = express.Router()
 
@@ -138,7 +139,7 @@ router.post("/locations/addbyid", async (req, res) => {
 })
 
 // Obtener las localizaciones para un usuario (email) y una fecha opcional
-router.get("/locations/:email/:fecha?", async (req, res) => {
+/*router.get("/locations/:email/:fecha?", async (req, res) => {
     console.log("Emisor: ", req.params.email);
     let criterio = { email: req.params.email };
 
@@ -152,6 +153,41 @@ router.get("/locations/:email/:fecha?", async (req, res) => {
 
         criterio = {
             $and: [{ '_id': { $in: locs } }, { fecha: fecha }]
+        }, function (err, locs) {
+            console.log(locs);
+        }
+    } else {
+        criterio = {
+            '_id': { $in: locs }
+        }, function (err, locs) {
+            console.log(locs);
+        }
+    }
+
+    locs = await Location.find(criterio);
+
+    res.send(locs);
+})*/
+
+// Obtener las localizaciones para un usuario (email) y una fecha opcional
+router.get("/locations/:email/:fecha?", async (req, res) => {
+    console.log("Emisor: ", req.params.email);
+    let criterio = { email: req.params.email };
+
+    let user = await User.find(criterio).sort('-_id') //En orden inverso
+
+    let locs = user[0].locations;
+
+    let fecha = req.params.fecha;
+
+    if (fecha != undefined) {
+
+        criterio = {
+            $and: [{ '_id': { $in: locs } }, { fecha: {
+                                                $gt: fecha + MIN_HOUR,
+                                                $lt: fecha + MAX_HOUR
+                                            } 
+        }]
         }, function (err, locs) {
             console.log(locs);
         }
