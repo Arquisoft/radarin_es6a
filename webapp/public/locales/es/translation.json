@@ -106,7 +106,7 @@
   },
   "locations": {
 		"title": "Localizaciones",
-		"date": "Fecha",
+		"date": "Fecha (<YYYY-mm-dd>) ",
 		"btnLocations": "Buscar",
     "longitud": "Longitud",
     "latitud": "Latitud",

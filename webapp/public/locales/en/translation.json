@@ -105,7 +105,7 @@
   },
   "locations": {
 		"title": "Locations",
-		"date": "Date",
+		"date": "Date (<YYYY-mm-dd>) ",
 		"btnLocations": "Show",
     "longitud": "Longitude",
     "latitud": "Latitude",

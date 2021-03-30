@@ -84,7 +84,7 @@ class Locations extends React.Component {
 					<LocationsForm id="locationsf">
 						<DivForms>
 							<LabelInput>
-								{i18n.t("locations.date")}{" "}
+								{i18n.t("locations.date")}
 								<input type="text" id="locations_date" name="locations_date" ref={this.locations_date} />
 							</LabelInput>
 						</DivForms>
