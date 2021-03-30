@@ -1,22 +1,40 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+//Imports
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { TapGestureHandler } from 'react-native-gesture-handler';
-import { Home, Profile, Geo } from './screens/BasicScreens'
+import { default as React } from 'react';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+//Screens
+import { Friends } from './screens/Friends';
+import { Home } from './screens/Home';
+import { Notifications } from './screens/Notifications';
+import { Profile } from './screens/Profile';
+import { Settings } from './screens/Settings';
+
 
 const Tabs = createBottomTabNavigator();
-const GeoStack = createStackNavigator();
+const NotificationsStack = createStackNavigator();
+const FriendsStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
+const SettingsStack = createStackNavigator();
 
-const GeoStackScreen = () => {
+const NotificationsStackScreen = () => {
   return (
-    <GeoStack.Navigator>
-      <GeoStack.Screen name="Geolocalización" component={Geo} />
-    </GeoStack.Navigator>
+    <NotificationsStack.Navigator>
+      <NotificationsStack.Screen name="Avisos" component={Notifications} />
+    </NotificationsStack.Navigator>
+  );
+}
+
+const FriendsStackScreen = () => {
+  return (
+    <FriendsStack.Navigator>
+      <FriendsStack.Screen name="Amigos" component={Friends} />
+    </FriendsStack.Navigator>
   );
 }
 
@@ -36,18 +54,36 @@ const ProfileStackScreen = () => {
   );
 }
 
+const SettingsStackScreen = () => {
+  return (
+    <SettingsStack.Navigator>
+      <SettingsStack.Screen name="Ajustes" component={Settings} />
+    </SettingsStack.Navigator>
+  );
+}
+
 export default function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <NavigationContainer>
         <Tabs.Navigator initialRouteName="Inicio">
           <Tabs.Screen
-            name="Geo"
-            component={GeoStackScreen}
+            name="Avisos"
+            component={NotificationsStackScreen}
             options={{
-              tabBarLabel: 'Geo',
+              tabBarLabel: 'Avisos',
               tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="earth" color={color} size={size} />
+                <MaterialCommunityIcons name="bell" color={color} size={size - 2} />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="Amigos"
+            component={FriendsStackScreen}
+            options={{
+              tabBarLabel: 'Amigos',
+              tabBarIcon: ({ color, size }) => (
+                <FontAwesome5Icon name="user-friends" color={color} size={size - 5} />
               ),
             }}
           />
@@ -57,7 +93,7 @@ export default function App() {
             options={{
               tabBarLabel: 'Inicio',
               tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="home" color={color} size={size} />
+                <MaterialCommunityIcons name="home" color={color} size={size + 3} />
               ),
             }}
           />
@@ -67,7 +103,17 @@ export default function App() {
             options={{
               tabBarLabel: 'Perfil',
               tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="account" color={color} size={size} />
+                <MaterialCommunityIcons name="account" color={color} size={size + 2} />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="Ajustes"
+            component={SettingsStackScreen}
+            options={{
+              tabBarLabel: 'Ajustes',
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="settings-sharp" color={color} size={size - 2} />
               ),
             }}
           />
