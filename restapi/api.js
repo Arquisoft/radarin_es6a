@@ -44,6 +44,41 @@ router.get("/users/delete/:email", async (req, res) => {
         res.send(user)
     }
 })
+
+//Borrar location
+//Tener en cuenta que una location está vinculada a user
+router.delete("/locations/delete/:_id", async (req, res) => {
+    //Comprobar si la location está registrada
+    let idLocation = req.params._id;
+    console.log("Voy a borrar: " + idLocation)
+    let result = await Location.deleteOne({ _id: idLocation });
+
+    if(result && result.deletedCount > 0){
+        criterio = {
+            locations: { $in: [idLocation] } 
+        }
+        
+        let user = await User.findOne( criterio ) //En orden inverso
+        if (!user) {
+            res.send({ error: "Error: El usuario no existe" })
+            return;
+        }
+        let writeResult = await User.update(
+            { '_id': user._id },
+            { $pull: { locations: idLocation } })
+       
+            if(writeResult.nModified != 1){
+                res.send({ error: "Error: El usuario no ha sido modificado" })
+            return;
+            }
+        res.send(result);
+    } else {
+        res.send({ error: "Error: La localización no ha sido borrada" })
+    }
+
+        
+})
+
 // Obtener todas las localizaciones
 router.get("/locations/list", async (req, res) => {
     const positions = await Location.find({}).sort('-_id') //En orden inverso
@@ -58,8 +93,7 @@ router.post("/locations/add", async (req, res) => {
     let fecha = req.body.fecha;
     let email = req.body.email;
     console.log("Creando una localización (" + longitud + "," + latitud + ")" + " y fecha: " + fecha + " para " + email);
-    //Comprobar si ya existe una localización con las mismas coordenadas y la misma fecha
-
+    
     let user = await User.find({ email }) //En orden inverso
     if (!user) {
         res.send({ error: "Error: El usuario no existe" })
@@ -137,37 +171,6 @@ router.post("/locations/addbyid", async (req, res) => {
     );
     res.send(location)
 })
-
-// Obtener las localizaciones para un usuario (email) y una fecha opcional
-/*router.get("/locations/:email/:fecha?", async (req, res) => {
-    console.log("Emisor: ", req.params.email);
-    let criterio = { email: req.params.email };
-
-    let user = await User.find(criterio).sort('-_id') //En orden inverso
-
-    let locs = user[0].locations;
-
-    let fecha = req.params.fecha;
-
-    if (fecha != undefined) {
-
-        criterio = {
-            $and: [{ '_id': { $in: locs } }, { fecha: fecha }]
-        }, function (err, locs) {
-            console.log(locs);
-        }
-    } else {
-        criterio = {
-            '_id': { $in: locs }
-        }, function (err, locs) {
-            console.log(locs);
-        }
-    }
-
-    locs = await Location.find(criterio);
-
-    res.send(locs);
-})*/
 
 // Obtener las localizaciones para un usuario (email) y una fecha opcional
 router.get("/locations/:email/:fecha?", async (req, res) => {

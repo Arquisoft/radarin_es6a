@@ -57,6 +57,12 @@ class Locations extends React.Component {
 		this.handleShow(event);
 	}
 
+	handleSubmitDelete(event, id) {
+		event.preventDefault();
+		this.handleDelete(event, id);
+		this.handleShow(null);
+	}
+
 	async handleShow(event) {
 
 			let email = this.webID.replace("https://", "");
@@ -73,7 +79,22 @@ class Locations extends React.Component {
 			});
 			
 			
-		}
+	}
+
+	async handleDelete(event, id) {
+
+		this._asyncRequest = locationsHelper.deleteLocations(id).then((data) => {
+			this._asyncRequest = null;
+			if (data.error && data.error!=undefined) {
+				alert("ERROR:" + data.error);
+			} else {
+				console.log("Borrado correcto, respuesta=" , data);
+			}
+		});
+		
+		
+	}
+
 		
 	render(): React.ReactNode {
 		
@@ -126,11 +147,17 @@ class Locations extends React.Component {
 													<TableCell align="center">{m.longitud}</TableCell>
 													<TableCell align="center">{m.latitud}</TableCell>
 													<TableCell align="center">{m.fecha}</TableCell>
+													<TableCell>
+														<Button id="delete_location" type="submit" onClick={(e) => this.handleSubmitDelete(e, m._id)}>
+														<FontAwesomeIcon icon="backspace" className="backspace" title=""/>
+														</Button>
+													</TableCell>
 												</TableRow>
 												
 													)} else{
 														return (<TableRow>
 															<TableCell align="center">{m.longitud}</TableCell>
+															
 														</TableRow>);
 													}
 												}
@@ -149,6 +176,7 @@ class Locations extends React.Component {
 						<h5 align="center">
 							{i18n.t("locations.noLocations")}
 						</h5>
+						
 					</FormRenderContainer>	
 				</ResultLocations>
 			);
