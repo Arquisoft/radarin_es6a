@@ -16,3 +16,13 @@ export async function getUsers(){
     let response = await fetch(apiEndPoint+'/users/list')
     return await response.json()
 }
+
+export async function addLocation(nameLocation){
+    const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+    let response = await fetch(apiEndPoint+'/locations/add', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({'name':nameLocation})
+      })
+    return await response.json()
+}
