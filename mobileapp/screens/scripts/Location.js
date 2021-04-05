@@ -20,7 +20,11 @@ function handleLocation(location) {
             id: '605f53998a7ec5322c089257'
         })
     })
-        .then(response => log('Coordenadas enviadas correctamente.'))
+        .then((response) => response.json())
+        .then((json) => {
+            log('Coordenadas enviadas correctamente.');
+            log('Hay ' + json.number + ' amigos cerca.');
+        })
         .catch((error) => log('Error en el envio: ' + error));
 }
 

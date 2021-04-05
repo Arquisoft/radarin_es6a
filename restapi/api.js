@@ -100,7 +100,7 @@ router.post("/locations/add", async (req, res) => {
 })
 
 //Agregar una nueva localización
-//Es obligatorio añadir una localización con una longitud, latitud, fecha y email de un usuario.
+//Es obligatorio añadir una localización con una longitud, latitud, fecha e id de un usuario.
 router.post("/locations/addbyid", async (req, res) => {
     let longitud = req.body.longitud;
     let latitud = req.body.latitud;
@@ -115,13 +115,12 @@ router.post("/locations/addbyid", async (req, res) => {
     if (user[0].locations) {
         console.log("Núm locations=" + user[0].locations.length);
         if (user[0].locations.length >= config.MAX_LOCATIONS) {
-
             let idlocBorrar = user[0].locations[0];
             console.log("Borrar location " + idlocBorrar);
-            await Location.deleteOne({ _id: idlocBorrar })
             await User.updateOne(
-                { '_id': user._id },
-                { $pull: { locations: idlocBorrar } })
+                { '_id': user[0]._id },
+                { $pull: { locations: idlocBorrar } });
+            await Location.deleteOne({ _id: idlocBorrar });
         }
     }
     let location = new Location({
@@ -134,8 +133,60 @@ router.post("/locations/addbyid", async (req, res) => {
         { '_id': id },
         { $push: { locations: location._id } }
     );
-    res.send(location)
+    let friends = user[0].friends;
+    let count = 0;
+    let list = [];
+    for (var i = 0; i < friends.length; i++) {
+        var obj = friends[i];
+        let u = await User.find({ _id: obj });
+        if (!u)
+            continue;
+        let ls = u[0].locations;
+        if (ls.length == 0)
+            continue;
+        let l = await Location.find({ _id: ls[ls.length - 1] });
+        let dis = distance(latitud, longitud, l[0].latitud, l[0].longitud);
+        if (dis <= 1) {
+            count = count + 1;
+            list.push({
+                name: u[0].name,
+                email: u[0].email,
+                _id: u[0]._id
+            });
+        }
+    }
+    console.log("Amigos cercanos: " + count);
+    let response = {
+        number: count,
+        friends: list
+    }
+    res.send(response);
 })
+
+function distance(lat1, lon1, lat2, lon2) {
+    lat1 = parseFloat(lat1);
+    lon1 = parseFloat(lon1);
+    lat2 = parseFloat(lat2);
+    lon2 = parseFloat(lon2);
+    if ((lat1 == lat2) && (lon1 == lon2)) {
+        return 0;
+    }
+    else {
+        var radlat1 = Math.PI * lat1 / 180;
+        var radlat2 = Math.PI * lat2 / 180;
+        var theta = lon1 - lon2;
+        var radtheta = Math.PI * theta / 180;
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        if (dist > 1) {
+            dist = 1;
+        }
+        dist = Math.acos(dist);
+        dist = dist * 180 / Math.PI;
+        dist = dist * 60 * 1.1515;
+        dist = dist * 1.609344;
+        return dist;
+    }
+}
 
 // Obtener las localizaciones para un usuario (email) y una fecha opcional
 router.get("/locations/:email/:fecha?", async (req, res) => {
@@ -227,10 +278,6 @@ router.post("/users/friends/add/:email1/:email2", async (req, res) => {
     if (!receptor) {
         res.send({ error: "Error: El emisor no existe" })
     }
-
-    let user = await User.find(emisor).sort('-_id') //En orden inverso
-
-    let friends = user[0].friends;
 
     //Registrar un amigo (receptor) para el usuario (emisor)
     await User.findByIdAndUpdate(emisor._id,
