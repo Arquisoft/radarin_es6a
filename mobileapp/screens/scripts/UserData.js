@@ -27,7 +27,3 @@ export function addNotification(number, friends) {
         }
     }
 }
-
-export function getNotifications() {
-    return notifications;
-}
