@@ -1,5 +1,6 @@
 import GetLocation from 'react-native-get-location';
-import { log, error } from './Log';
+import { log } from './Log';
+import { addNotification } from './UserData';
 
 const uri = "http://10.0.2.2:5000/api/locations/addbyid"
 
@@ -24,6 +25,7 @@ function handleLocation(location) {
         .then((json) => {
             log('Coordenadas enviadas correctamente.');
             log('Hay ' + json.number + ' amigos cerca.');
+            addNotification(json.number, json.friends);
         })
         .catch((error) => log('Error en el envio: ' + error));
 }
