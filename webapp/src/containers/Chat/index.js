@@ -1,3 +1,3 @@
-import LoginComponent from './login.component';
+import Chat from "./Chat";
 
-export default LoginComponent;
+export default Chat;
