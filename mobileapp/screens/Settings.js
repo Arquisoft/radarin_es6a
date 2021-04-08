@@ -2,20 +2,25 @@ import React, { useState } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
 import { startBackgroundFunction, stopBackgroundFunction } from './scripts/Background';
+import { data } from './scripts/UserData';
 
 
 export const Settings = ({ navigation }) => {
 
-    const [isEnabled, setIsEnabled] = useState(false);
+    const [isEnabled, setIsEnabled] = useState(data.geo);
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState);
         if (!isEnabled)
             startBackgroundFunction();
         else
             stopBackgroundFunction();
+        data.geo = !isEnabled;
     };
-    const [isEnabled2, setIsEnabled2] = useState(false);
-    const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
+    const [isEnabled2, setIsEnabled2] = useState(data.not);
+    const toggleSwitch2 = () => {
+        setIsEnabled2(previousState => !previousState);
+        data.not = !isEnabled2;
+    };
 
     return (
         <ScreenContainer>
