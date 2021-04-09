@@ -15,11 +15,13 @@ export const Settings = ({ navigation }) => {
         else
             stopBackgroundFunction();
         data.geo = !isEnabled;
+        data.updateGeo();
     };
     const [isEnabled2, setIsEnabled2] = useState(data.not);
     const toggleSwitch2 = () => {
         setIsEnabled2(previousState => !previousState);
         data.not = !isEnabled2;
+        data.updateNot();
     };
 
     return (

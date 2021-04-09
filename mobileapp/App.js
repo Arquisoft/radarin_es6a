@@ -7,6 +7,7 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { data } from './screens/scripts/UserData';
 //Screens
 import { Friends } from './screens/Friends';
 import { Home } from './screens/Home';
@@ -14,6 +15,7 @@ import { Notifications } from './screens/Notifications';
 import { Profile } from './screens/Profile';
 import { Settings } from './screens/Settings';
 
+data.init();
 
 const Tabs = createBottomTabNavigator();
 const NotificationsStack = createStackNavigator();
