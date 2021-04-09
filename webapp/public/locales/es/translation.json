@@ -247,10 +247,15 @@
   },
   "friends":{
     "title": "AMIGOS",
-    "addTitle": "Añadir Amigo",
+    "addTitle": "Introduzca el WebId del amigo que desea añadir",
     "add": "Añadir",
-    "deleteTitle": "Eliminar Amigo",
-    "delete": "Eliminar"
-
+    "deleteTitle": "Seleccione el amigo que desea eliminar",
+    "delete": "Eliminar",
+    "deleteErrorTitle": "Error al eliminar amigo",
+    "deleteErrorMessage": "No has seleccionado un amigo para eliminar",
+    "addErrorTitle": "Error al añadir amigo",
+    "addErrorMessage": "El WebId introducido no es válido",
+    "checkErrorMessage": "El amigo a añadir ya pertenece a la lista de amigos",
+    "permissionsErrorMessage": "No hay permisos para realizar la operación"
   }
 }

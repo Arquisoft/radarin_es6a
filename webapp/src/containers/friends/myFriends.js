@@ -107,8 +107,10 @@ export const myFriends = ({ myWebId, service }) => {
           <span className="span-friends">{t("friends.addTitle")}</span>
           <div className="add-friends">
             <input data-testid="input-add" className="input-add" id="friendId" type="text"
-                   placeholder="e.g. https://user.solid.community/profile/card#me"></input>
-            <Button id="btnAdd" data-testid="btnAddFriend" className="correct-margin" onClick={addFriend}>
+                   placeholder="https://uoxxxxxx.inrupt.net/"></input>
+          </div>
+          <div>
+          <Button id="btnAdd" data-testid="btnAddFriend" className="correct-margin" onClick={addFriend}>
               {t("friends.add")}
             </Button>
           </div>

@@ -249,6 +249,12 @@
     "addTitle": "Add Friend",
     "add": "Add",
     "deleteTitle": "Delete Friend",
-    "delete": "Delete"
+    "delete": "Delete",
+    "deleteErrorTitle": "Error deleting friend",
+    "deleteErrorMessage": "You have not selected a friend to delete",
+    "addErrorTitle": "Error adding amigo",
+    "addErrorMessage": "The WebId entered is not valid",
+    "checkErrorMessage": "The friend to add already belongs to the friends list",
+    "permissionsErrorMessage": "There are no permissions to perform the operation"
   }
 }

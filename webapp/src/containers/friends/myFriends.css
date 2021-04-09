@@ -11,17 +11,19 @@
 
 .list-friends {
     border: solid #cbcbcb 1px;
-    margin-bottom: .5em;
+    margin-bottom: .7em;
     border-radius: .2em;
-    margin-top: .5em;
+    margin-top: .7em;
 }
 
 .add-friends{
-    margin-top: .8em;
+    margin-top: .9sem;
+    margin-bottom: .7em;
 }
 
 .input-add {
     width: 75%;
+    margin-top: .7em;
 }
 
 .span-friends {
@@ -32,6 +34,8 @@
     border: solid #cbcbcb 1px;
     border-radius: auto;
     background: #fff;
+    height: 650px;
+    width: 1000px;
     
 }
 
