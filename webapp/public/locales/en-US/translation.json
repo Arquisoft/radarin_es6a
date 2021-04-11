@@ -47,6 +47,7 @@
   },
   "navBar": {
     "welcome": "Welcome",
+    "map": "Mapa",
     "formModel": "Form Model",
     "logOut": "Log out",
     "profile": "Profile",
