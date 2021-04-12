@@ -15,7 +15,7 @@ process.on('unhandledRejection', err => {
 // Ensure environment variables are read.
 require('../config/env');
 
-const jest = require('jest');
+const jest1 = require('jest');
 const execSync = require('child_process').execSync;
 let argv = process.argv.slice(2);
 
@@ -44,4 +44,4 @@ if (!process.env.CI && argv.indexOf('--coverage') === -1 && argv.indexOf('--watc
   argv.push(hasSourceControl ? '--watch' : '--watchAll');
 }
 
-jest.run(argv);
+jest1.run(argv);

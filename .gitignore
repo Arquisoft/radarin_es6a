@@ -2,6 +2,7 @@
 
 # dependencies
 webapp/node_modules
+webapp/package-lock.json
 /.pnp
 .pnp.js
 
