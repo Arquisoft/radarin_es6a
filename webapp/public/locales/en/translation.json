@@ -48,6 +48,7 @@
   "navBar": {
     "welcome": "Welcome",
     "map": "Map",
+    "locations": "Locations",
     "logOut": "Log out",
     "profile": "Profile",
     "formModelRender": "Form Model Render",
@@ -102,6 +103,15 @@
       "maximumFiles": "Sorry, you have exceeded the maximum number of files allowed per upload"
     }
   },
+  "locations": {
+		"title": "Locations",
+		"date": "Date (<YYYY-mm-dd>) ",
+		"btnLocations": "Show",
+    "longitud": "Longitude",
+    "latitud": "Latitude",
+    "fecha": "Date",
+    "noLocations": "No locations available. Please, start the search."
+	},
   "profile": {
     "successCallback": "Pod updated successfully",
     "successTitle": "Success",
