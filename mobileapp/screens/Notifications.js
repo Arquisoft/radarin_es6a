@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, FlatList, StatusBar, Text } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
-import { data, deleteNotification } from './scripts/UserData';
+import { data } from './scripts/UserData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function useForceUpdate() {
@@ -9,6 +9,11 @@ function useForceUpdate() {
     return () => setValue(value => value + 1);
 }
 
+/**
+ * Metodo que devuelve la vista de avisos del menu de navegación
+ * @param {*} navigation 
+ * @returns Vista de avisos
+ */
 export var Notifications = ({ navigation }) => {
     const forceUpdate = useForceUpdate();
     return (
@@ -28,7 +33,7 @@ export var Notifications = ({ navigation }) => {
                                 <MaterialCommunityIcons
                                     name="close-thick" style={styles.x} color={'#999'} size={30}
                                     onPress={() => {
-                                        deleteNotification(item.id);
+                                        data.deleteNotification(item.id);
                                         forceUpdate();
                                     }} />
                             </View>

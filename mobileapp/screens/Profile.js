@@ -2,6 +2,11 @@ import React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
 
+/**
+ * Metodo que devuelve la vista del perfil del menu de navegación
+ * @param {*} navigation 
+ * @returns Vista del perfil del usuario
+ */
 export const Profile = ({ navigation }) => {
     return (
         <ScreenContainer>

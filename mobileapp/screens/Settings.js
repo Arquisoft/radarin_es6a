@@ -4,7 +4,11 @@ import { ScreenContainer } from './components/ScreenContainer';
 import { startBackgroundFunction, stopBackgroundFunction } from './scripts/Background';
 import { data } from './scripts/UserData';
 
-
+/**
+ * Metodo que devuelve la vista de ajustes del menu de navegación
+ * @param {*} navigation 
+ * @returns Vista de ajustes
+ */
 export const Settings = ({ navigation }) => {
 
     const [isEnabled, setIsEnabled] = useState(data.geo);

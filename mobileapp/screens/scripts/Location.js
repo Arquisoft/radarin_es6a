@@ -1,14 +1,13 @@
 import GetLocation from 'react-native-get-location';
 import { log } from './Log';
-import { addNotification } from './UserData';
-
-const uri = "http://10.0.2.2:5000/api/locations/addbyid"
+import { data } from './UserData';
 
 /**
  * Funcion para manejar la localización
  * @param {GetLocation.Location} location 
  */
 function handleLocation(location) {
+    var uri = "http://" + data.server.ip + ":" + data.server.port + "/api/locations/addbyid";
     log("Coordenadas:" + location.longitude + "," + location.latitude);
     fetch(uri, {
         method: 'POST',
@@ -18,7 +17,7 @@ function handleLocation(location) {
         }, body: JSON.stringify({
             longitud: location.longitude,
             latitud: location.latitude,
-            id: '605f53998a7ec5322c089257'
+            id: data.user.id
         })
     })
         .then((response) => response.json())
@@ -30,7 +29,7 @@ function handleLocation(location) {
                 msg = "Hay un amigo cerca"
             else
                 msg = "Hay " + json.number + " amigos cerca"
-            addNotification(json.number, json.friends, msg);
+            data.addNotification(json.number, json.friends, msg);
         })
         .catch((error) => log('Error en el envio: ' + error));
 }
