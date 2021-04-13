@@ -3,6 +3,7 @@ import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { log } from './Log';
 import { startBackgroundFunction } from './Background';
+import uuid from 'react-native-uuid';
 
 export var data = {
     notifications: [],
@@ -53,13 +54,17 @@ export var data = {
     }
 }
 
-export function addNotification(number, friends) {
+export function addNotification(number, friends, msg) {
     if (number > 0) {
-        data.notifications.push({
+        let d = new Date();
+        let obj = {
+            id: uuid.v4(),
+            mensaje: msg,
             number: number,
             friends: friends,
-            date: new Date()
-        });
+            date: d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()
+        };
+        data.notifications.push(obj);
         data.updateNotifications();
         if (AppState.currentState != "active" && data.not) {
             var mensaje = "";
@@ -73,4 +78,11 @@ export function addNotification(number, friends) {
             });
         }
     }
+}
+
+export function deleteNotification(id) {
+    data.notifications = data.notifications.filter(function (obj) {
+        return obj.id !== id;
+    });
+    data.updateNotifications();
 }

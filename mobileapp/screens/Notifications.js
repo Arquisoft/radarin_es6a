@@ -1,26 +1,79 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, FlatList, StatusBar, Text } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
+import { data, deleteNotification } from './scripts/UserData';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export const Notifications = ({ navigation }) => {
+function useForceUpdate() {
+    const [value, setValue] = useState(0);
+    return () => setValue(value => value + 1);
+}
+
+export var Notifications = ({ navigation }) => {
+    const forceUpdate = useForceUpdate();
     return (
         <ScreenContainer>
             <View style={styles.container}>
-                <Text style={styles.text}>Proximamente...</Text>
+                <FlatList
+                    data={data.notifications}
+                    renderItem={({ item }) => (
+                        <View style={styles.row}>
+                            <View style={styles.item}>
+                                <Text style={styles.date}>
+                                    {item.date}
+                                </Text>
+                            </View>
+                            <View style={styles.item}>
+                                <Text style={styles.title}>{item.mensaje}</Text>
+                                <MaterialCommunityIcons
+                                    name="close-thick" style={styles.x} color={'#999'} size={30}
+                                    onPress={() => {
+                                        deleteNotification(item.id);
+                                        forceUpdate();
+                                    }} />
+                            </View>
+                        </View>
+                    )}
+                    keyExtractor={item => item.id}
+                    onRefresh={forceUpdate}
+                    refreshing={false}
+                    extraData={data.notifications}
+                />
             </View>
-        </ScreenContainer>
+        </ScreenContainer >
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
     },
-    text: {
-        textAlign: "center",
-        fontSize: 22,
-        marginTop: 10
+    row: {
+        backgroundColor: '#fff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        borderRadius: 15,
+        elevation: 5,
+    },
+    item: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    title: {
+        fontSize: 20,
+        color: '#333'
+    },
+    date: {
+        fontSize: 14,
+        color: '#333',
+        marginBottom: 4
     }
 });

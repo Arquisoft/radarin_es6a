@@ -25,7 +25,12 @@ function handleLocation(location) {
         .then((json) => {
             log('Coordenadas enviadas correctamente.');
             log('Hay ' + json.number + ' amigos cerca.');
-            addNotification(json.number, json.friends);
+            let msg = '';
+            if (json.number == 1)
+                msg = "Hay un amigo cerca"
+            else
+                msg = "Hay " + json.number + " amigos cerca"
+            addNotification(json.number, json.friends, msg);
         })
         .catch((error) => log('Error en el envio: ' + error));
 }
