@@ -29,7 +29,7 @@ function handleLocation(location) {
                 msg = "Hay un amigo cerca"
             else
                 msg = "Hay " + json.number + " amigos cerca"
-            data.addNotification(json.number, json.friends, msg);
+            data.user.notifications.addNotification(json.number, json.friends, msg);
         })
         .catch((error) => log('Error en el envio: ' + error));
 }

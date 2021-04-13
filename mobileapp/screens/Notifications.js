@@ -20,7 +20,7 @@ export var Notifications = ({ navigation }) => {
         <ScreenContainer>
             <View style={styles.container}>
                 <FlatList
-                    data={data.notifications}
+                    data={data.user.notifications.list}
                     renderItem={({ item }) => (
                         <View style={styles.row}>
                             <View style={styles.item}>
@@ -33,7 +33,7 @@ export var Notifications = ({ navigation }) => {
                                 <MaterialCommunityIcons
                                     name="close-thick" style={styles.x} color={'#999'} size={30}
                                     onPress={() => {
-                                        data.deleteNotification(item.id);
+                                        data.user.notifications.deleteNotification(item.id);
                                         forceUpdate();
                                     }} />
                             </View>
@@ -42,7 +42,7 @@ export var Notifications = ({ navigation }) => {
                     keyExtractor={item => item.id}
                     onRefresh={forceUpdate}
                     refreshing={false}
-                    extraData={data.notifications}
+                    extraData={data.user.notifications.list}
                 />
             </View>
         </ScreenContainer >

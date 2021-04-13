@@ -1,10 +1,10 @@
 import BackgroundTimer from 'react-native-background-timer';
 import { location } from './Location';
 import { log } from './Log';
+import { data } from './UserData';
 
 //Configuración por defecto
 const func = location;
-var sec = 5;
 //Datos de la tarea
 var running = false;
 
@@ -14,7 +14,8 @@ var running = false;
  */
 export function startBackgroundFunction() {
     BackgroundTimer.stopBackgroundTimer();
-    BackgroundTimer.runBackgroundTimer(func, sec * 1000);
+    func();
+    BackgroundTimer.runBackgroundTimer(func, data.settings.geolocationTimeInterval * 1000);
     running = true;
     log("Se ha iniciado la tarea en segundo plano.");
 }

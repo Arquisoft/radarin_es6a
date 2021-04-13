@@ -11,21 +11,21 @@ import { data } from './scripts/UserData';
  */
 export const Settings = ({ navigation }) => {
 
-    const [isEnabled, setIsEnabled] = useState(data.geo);
+    const [isEnabled, setIsEnabled] = useState(data.settings.geolocation);
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState);
         if (!isEnabled)
             startBackgroundFunction();
         else
             stopBackgroundFunction();
-        data.geo = !isEnabled;
-        data.updateGeo();
+        data.settings.geolocation = !isEnabled;
+        data.settings.updateGeolocation();
     };
-    const [isEnabled2, setIsEnabled2] = useState(data.not);
+    const [isEnabled2, setIsEnabled2] = useState(data.settings.notifications);
     const toggleSwitch2 = () => {
         setIsEnabled2(previousState => !previousState);
-        data.not = !isEnabled2;
-        data.updateNot();
+        data.settings.notifications = !isEnabled2;
+        data.settings.updateNotifications();
     };
 
     return (
