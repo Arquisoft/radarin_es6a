@@ -48,6 +48,7 @@
   "navBar": {
     "welcome": "Welcome",
     "map": "Mapa",
+    "chat": "Chat",
     "locations": "Locations",
     "formModel": "Form Model",
     "logOut": "Log out",

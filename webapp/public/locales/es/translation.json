@@ -48,6 +48,7 @@
   "navBar": {
     "welcome": "Bienvenida",
     "map": "Mapa",
+    "chat": "Chat",
     "locations": "Localizaciones",
     "formModel": "Form Model",
     "logOut": "Cerrar Sesión",
