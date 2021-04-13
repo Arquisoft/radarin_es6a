@@ -47,8 +47,12 @@
   },
   "navBar": {
     "welcome": "Bienvenida",
+<<<<<<< HEAD
     "map": "Mapa",
     "locations": "Localizaciones",
+=======
+    "myfriends": "Mis amigos",
+>>>>>>> 36a68aee23a3ddad111f2ac9b8e90694b47857b3
     "formModel": "Form Model",
     "logOut": "Cerrar Sesión",
     "profile": "Perfil",
