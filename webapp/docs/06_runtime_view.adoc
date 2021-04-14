@@ -1,12 +1,16 @@
 [[section-runtime-view]]
 == Vista en tiempo de ejecución
 
-=== Escenario 1: Solicitar información personal
+=== Escenario 1: Inicio de sesión válido
 
 
-* El usuario desea acceder a su lista de amigos.
-* Dado que el usuario desea acceder a la lista de sus amigos, la cual está almacenada en su pod; la app de Radarin lleva a cabo una petición por dicha información. 
-Seguidamente el pod responde a dicha petición con la lista de amigos del usuario y la app muestra dicha información al usuario.
+* El usuario desea iniciar sesión con su cuenta de Solid.
+* Una vez el usuario ha introducido sus credenciales y ha pulsado el boton de iniciar sesión, la aplicación móvil 
+realizará una petición al servidor en la que enviará las credenciales del usuario. 
+* El servidor recibirá la petición y usando las credenciales del usuario intentará iniciar sesión en el pod del usuario.
+* El servidor responderá a la petición con el resultado del inicio de sesión. En caso de que el inicio fuese válido, la aplicación móvil 
+realizará otra petición al servidor en la que solicitará la información personal del usuario. Dicha información será obtenida por el servidor 
+a través del pod el usuario.
 
 El diagrama de secuencia es el siguiente:
 
@@ -14,20 +18,37 @@ El diagrama de secuencia es el siguiente:
 ----
 actor Usuario as "Usuario"
 entity App as "RADARIN App"
+database Server as "Servidor RADARIN"
 database Pod as "Pod del Usuario"
-Usuario -> App: Consulta lista de amigos
-App -> Pod: Se solicita lista de amigos
-Pod --> App: Se devuelve la lista de amigos
-App --> Usuario: Se muestra la lista de amigos
+Usuario -> App: Introduce credenciales
+Usuario -> App: Intenta iniciar sesión
+App -> Server: Se envía petición para iniciar sesión
+Server -> Pod: Se envía petición para iniciar sesión
+Pod --> Server: Se devuelve el resultado del inicio de sesión
+Server --> App: Se devuelve el resultado del inicio de sesión
+App -> App: Se evalúa resultado del inicio de sesión
+App -> Server: Se envía petición para obtener información personal
+Server -> Pod: Se envía petición para obtener información personal
+Pod --> Server: Se devuelve el resultado de la consulta
+Server --> App: Se devuelve el resultado de la consulta
+App -> Usuario: Se muestra el inicio de sesión correcto
+App -> Usuario: Se visualiza la información personal
 ----
 
 === Escenario 2: Notificación amigo cerca
 
 
 * Proceso para que un usario sea notificado de que un amigo esta cerca suyo.
-* El usuario inicia la app móvil y esta comienza a mandar la ubicación del dispositivo al servidor web. Posteriormente este usuario comprueba su 
-lista de amigos y de forma paralela la app lleva a cabo una petición al servidor web para saber cuales de sus amigos están cerca de él. Tras la respuesta
-del servidor, si alguno de sus amigos está cerca de él, la app móvil notificará al usuario.
+* Para que un usuario pueda ser notificado de que un amigo suyo se encuentra cerca de su posición este primero debe activar la
+geolocalización en la pestaña de ajustes de la aplicación.
+* Una vez activada la geolocalización, la aplicación envia una petición al servidor donde inclute las coordenadas del usuario.
+* El servidor recibe dicha petición, almacena las coordenadas del usuario y comprueba que amigos de ese usuario se encuentran 
+cerca de su posición en base a las ultimas coordenadas de cada uno.
+* El servidor responde a la petición de la aplicación móvil con el numero de amigos cerca de su posición, y en caso de que este 
+número sea mayor de 0, tambiés se enviará una lista de que amigos son aquellos que se encuentran cerca.
+* Si el usario ha activado las notificaciones en los ajustes de la aplicación (por defecto esta opción ya se encuentra activada), 
+cuando se reciba la respuesta del servidor se lanzará una notificación, si la aplicación se encuentra en segundo plano. Además se 
+podrá visualizar dichos avisos desde la ventana de avisos de la aplicación.
 
 El diagrama de secuencia es el siguiente:
  
@@ -35,15 +56,18 @@ El diagrama de secuencia es el siguiente:
 ----
 actor Usuario
 entity App as "RADARIN App"
-database Pod as "Pod del Usuario"
 database Server as "Servidor RADARIN"
-Usuario -> App: Iniciar app
-App --> Server: Guardar ubicación actual del dispositivo
-Usuario -> App: Consulta lista de amigos
-App -> Pod: Se solicita lista de amigos
-Pod --> App: Se devuelve la lista de amigos
-App --> Usuario: Se muestra la lista de amigos
-App -> Server: Comprueba amigos cerca
-Server --> App: Respuesta con lista de amigos cerca
-App -> Usuario: Notificación amigo cerca
+Usuario -> App: Inicia la aplicación
+Usuario -> App: Activa la geolocalización
+App -> Server: Se envía petición para guardar coordenadas
+Server -> Server: Se almacena la localización
+Server -> Server: Se comprueba los amigos cercanos al usuario
+Server --> App: Se devuelve el resultado con el número de amigos cerca
+App -> App: Comprueba que el número de amigos cerca no es 0
+App -> App: Comprueba que la aplicación está en segundo plano
+App --> Usuario: Se lanza notificación
+Usuario -> App: Accede a la aplicación
+Usuario -> App: Accede a la vista de avisos
+App --> Usuario: Se visualiza la lista de avisos
+
 ----
