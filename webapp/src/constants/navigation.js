@@ -8,6 +8,18 @@ export const NavigationItems = [
     label: 'navBar.welcome',
     to: '/welcome'
   }
+  ,{
+    id: 'map',
+    icon: '/img/icon/apps.svg',
+    label: 'navBar.map',
+    to: '/map'
+  },
+  {
+    id: 'locations',
+    icon: '/img/icon/apps.svg',
+    label: 'navBar.locations',
+    to: '/locations'
+  }
 ];
 
 export const ProfileOptions = [
