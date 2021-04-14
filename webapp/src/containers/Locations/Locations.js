@@ -1,22 +1,11 @@
 import React from "react";
-import { Loader } from "@util-components";
-import { errorToaster, successToaster } from "@utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import locationsHelper from "./LocationsHelper";
-/*import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';*/
 import ReactTable from 'react-table-v6'
 import 'react-table-v6/react-table.css'
 
 import { Header,
 	 LocationsWrapper,
-	 TextArea,
 	 DivForms,
 	 LabelInput,
 	 TitleLocations,
@@ -62,10 +51,10 @@ class Locations extends React.Component {
 	handleSubmitDelete(e) {
 		e.preventDefault();
 		let id = e.target.value;
-		if (id == undefined) {
+		if (id === undefined) {
 			id = e.target.parentNode.value;
 		}
-		if (id!=undefined) {
+		if (id!==undefined) {
 		
 		
 			console.log("Quiero borrar " + id);
@@ -98,7 +87,7 @@ class Locations extends React.Component {
 
 		this._asyncRequest = locationsHelper.deleteLocations(id).then((data) => {
 			this._asyncRequest = null;
-			if (data.error && data.error!=undefined) {
+			if (data.error && data.error!==undefined) {
 				alert("ERROR:" + data.error);
 			} else {
 				console.log("Borrado correcto, respuesta=" , data);

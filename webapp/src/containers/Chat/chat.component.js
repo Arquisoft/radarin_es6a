@@ -1,6 +1,5 @@
 /* eslint-disable constructor-super */
 import React from 'react';
-import { documentExists } from '../../utils/ldflex-helper';
 import chatHelper from "./chatHelper";
 
 class Chat extends React.Component {
@@ -44,7 +43,7 @@ class Chat extends React.Component {
 
 			this._asyncRequest = chatHelper.sendMessages(email1,email2).then((message) => {
 				this._asyncRequest = null;
-				if (message.error && message.error!=undefined) {
+				if (message.error && message.error!==undefined) {
 					alert("ERROR:" + message.error);
 				} else {
 					console.log("Insertado correcto, respuesta=" , message);
