@@ -14,6 +14,7 @@ import {
 	 Button,
 	ChatForm,
   MessageChat
+
   
  } 
 from "./chat.style";
@@ -87,7 +88,7 @@ function Message(props) {
       let previous = messages[i - 1];
       let current = messages[i];
       let next = messages[i + 1];
-      let isMine = current.author ;//=== MY_USER_ID;
+      let isMine = current.author ==="apple";//=== MY_USER_ID;//OJO HAY QUE PONER EL WEB ID DEL USER
       let currentMoment = moment(current.timestamp);
       let prevBySameAuthor = false;
       let nextBySameAuthor = false;
@@ -147,19 +148,33 @@ function Message(props) {
 }
 
 class Chat extends React.Component {
-//const MY_USER_ID = webId;
 
   
-  
-getList() {
+getList(nombre) {
   return(
+   
   <div className="message-list">
-        <h1 className="toolbar-title"  > webid2</h1> 
-      <div className="message-list-container"><MessageChat><MessageList> </MessageList></MessageChat></div>
+       <TitleChat> <h1 className="toolbar-title"  > {nombre}</h1> </TitleChat>
+      <div className="message-list-container"><MessageList> </MessageList></div>
       </div>
+
+  
       );
 };
 
+getTyperBar(){
+
+  return(
+      <div className="escribe">
+        <input
+          type="text"
+          placeholder="Escribe un mensaje"
+        />
+       
+</div>
+      );
+
+}
 render() : React.ReactNode{
   return (
     <ChatWrapper data-testid="chat-component">
@@ -168,19 +183,23 @@ render() : React.ReactNode{
 					<ChatForm id="chatUser">
 						<DivForms>
 							<LabelInput>
-								<input type="text" id="chat" name="chat.user" ref={this.locations_date} />
+								<input type="text" placeholder="Escribe un usuario" id="chat" name="chat.user" />
 							</LabelInput>
 						</DivForms>
 						
 					</ChatForm>
 					<DivForms>
-						<Button id="send_message" form="chatUser" type="submit" onClick={(e) => this.handleSubmit(e)}>
+						<Button id="send_message" form="chatUser" type="submit" onClick={(e) => this.handleSubmit(e)} >Ir
 						</Button>
 					</DivForms>
 				</Header>
-        {this.getList()}
-        </ChatWrapper>
+        <MessageChat>
+        {this.getList("webID2")}
+        {this.getTyperBar()}
 
+        </MessageChat>
+        </ChatWrapper>
+ //PASAR AQUI EL WEB ID
 
       
   );

@@ -139,7 +139,7 @@ import styled from "styled-components";
   }
   `;
   
-  export const Input = styled.input`margin: 5px;`;
+ 
   
   export const Button = styled.button`
     max-width: 128px;
@@ -150,14 +150,10 @@ import styled from "styled-components";
     }
   `;
   
-  export const TextArea = styled.textarea`
-    resize: none;
-    @media only screen and (max-width: 900px) {
-      width: 100%;
-    }
-  `;
   
-  export const DivForms = styled.div`margin: 1em;@media only screen and (max-width: 900px) {
+  
+  export const DivForms = styled.div`
+  margin: 1em;@media only screen and (max-width: 900px) {
       align-text:center;		
       max-width: 100%;
       h5,
@@ -184,17 +180,18 @@ import styled from "styled-components";
     }
   `;
   
-  export const TitleChat = styled.h3`
+  export const TitleChat = styled.h1`
+    font-size: 10px;
+    font-weight: bold;
     text-align: center;
-    color: white;
+    text-transform: capitalize;
+    margin: 0;
+  }
   `;
   
-  export const UploaderFiles = styled.h3`
-    margin-top: 1em;
-    text-align: center;
-  `;
   
-  export const DivMin = styled.div``;
+  
+
   
   export const InputFile = styled.input``;
   
@@ -236,33 +233,6 @@ import styled from "styled-components";
       }`;
   
   
-  export const FormRenderContainer = styled.div`
-    border: 1px solid #dae0e6;
-    min-height: 40px;
-    padding: 5px;
-    background-image: url('img/pattern-geo.png'),
-    background-color: white;
-    background-repeat: repeat, no-repeat;
-    padding: 30px 20px;
-    .inrupt-form-group {
-      border: 1px solid #c0c0c0;
-      background-color: #f9f9f9;
-      margin: 15px 0;
-    }
-    .input-wrap {
-      margin: 0;
-    }
-    input {
-      margin-left: 0;
-    }
-    #mapa{
-      width: 570px;
-      height: 350px;
-      padding: 0px !IMPORTANT;
-    }
-    #shareRoute{
-      display: contents;
-    }
-  `;
+
   
     
