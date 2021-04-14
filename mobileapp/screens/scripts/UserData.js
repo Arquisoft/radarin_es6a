@@ -36,6 +36,7 @@ export var data = {
     },
     user: {
         id: '605f53998a7ec5322c089257',
+        logged: false,
         notifications: {
             list: [],
             addNotification: async (number, friends, msg) => {
