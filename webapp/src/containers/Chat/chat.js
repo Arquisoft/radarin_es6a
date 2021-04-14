@@ -1,26 +1,19 @@
 
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import InputBase from '@material-ui/core/InputBase';
-import Toolbar from '@material-ui/core/Toolbar';
+
 
 import i18n from "i18n";
 import {
-  ChatInputContainer,
-  ChatIconStyle,
-  ChatInputInput,
+  
   Header,
 	 ChatWrapper,
-	 TextArea,
 	 DivForms,
 	 LabelInput,
 	 TitleChat,
 	 Button,
 	ChatForm,
-	 ResultLocations ,
-	 FormRenderContainer
+  MessageChat
   
  } 
 from "./chat.style";
@@ -56,12 +49,8 @@ function Message(props) {
     </div>
   );
 }
- 
-class Chat extends React.Component {
-//const MY_USER_ID = webId;
 
-    
-  MessageList(props) {
+  function MessageList(props) {
   const [messages, setMessages] = useState([])
 
   useEffect(() => {
@@ -76,20 +65,20 @@ class Chat extends React.Component {
         {
             id: 1,
             author: 'apple',
-            message: 'Hello world! This is a long message that will hopefully get wrapped by our message bubble component! We will see how well it works.',
+            message: 'Esto es una pruebaaaa del chat para RADARIN 6A',
             timestamp: new Date().getTime()
           },
           {
             id: 2,
             author: 'orange',
-            message: 'It looks like it wraps exactly as it is supposed to. Lets see what a reply looks like!',
+            message: 'Holaaa!',
             timestamp: new Date().getTime()
           },
       ]
       setMessages([...messages, ...tempMessages])
   }
-  
-    const renderMessages = () => {
+
+  const renderMessages = () => {
     let i = 0;
     let messageCount = messages.length;
     let tempMessages = [];
@@ -98,7 +87,7 @@ class Chat extends React.Component {
       let previous = messages[i - 1];
       let current = messages[i];
       let next = messages[i + 1];
-      let isMine = current.author ;//=== MY_USER_ID
+      let isMine = current.author ;//=== MY_USER_ID;
       let currentMoment = moment(current.timestamp);
       let prevBySameAuthor = false;
       let nextBySameAuthor = false;
@@ -147,12 +136,26 @@ class Chat extends React.Component {
 
     return tempMessages;
   }
-  }
+
+  return(
+    <div className="message-list">
+    
+
+      <div className="message-list-container">{renderMessages()}</div>
+      </div>);
+
+}
+
+class Chat extends React.Component {
+//const MY_USER_ID = webId;
+
+  
+  
 getList() {
   return(
   <div className="message-list">
         <h1 className="toolbar-title"  > webid2</h1> 
-      <div className="message-list-container">{renderMessages()}</div>
+      <div className="message-list-container"><MessageChat><MessageList> </MessageList></MessageChat></div>
       </div>
       );
 };
