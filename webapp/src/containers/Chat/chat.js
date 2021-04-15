@@ -1,6 +1,6 @@
-
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
+import chatHelper from "./chatHelper";
 
 
 import i18n from "i18n";
@@ -18,6 +18,7 @@ import {
   
  } 
 from "./chat.style";
+
 function Message(props) {
   const {
     data,
@@ -147,20 +148,108 @@ function Message(props) {
 
 }
 
+type Props = {
+	webId: String
+};
+
 class Chat extends React.Component {
+
+  constructor({ webId }: Props) {
+		super();
+	
+		this.chat = React.createRef();
+    this.handleShow= this.handleShow.bind(this);
+
+    this.state = {
+			data: []
+		};
+  }
+
+
+
+
+async  handleShow(event) {
+
+
+
+  let email = this.webID.replace("https://", "");
+
+  email = email.replace(".solid.community/profile/card#me", "");
+
+  email = email.replace("/profile/card#me", "");
+
+
+
+  this._asyncRequest = chatHelper.getMessages(email, this.chat.current.value).then((data) => {
+
+    
+      this._asyncRequest = null;
+
+      this.setState({
+
+          data: data
+
+          
+
+      });
+
+      console.log("this.state.data=" , this.state.data);
+
+  
+
+          
+
+  });
+}
+
+    
+
+
+handleSubmit(event) {
+
+    
+
+    let email1 = this.webID.replace("https://", "");
+
+    email1 = email1.replace(".solid.community/profile/card#me", "");
+
+    email1 = email1.replace("/profile/card#me", "");
+
+
+
+    this._asyncRequest = chatHelper.sendMessages(email1,this.chat).then((message) => {
+
+        this._asyncRequest = null;
+
+        if (message.error && message.error!=undefined) {
+
+            alert("ERROR:" + message.error);
+
+        } else {
+
+            console.log("Insertado correcto, respuesta=" , message);
+
+        }
+
+    });
+  
+
+
+
+}
 
   
 getList(nombre) {
   return(
    
   <div className="message-list">
-       <TitleChat> <h1 className="toolbar-title"  > {nombre}</h1> </TitleChat>
+        <TitleChat> <h1 className="toolbar-title"  > {nombre}</h1> </TitleChat>
       <div className="message-list-container"><MessageList> </MessageList></div>
       </div>
 
   
       );
-};
+}
 
 getTyperBar(){
 
@@ -183,7 +272,7 @@ render() : React.ReactNode{
 					<ChatForm id="chatUser">
 						<DivForms>
 							<LabelInput>
-								<input type="text" placeholder="Escribe un usuario" id="chat" name="chat.user" />
+								<input type="text" placeholder="Escribe un usuario" id="chat" name="chat" ref={this.chat} />
 							</LabelInput>
 						</DivForms>
 						
@@ -194,7 +283,7 @@ render() : React.ReactNode{
 					</DivForms>
 				</Header>
         <MessageChat>
-        {this.getList("webID2")}
+        {this.getList("webid2")}
         {this.getTyperBar()}
 
         </MessageChat>
