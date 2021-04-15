@@ -74,8 +74,11 @@ checkBrowsers(paths.appPath, isInteractive)
     const protocol = process.env.HTTP === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
     const urls = prepareUrls(protocol, HOST, port);
+
+    console.log("paths.servedPath:" , paths.servedPath);
     // Create a webpack compiler that is configured with custom messages.
     const compiler = createCompiler(webpack, config, appName, urls, useYarn);
+    //const compiler = createCompiler({ "webpack": webpack, "config":config, "appName": appName, "urls":urls, "userYarn": useYarn });
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
     const proxyConfig = prepareProxy(proxySetting, paths.appPublic);

@@ -1,8 +1,10 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 webapp/node_modules
+webapp/package-lock.json
+package-lock.json
 /.pnp
 .pnp.js
 
@@ -20,6 +22,9 @@ restapi/node_modules
 restapi/data
 
 .eslintcache
+<<<<<<< HEAD
+>>>>>>> Stashed changes
+=======
 
 #mobile app
 mobileapp/node_modules/**/*
@@ -35,3 +40,4 @@ mobileapp/web-build/
 
 # mobile app macOS
 mobileapp/.DS_Store
+>>>>>>> 91db20d8854045cd0a2eba547eefeaecc9ea1d95

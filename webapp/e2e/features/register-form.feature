@@ -1,4 +1,4 @@
-Feature: Registering a new user
+Feature: Already registered user
 
 Scenario: The user is not registered in the site
   Given An unregistered user
