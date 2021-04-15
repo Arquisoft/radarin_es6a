@@ -1,26 +1,15 @@
 const express = require("express")
 const User = require("./models/users")
 const Location = require("./models/locations")
-<<<<<<< HEAD
 const Message = require("./models/messages")
 var config = require('./config');
 const { MIN_HOUR, MAX_HOUR } = require("./config");
-=======
-var config = require('./config');
-const { MIN_HOUR, MAX_HOUR } = require("./config");
-
->>>>>>> 6078aeb0e6309b0fc64e3eb94651f73556b02e4a
 const router = express.Router()
 
 // Get all users
 router.get("/users/list", async (req, res) => {
-<<<<<<< HEAD
     const users = await User.find({}).sort('-_id') //Inverse order
 	res.send(users)
-=======
-    const users = await User.find({}).sort('-_id') //En orden inverso
-    res.send(users)
->>>>>>> 6078aeb0e6309b0fc64e3eb94651f73556b02e4a
 })
 
 //register a new user
@@ -29,17 +18,9 @@ router.post("/users/add", async (req, res) => {
     let email = req.body.email;
     //Check if the device is already in the db
     let user = await User.findOne({ email: email })
-<<<<<<< HEAD
     if (user)
         res.send({error:"Error: This user is already registered"})
     else{
-=======
-    if (user) {
-        res.send({ error: "Error: El usuario ya está registrado" })
-    }
-
-    else {
->>>>>>> 6078aeb0e6309b0fc64e3eb94651f73556b02e4a
         user = new User({
             name: name,
             email: email,
