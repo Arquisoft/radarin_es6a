@@ -11,7 +11,7 @@ export const NavigationItems = [
   {
     id: 'friends',
     icon: '/img/icon/friends-icon.png',
-    label: 'Amigos',
+    label: 'navBar.friends',
     to: '/friends'
   }
 ];
