@@ -26,7 +26,7 @@ export const WelcomePageContent = props => {
     <WelcomeWrapper data-testid="welcome-wrapper">
       <WelcomeCard className="card">
         <WelcomeLogo data-testid="welcome-logo">
-          <img src="/img/logo.svg" alt="Inrupt" />
+          <img src="/img/logoRadarin.PNG" alt="Inrupt" />
         </WelcomeLogo>
         <WelcomeProfile data-testid="welcome-profile">
           <h3>
@@ -48,6 +48,7 @@ export const WelcomePageContent = props => {
                 },
                 onError: error => {
                   if (error && error.statusText) {
+                    
                     errorToaster(error.statusText, t('welcome.errorTitle'));
                   }
                 },
@@ -80,7 +81,7 @@ export const WelcomePageContent = props => {
             <h3>
               title
               <a
-                href="https://github.com/inrupt/solid-react-sdk"
+                href="https://github.com/Arquisoft/radarin_es6a"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -92,7 +93,7 @@ export const WelcomePageContent = props => {
             <p>
               text
               <a
-                href="https://github.com/inrupt/solid-react-sdk"
+                href="https://solidproject.org/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -101,6 +102,7 @@ export const WelcomePageContent = props => {
               text
             </p>
           </Trans>
+
           <Trans i18nKey="welcome.libraryList">
             <ul>
               <li>
@@ -132,7 +134,7 @@ export const WelcomePageContent = props => {
               </li>
             </ul>
           </Trans>
-
+          
           <Trans i18nKey="welcome.evolvingMessage">
             <p>
               The SDK is continually evolving. Take a look at the
@@ -147,36 +149,7 @@ export const WelcomePageContent = props => {
               planned.
             </p>
           </Trans>
-          <p>{t('welcome.version050')}</p>
-          <h3>{t('welcome.fairUsageTitle')}</h3>
-          <p>{t('welcome.fairUsageText')}</p>
-          <Trans i18nKey="welcome.fairUsageExamples">
-            <ul>
-              <li>
-                If your application is Solid compatible, you can use the Solid logo to indicate
-                that. If not, please don’t misrepresent yourself by using the Solid logo.
-              </li>
-              <li>
-                Please don't use the inrupt name as a part of your company name, website name,
-                domain name, service name, or app name. Don't use our logo as your own or modify it
-                to fit into your own logo.
-              </li>
-              <li>
-                If you’d like, you may use the inrupt logo to indicate that your application is
-                powered by inrupt’s SDK, but please make sure the context is clear to the user. Your
-                own logo should always be larger than inrupt’s logo, for example.
-              </li>
-            </ul>
-          </Trans>
-          <p>{t('welcome.fairUsageSummary')}</p>
-          <h3>{t('welcome.contactUsTitle')}</h3>
-          <Trans i18nKey="welcome.contactUsText">
-            <p>
-              If you have additional questions about the use of the React SDK for Solid, the
-              Application Generator, or inrupt’s brand, please contact
-              <a href="mailto:support@inrupt.com">support@inrupt.com</a>.
-            </p>
-          </Trans>
+          
         </WelcomeDetail>
       </WelcomeCard>
     </WelcomeWrapper>

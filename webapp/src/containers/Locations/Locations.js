@@ -1,20 +1,11 @@
 import React from "react";
-import { Loader } from "@util-components";
-import { errorToaster, successToaster } from "@utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import locationsHelper from "./LocationsHelper";
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import ReactTable from 'react-table-v6'
+import 'react-table-v6/react-table.css'
 
 import { Header,
 	 LocationsWrapper,
-	 TextArea,
 	 DivForms,
 	 LabelInput,
 	 TitleLocations,
@@ -57,10 +48,21 @@ class Locations extends React.Component {
 		this.handleShow(event);
 	}
 
-	handleSubmitDelete(event, id) {
-		event.preventDefault();
-		this.handleDelete(event, id);
-		this.handleShow(null);
+	handleSubmitDelete(e) {
+		e.preventDefault();
+		let id = e.target.value;
+		if (id === undefined) {
+			id = e.target.parentNode.value;
+		}
+		if (id!==undefined) {
+		
+		
+			console.log("Quiero borrar " + id);
+			this.handleDelete(e,  id);
+			this.handleShow(null);
+		} else {
+			console.log("¿Dónde has pinchado ?", e.target)
+		}
 	}
 
 	async handleShow(event) {
@@ -84,8 +86,9 @@ class Locations extends React.Component {
 	async handleDelete(event, id) {
 
 		this._asyncRequest = locationsHelper.deleteLocations(id).then((data) => {
-			this._asyncRequest = null;
-			if (data.error && data.error!=undefined) {
+			this._asyncRequest = null
+
+			if (data.error && data.error!==undefined) {
 				alert("ERROR:" + data.error);
 			} else {
 				console.log("Borrado correcto, respuesta=" , data);
@@ -97,7 +100,6 @@ class Locations extends React.Component {
 
 		
 	render(): React.ReactNode {
-		
 		return (
 			<LocationsWrapper data-testid="locations-component">
 				<Header data-testid="locations-header">
@@ -128,45 +130,50 @@ class Locations extends React.Component {
 
 	getList() {
 		if (this.state.data !== null && this.state.data.length > 0) {
-				return (
+			let headerLongitud = i18n.t("locations.longitud");
+			let headerLatitud = i18n.t("locations.latitud");
+			let headerFecha = i18n.t("locations.fecha");
+			let headerVacia = "";
+			let rows = [];
+			this.state.data.forEach(m => {
+				rows.push(
+					{
+						longitud: m.longitud,
+						latitud: m.latitud,
+						fecha: m.fecha,
+						eliminar: m._id  
+					}
+					);
+			});
+			
+
+			let columns = [
+				{
+				Header:  headerLongitud ,
+				accessor: 'longitud'
+			  	},
+				{
+				Header:  headerLatitud ,
+				accessor: 'latitud'
+				},
+				{
+				Header:  headerFecha ,
+				accessor: 'fecha'
+				},
+				{
+				Header:  headerVacia ,
+				accessor: 'eliminar',
+				Cell: props => <Button id='delete_location' value={props.value} type='submit' onClick={(e) => this.handleSubmitDelete(e)}  ><FontAwesomeIcon icon='backspace' className='backspace' /></Button> 
+				}
+			];
+			return (
 				<ResultLocations>
-					<TableContainer component={Paper}>
-						<Table aria-label="simple table">
-							<TableHead>
-							<TableRow>
-								<TableCell align="center">{i18n.t("locations.longitud")}</TableCell>
-								<TableCell align="center">{i18n.t("locations.latitud")}</TableCell>
-								<TableCell align="center">{i18n.t("locations.fecha")}</TableCell>
-							</TableRow>
-							</TableHead>
-							<TableBody>
-									{this.state.data.length && this.state.data.map(m => {
-										if(this.state.data.length > 0) {
-											return (
-												<TableRow>
-													<TableCell align="center">{m.longitud}</TableCell>
-													<TableCell align="center">{m.latitud}</TableCell>
-													<TableCell align="center">{m.fecha}</TableCell>
-													<TableCell>
-														<Button id="delete_location" type="submit" onClick={(e) => this.handleSubmitDelete(e, m._id)}>
-														<FontAwesomeIcon icon="backspace" className="backspace" title=""/>
-														</Button>
-													</TableCell>
-												</TableRow>
-												
-													)} else{
-														return (<TableRow>
-															<TableCell align="center">{m.longitud}</TableCell>
-															
-														</TableRow>);
-													}
-												}
-											)
-										}
-									
-							</TableBody>
-						</Table>
-					</TableContainer>
+					<ReactTable
+						data={rows}
+						columns={columns}
+					/>
+					
+
 				</ResultLocations>
 			);
 		} else {

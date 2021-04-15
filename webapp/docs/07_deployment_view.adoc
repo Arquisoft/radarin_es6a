@@ -1,7 +1,7 @@
 [[section-deployment-view]]
 
 
-== Deployment View
+== Vista de implementación
 En esta sección, se describe la arquitectura de Radarin, incluyendo la infraestructura de hardware y software para ejecutarla, así como el entorno de ejecución y el middleware que los comunica.
 
 image:diagramaInfraestructura.png[diagrama Infraestructura] 

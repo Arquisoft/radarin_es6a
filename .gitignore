@@ -22,3 +22,22 @@ restapi/node_modules
 restapi/data
 
 .eslintcache
+<<<<<<< HEAD
+>>>>>>> Stashed changes
+=======
+
+#mobile app
+mobileapp/node_modules/**/*
+mobileapp/.expo/*
+mobileapp/npm-debug.*
+mobileapp/*.jks
+mobileapp/*.p8
+mobileapp/*.p12
+mobileapp/*.key
+mobileapp/*.mobileprovision
+mobileapp/*.orig.*
+mobileapp/web-build/
+
+# mobile app macOS
+mobileapp/.DS_Store
+>>>>>>> 91db20d8854045cd0a2eba547eefeaecc9ea1d95

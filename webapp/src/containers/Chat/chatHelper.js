@@ -18,4 +18,8 @@ class ChatHelper {
 }
 const chatHelper = new ChatHelper();
 
+<<<<<<< HEAD
 export default ChatHelper;
+=======
+export default chatHelper;
+>>>>>>> origin/develop
