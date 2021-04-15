@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { PrivateLayout, PublicLayout, NotLoggedInLayout } from '@layouts';
 import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 
-import { Login, Register, PageNotFound, Welcome, RegistrationSuccess, GoogleMap, Locations, Chat} from './containers';
+import { Login, Register, PageNotFound, Welcome, RegistrationSuccess, GoogleMap, Locations} from './containers';
 
 
 const privateRoutes = [
@@ -11,12 +11,6 @@ const privateRoutes = [
     path: '/welcome',
     component: Welcome
   },
-  {
-    id: 'chat',
-    path: '/chat',
-    component:  Chat
-  }
-  ,
   {
     id: 'locations',
     path: '/locations',
