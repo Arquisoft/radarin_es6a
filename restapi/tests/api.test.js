@@ -48,7 +48,11 @@ describe('user ', () => {
      it('can not be created correctly', async () => {
         username = 'Pablo'
         email = 'pablo@uniovi.es'
+<<<<<<< HEAD
         err = "Error: This user is already registered"
+=======
+        err = "Error: El usuario ya está registrado"
+>>>>>>> 6078aeb0e6309b0fc64e3eb94651f73556b02e4a
         const response = await request(app).post('/api/users/add').send({name: username,email: email}).set('Accept', 'application/json')
         expect(response.statusCode).toBe(200);
         expect(response.body.error).toBe(err);

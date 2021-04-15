@@ -48,6 +48,7 @@
   "navBar": {
     "welcome": "Welcome",
     "map": "Map",
+    "myfriends": "My Friends",
     "locations": "Locations",
     "logOut": "Log out",
     "profile": "Profile",

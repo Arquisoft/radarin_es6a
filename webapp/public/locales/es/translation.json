@@ -49,7 +49,6 @@
     "welcome": "Bienvenida",
     "map": "Mapa",
     "locations": "Localizaciones",
-    "myfriends": "Mis amigos",
     "friends": "Amigos",
     "formModel": "Form Model",
     "logOut": "Cerrar Sesión",
@@ -115,6 +114,7 @@
     "fecha": "Fecha",
     "noLocations": "No hay localizaciones disponibles. Por favor inicie una búsqueda."
   },
+
   "profile": {
     "successCallback": "Pod actualizado satisfactoriamente",
     "successTitle": "Éxito",

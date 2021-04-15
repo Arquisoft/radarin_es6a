@@ -29,7 +29,7 @@ module.exports.startserver = async () => {
     app.use(express.json())
     app.use("/api", api)
 
-    server = await app.listen(5000)
+    server = await app.listen(5000);
     console.log("Server has started!")
     return app
 }
@@ -37,7 +37,7 @@ module.exports.startserver = async () => {
 module.exports.closeServer = async () => {
     await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
-    await server.close()
+    await server.close();
 }
 
 module.exports.closeDB = async () => {

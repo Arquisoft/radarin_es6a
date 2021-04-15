@@ -86,7 +86,8 @@ class Locations extends React.Component {
 	async handleDelete(event, id) {
 
 		this._asyncRequest = locationsHelper.deleteLocations(id).then((data) => {
-			this._asyncRequest = null;
+			this._asyncRequest = null
+
 			if (data.error && data.error!==undefined) {
 				alert("ERROR:" + data.error);
 			} else {
@@ -134,7 +135,6 @@ class Locations extends React.Component {
 			let headerFecha = i18n.t("locations.fecha");
 			let headerVacia = "";
 			let rows = [];
-			//"<Button id='delete_location' type='submit' onClick={(e) => this.handleSubmitDelete(e, m._id)}><FontAwesomeIcon icon='backspace' className='backspace' /></Button>";
 			this.state.data.forEach(m => {
 				rows.push(
 					{
@@ -173,6 +173,7 @@ class Locations extends React.Component {
 						columns={columns}
 					/>
 					
+
 				</ResultLocations>
 			);
 		} else {

@@ -1,7 +1,7 @@
 /**
  * Object mapping of known possible inboxes for the user
  */
-export const NavigationItems = [
+ export const NavigationItems = [
   {
     id: 'welcome',
     icon: '/img/icon/apps.svg',
