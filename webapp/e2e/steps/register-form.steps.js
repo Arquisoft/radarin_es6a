@@ -31,6 +31,8 @@ defineFeature(feature, test => {
     });
   });*/
 
+  //User already registered
+
   test('The user is already registered in the site', ({ given, when, then }) => {
     
     given('An already registered user', () => {
