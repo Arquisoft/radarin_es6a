@@ -1,14 +1,8 @@
 {
-<<<<<<< HEAD
 	"dependencies": {
 		"mongodb": "^2.2.33"
 	},
 	"devDependencies": {
 		"fork-ts-checker-webpack-plugin": "^6.1.1"
 	}
-=======
-  "dependencies": {
-    "mongodb": "^2.2.36"
-  }
->>>>>>> feature/rama_hugo
 }
