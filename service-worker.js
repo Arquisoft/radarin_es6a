@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/radarin_es6a/precache-manifest.19d2da2050c0b19f3d6c6aa560dfe707.js"
+  "/radarin_es6a/precache-manifest.57d5aec4b1aa9aa1d9f4fe22e3ef325b.js"
 );
 
 workbox.clientsClaim();
