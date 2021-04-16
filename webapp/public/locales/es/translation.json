@@ -48,6 +48,7 @@
   "navBar": {
     "welcome": "Bienvenida",
     "map": "Mapa",
+    "chat": "Chat",
     "locations": "Localizaciones",
     "friends": "Amigos",
     "formModel": "Form Model",

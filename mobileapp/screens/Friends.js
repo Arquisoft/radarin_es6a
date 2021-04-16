@@ -2,6 +2,11 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
 
+/**
+ * Metodo que devuelve la vista de amigos del menu de navegación
+ * @param {*} navigation 
+ * @returns Vista de la lista de amigos del usuario
+ */
 export const Friends = ({ navigation }) => {
     return (
         <ScreenContainer>
