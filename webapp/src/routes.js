@@ -2,11 +2,8 @@ import React, { Fragment } from 'react';
 import { PrivateLayout, PublicLayout, NotLoggedInLayout } from '@layouts';
 import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 
-<<<<<<< HEAD
-import { Login, Register, PageNotFound, Welcome, RegistrationSuccess, GoogleMap, Locations,Chat} from './containers';
-=======
-import { Login, Register, PageNotFound, Welcome, RegistrationSuccess, GoogleMap, Locations, friends} from './containers';
->>>>>>> origin/develop
+import { Login, Register, PageNotFound, Welcome, RegistrationSuccess, GoogleMap, Locations,Chat, friends} from './containers';
+
 
 const privateRoutes = [
   {

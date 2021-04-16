@@ -40,9 +40,4 @@ export const ProfileOptions = [
     onClick: 'logOut',
     icon: 'lock'
   }
-<<<<<<< HEAD
-  
 ];
-=======
-];
->>>>>>> origin/develop

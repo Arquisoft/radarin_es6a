@@ -221,7 +221,7 @@ handleSubmit(event) {
 
         this._asyncRequest = null;
 
-        if (message.error && message.error!=undefined) {
+        if (message.error && message.error!==undefined) {
 
             alert("ERROR:" + message.error);
 

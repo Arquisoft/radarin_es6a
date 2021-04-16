@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import Chat from "./chat";
-export default Chat;
-=======
-import ChatComponent from './chat.component';
+import ChatComponent from './chat';
 
 export default ChatComponent;
->>>>>>> origin/develop
