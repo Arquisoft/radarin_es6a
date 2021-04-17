@@ -347,11 +347,13 @@ router.get("/users/friends/list/:email1", async (req, res) => {
 })
 
 //Enviar mensaje
-router.post("/chat/:email1/:email2", async (req, res) => {
+router.post("/chat/:email1/:email2/:mensaje", async (req, res) => {
    
     let email1 = req.params.email1;
     let email2 = req.params.email2;
-    let message = req.body.msn;
+    let message = req.params.mensaje;
+
+    console.log(message);
 
     var m = new Message({
         emisor: email1,

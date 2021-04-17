@@ -1,32 +1,27 @@
 /* eslint-disable constructor-super */
 import React from 'react';
-
 import chatHelper from "./chatHelper";
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import md5 from 'md5';
+import ReverseMd5 from 'reverse-md5';
+
 import { 
 	Button
    } 
-from "./locations.style";
+from "./chat.style";
 
 type Props = {
 	webId: String
 };
 
 class Chat extends React.Component {
-
+	
 	constructor({ webId }: Props) {
 			super();
 			this.webID = webId;
 			this.handleShow= this.handleShow.bind(this);
-			this.handleChange = this.handleChange.bind(this);
 			this.handleSubmit = this.handleSubmit.bind(this);
-			this.locations_date = React.createRef();
+			this.message = React.createRef();
+			this.user = React.createRef();
 			
 			this.state = {
 				data: [],
@@ -41,7 +36,7 @@ class Chat extends React.Component {
 			email = email.replace(".solid.community/profile/card#me", "");
 			email = email.replace("/profile/card#me", "");
 
-			this._asyncRequest = chatHelper.getMessages(email, "Pepe").then((data) => {
+			this._asyncRequest = chatHelper.getMessages(email,this.user.current.value).then((data) => {
 				this._asyncRequest = null;
 				this.setState({
 					data: data,
@@ -58,9 +53,12 @@ class Chat extends React.Component {
 			let email = this.webID.replace("https://", "");
 			email = email.replace(".solid.community/profile/card#me", "");
 			email = email.replace("/profile/card#me", "");
-		
 
-			this._asyncRequest = chatHelper.sendMessages(email,"Pepe").then((message) => {
+		//	let message_md5 = md5(this.message)
+		
+		//	console.log(message_md5);
+
+			this._asyncRequest = chatHelper.sendMessages(email,this.user.current.value,this.message.current.value).then((message) => {
 				this._asyncRequest = null;
 				if (message.error && message.error!=undefined) {
 					alert("ERROR:" + message.error);
@@ -69,7 +67,7 @@ class Chat extends React.Component {
 				}
 			});
 
-			this.handleShow(event);
+			
 
 
 		}
@@ -80,7 +78,12 @@ class Chat extends React.Component {
 			
 			  <label>
 				Mensaje:
-				<input type="text" name="msn" />
+				<input type="text" id="msn" ref={this.message}/>
+			  </label>
+
+			  <label>
+				Enviar a:
+				<input type="text" id="user" ref={this.user}/>
 			  </label>
 			  
 		
@@ -88,29 +91,28 @@ class Chat extends React.Component {
             <Button  type="submit" onClick={(e) => this.handleSubmit(e)}>
 							Enviar mensaje
 						</Button>
-
-			<TableContainer component={Paper}>
-						<Table aria-label="simple table">
 						
-							<TableBody>
+
+						<Button  type="submit" onClick={(e) => this.handleShow(e)}>
+							Mostrar mensajes
+						</Button>
+							
 									{this.state.data.length && this.state.data.map(m => {
 										
 											return (
-												<TableRow>
-													<TableCell align="center">{m.emisor}</TableCell>
-													<TableCell align="center">{m.receptor}</TableCell>
-													<TableCell align="center">{m.mensaje}</TableCell>
+												<div>
+													<div align="center">{m.emisor} </div>
+													<div align="center">{m.receptor}</div>
+													<div align="center">{m.mensaje}</div>
 												
-												</TableRow>
+												</div>
 												
 													)
 												}
 											)
 										}
 									
-							</TableBody>
-						</Table>
-					</TableContainer>
+		
 			
 			</div>
 		  );
