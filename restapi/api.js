@@ -346,37 +346,23 @@ router.get("/users/friends/list/:email1", async (req, res) => {
     res.send(friends);
 })
 
-//Obtener los mensajes de un chat
-router.get("chat/:email1/:email2",async (req, res) => {
-
+//Enviar mensaje
+router.post("/chat/:email1/:email2", async (req, res) => {
+   
     let email1 = req.params.email1;
     let email2 = req.params.email2;
+    let message = req.body.msn;
 
-    let emisor = await User.findOne({ email: email1 })
-    if (!emisor) {
-        res.send({ error: "Error: El emisor no existe" })
-    }
+    var m = new Message({
+        emisor: email1,
+        receptor: email2,
+        mensaje: message
+    })
+    await m.save()
+    res.send(m)
 
-    let receptor = await User.findOne({ email: email2 })
-    if (!receptor) {
-        res.send({ error: "Error: El receptor no existe" })
-    }
-
-    let criterio = { 'emisor':  emisor , 'receptor':receptor }
-
-    messages = await Message.find(criterio);
-
-
-      res.send(messages);
-
+    
 })
-
-
-}
-)
-
-
-
 
 
 
