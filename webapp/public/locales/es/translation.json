@@ -47,8 +47,10 @@
   },
   "navBar": {
     "welcome": "Bienvenida",
-    "myfriends": "Mis amigos",
+    "map": "Mapa",
+    "chat": "Chat",
     "locations": "Localizaciones",
+    "friends": "Amigos",
     "formModel": "Form Model",
     "logOut": "Cerrar Sesión",
     "profile": "Perfil",
@@ -79,16 +81,16 @@
   "welcome": {
     "welcome": "Bienvenido",
     "doneMessage": "¿Terminaste?",
-    "title": "<0>Esta aplicacion fue generada con <1>Solid React SDK by inrupt.</1></0>",
-    "description": "<0>El <1>Solid React SDK by inrupt</1>  es una combinación de librerias, componentes, documentación, buenas prácticas y un generador de aplicaciones diseñada para acelerar el desarrollo de aplicaciones Solid de alta calidad:</0>",
-    "libraryList": "<0><0><0> Componentes reutilizables </0>que puedes utilizar en tus propias aplicaciones.</0><1><0>Generador de aplicaciones</0>, incorpora todos los componentes y las buenas practicas en una misma aplicacion para el desarrollador. Nota: La aplicaciones Solid React, muestra el uso de los componentes instalados por el generador. No debe ser considerado como un servicio que Inrupt provee, y está sujeto a cambios.</0><0>Patrones de buenas prácticas que puedes referenciar como ejemplos para lograr resolver diferentes situaciones.</1></0>",
+    "title": "<0>Bienvenido a <1>Radarin_ES6A</1></0>",
+    "description": "<0>Radarin es una aplicación creada por alumnos del grupo de español 6A de la asignatura Arquitectura del Software. El propósito de Radarin es facilitar encuentros entre amigos, además esta aplicación es compatible con el <1>proyecto SOLID</1> y no almacena información personal sobre los usuarios de forma centralizada sino que pide permiso para obtener dicha información al pod del usuario correspondiente. Como usuario podrás utilizar la aplicación para:</0>",
+    "libraryList": "<0><0>Añadir y borrar amigos.</0><0>La aplicación te notificará cuando un amigo esté cerca tuya y podrás ver su posición en el mapa.</0><0>Chatear con tus amigos.</0>",
     "fairUsageTitle": "Condiciones de uso",
     "fairUsageText": "Los logos de Solid y Inrupt incluidos en este SDK son exclusivamente para ejemplo. Esperamos que los desarrolladores que utilicen nuestro SDK para propósitos comerciales los actualicen con sus propios logos.",
     "fairUsageExamples": "<0><0>Si su aplicación es combatible con Solid, usted puede utilizarlo para indicarlo, de lo contrario no usarlo.</0><1>No utilice el nombre de Inrupt como parte del nombre de su empresa, sitio web, dominio,  servicio o nombre de la aplicación. No modifique o utilice nuestros logos como suyos.</1><2>Si lo desea, puede usar el logotipo de Inrupt para indicar que su aplicación funciona con el SDK de Inrupt, pero asegúrese de que el contexto sea claro para el usuario. Por ejemplo su propio logotipo siempre debe ser más grande que el logotipo de Inrupt.</2></0>",
     "fairUsageSummary": "En general, aplique sentido común y honestidad a su uso de los logotipos de Solid o Inrupt. No utilice para implicar una asociación o respaldo oficial donde no exista.",
     "contactUsTitle": "Contáctenos",
     "contactUsText": "<0>\nSi tiene preguntas adicionales sobre el uso de nuestro Solid React SDK by inrupt, el Generador de aplicaciones o la marca de Inrupt, contáctese con <1>support@inrupt.com<1>.</0>",
-    "evolvingMessage": "<0>El SDK se encuentra en constante evolución. Revisa el <1>Calendario de Desarrollo</1>  para lo que está planeado.</0>",
+      "evolvingMessage": "<0>¡Esperemos que disfrutes de nuestra aplicación y te puedas ver con todos tus amigos!. Y recuerda, con nosotros, tus datos personales van a estar siempre seguros :)</0>",
     "implementing": "Esta última version se basa en las anteriores, incluye:",
     "version010": "<0><0>Mejores prácticas para la <0>Internacionalización</0>, con selector de lenguaje para la sesión.</0><1>Habilidad para actualizar la imagen de perfil en la página de bienvenida.</1> </0>",
     "version030": "<0><0>La habilidad de ver y editar el <1>Perfil del usuario</1></0><1>Inclusión de un pie de página con el número de versión y enlances a los recursos.</1><2>Se corrigieron varios errores pequeños de acuerdo a la retroalimentación de los usuarios.</2></0>",
@@ -112,7 +114,8 @@
     "latitud": "Latitud",
     "fecha": "Fecha",
     "noLocations": "No hay localizaciones disponibles. Por favor inicie una búsqueda."
-	},
+  },
+
   "profile": {
     "successCallback": "Pod actualizado satisfactoriamente",
     "successTitle": "Éxito",
@@ -255,5 +258,18 @@
     "load": "Cargar",
     "save": "Guardar",
     "grantAccess": "Dar Acceso"
+  },
+  "friends":{
+    "title": "AMIGOS",
+    "addTitle": "Introduzca el WebId del amigo que desea añadir",
+    "add": "Añadir",
+    "deleteTitle": "Seleccione el amigo que desea eliminar",
+    "delete": "Eliminar",
+    "deleteErrorTitle": "Error al eliminar amigo",
+    "deleteErrorMessage": "No has seleccionado un amigo para eliminar",
+    "addErrorTitle": "Error al añadir amigo",
+    "addErrorMessage": "El WebId introducido no es válido",
+    "checkErrorMessage": "El amigo a añadir ya pertenece a la lista de amigos",
+    "permissionsErrorMessage": "No hay permisos para realizar la operación"
   }
 }

@@ -2,6 +2,11 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
 
+/**
+ * Metodo que devuelve la vista inicial del menu de navegación
+ * @param {*} navigation 
+ * @returns Vista inicial
+ */
 export const Home = ({ navigation }) => {
     return (
         <ScreenContainer>

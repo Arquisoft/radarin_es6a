@@ -13,7 +13,7 @@ class LocationsHelper {
 		  };
 		const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 		console.log(apiEndPoint + " " + id)
-		let response = await fetch(apiEndPoint+'/locations/delete' + "/" + id, requestOptions)
+		let response = await fetch(apiEndPoint+'/locations/delete/' + id, requestOptions)
 		return await response.json()
 	}
 }

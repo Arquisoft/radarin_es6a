@@ -2,20 +2,31 @@ import React, { useState } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
 import { startBackgroundFunction, stopBackgroundFunction } from './scripts/Background';
+import { data } from './scripts/UserData';
 
-
+/**
+ * Metodo que devuelve la vista de ajustes del menu de navegación
+ * @param {*} navigation 
+ * @returns Vista de ajustes
+ */
 export const Settings = ({ navigation }) => {
 
-    const [isEnabled, setIsEnabled] = useState(false);
+    const [isEnabled, setIsEnabled] = useState(data.settings.geolocation);
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState);
         if (!isEnabled)
             startBackgroundFunction();
         else
             stopBackgroundFunction();
+        data.settings.geolocation = !isEnabled;
+        data.settings.updateGeolocation();
     };
-    const [isEnabled2, setIsEnabled2] = useState(false);
-    const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
+    const [isEnabled2, setIsEnabled2] = useState(data.settings.notifications);
+    const toggleSwitch2 = () => {
+        setIsEnabled2(previousState => !previousState);
+        data.settings.notifications = !isEnabled2;
+        data.settings.updateNotifications();
+    };
 
     return (
         <ScreenContainer>

@@ -11,8 +11,10 @@ La aplicación Radarin estará basada en el framework React y en el proyecto de 
 | Asciidoctor | Realizar de la documentacion del proyecto de una forma sencilla  |
 Solid POD | Aumenta la seguridad del usuario haciendo que la informacion se almacene en un POD de forma descentralizada.Permitiendo así que el usuario decida quién accede a sus datos, o con quién los comparte |
  Node.js |Framework de javascript para el desarollo del back end de nuestra aplicación
-|Mongo DB |  |
-React.js|Framework basado en javascript para el desarollo del front end de nuestra aplicacón|
+|Mongo DB | Base de datos NoSQL donde guardaremos la minima información posible
+| React.js | Librería basada en javascript para el desarollo del front end
+|Express |Framework de desarollo de aplicaciones para node|
+Heroku| Plataforma para el depsliegue de la aplicación
 
 |===
 .Alcanzando los atributos de calidad
@@ -20,6 +22,6 @@ Teniendo en cuenta los atributos de calidad de este proyecto:
 
 * Seguridad: Mediante el uso del POD de usuario basado en el proyecto Solid proporcionamos al usuario el control en todo momento de su información de forma descentrlaizada
 
-*Privacidad: El usuario decidira en todo momento si desea compartir su ubicación para ser notificado, en el caso de que un amigo cercano se encuentre cerca
+* Privacidad: El usuario decidira en todo momento si desea compartir su ubicación para ser notificado, en el caso de que un amigo cercano se encuentre cerca
 
-*Usabilidad Mediante el uso de React.js además de algunas librerias obtendremos una aplicación sencilla para usuarios no técnicos
+* Usabilidad Mediante el uso de React.js además de algunas librerias obtendremos una aplicación sencilla para usuarios no técnicos
