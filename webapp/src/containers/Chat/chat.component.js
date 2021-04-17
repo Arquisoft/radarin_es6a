@@ -1,11 +1,17 @@
 /* eslint-disable constructor-super */
 import React from 'react';
 import chatHelper from "./chatHelper";
-import md5 from 'md5';
-import ReverseMd5 from 'reverse-md5';
-
+import i18n from "i18n";
 import { 
-	Button
+	Header,
+	 ChatWrapper,
+	 DivForms,
+	 LabelInput,
+	 TitleChat,
+	 Button,
+	ChatForm,
+  MessageChat
+
    } 
 from "./chat.style";
 
@@ -57,6 +63,8 @@ class Chat extends React.Component {
 		//	let message_md5 = md5(this.message)
 		
 		//	console.log(message_md5);
+		  
+		
 
 			this._asyncRequest = chatHelper.sendMessages(email,this.user.current.value,this.message.current.value).then((message) => {
 				this._asyncRequest = null;
@@ -67,7 +75,8 @@ class Chat extends React.Component {
 				}
 			});
 
-			
+			this.message = " ";
+			this.handleShow(event);
 
 
 		}
@@ -76,14 +85,44 @@ class Chat extends React.Component {
 		  return (
 			  <div>
 			
-			  <label>
+			
+			  <ChatWrapper data-testid="chat-component">
+                  <Header data-testid="chat-header">
+                      <TitleChat>{i18n.t("chat.webid2")}</TitleChat>
+                      <DivForms id="chatUser">
+                          <DivForms>
+                              <LabelInput>
+                                  <input type="text" placeholder="Escribe un usuario" id="chat" name="chat" ref={this.user} />
+                              </LabelInput>
+                          </DivForms>
+                          
+                      </DivForms>
+                      <DivForms>
+                          <Button id="send_message" form="chatUser" type="submit" onClick={(e) => this.handleShow(e)} >Ir
+                          </Button>
+                      </DivForms>
+                  </Header>
+          <div>
+		  {this.state.data.length && this.state.data.map(m => {
+										
+										return (
+										
+												
+												<MessageChat >{m.mensaje}</MessageChat>
+											
+									
+											
+												)
+											}
+										)}
+          
+  
+          </div>
+          </ChatWrapper>
+
+		  <label>
 				Mensaje:
 				<input type="text" id="msn" ref={this.message}/>
-			  </label>
-
-			  <label>
-				Enviar a:
-				<input type="text" id="user" ref={this.user}/>
 			  </label>
 			  
 		
@@ -92,27 +131,6 @@ class Chat extends React.Component {
 							Enviar mensaje
 						</Button>
 						
-
-						<Button  type="submit" onClick={(e) => this.handleShow(e)}>
-							Mostrar mensajes
-						</Button>
-							
-									{this.state.data.length && this.state.data.map(m => {
-										
-											return (
-												<div>
-													<div align="center">{m.emisor} </div>
-													<div align="center">{m.receptor}</div>
-													<div align="center">{m.mensaje}</div>
-												
-												</div>
-												
-													)
-												}
-											)
-										}
-									
-		
 			
 			</div>
 		  );
