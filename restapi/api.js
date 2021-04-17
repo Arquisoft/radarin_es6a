@@ -364,6 +364,21 @@ router.post("/chat/:email1/:email2", async (req, res) => {
     
 })
 
+//Obtener los mensajes de un chat
+router.get("/chat/:email1/:email2",async (req, res) => {
+
+    let email1 = req.params.email1;
+    let email2 = req.params.email2;
+
+
+    let criterio = { 'emisor':  email1 , 'receptor':email2 }
+
+    messages = await Message.find(criterio);
+
+    res.send(messages);
+
+})
+
 
 
 module.exports = router
