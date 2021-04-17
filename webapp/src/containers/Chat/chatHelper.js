@@ -8,7 +8,7 @@ class ChatHelper {
 
     async sendMessages(email1,email2) {
 		const requestOptions = {
-			method: 'INSERT'
+			method: 'POST'
 		  };
 		const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 		console.log(apiEndPoint )
