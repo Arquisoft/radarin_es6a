@@ -1,8 +1,8 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import locationsHelper from "./LocationsHelper";
-import ReactTable from 'react-table-v6'
-import 'react-table-v6/react-table.css'
+import ReactTable from 'react-table-v6';
+import 'react-table-v6/react-table.css';
 
 import { Header,
 	 LocationsWrapper,
