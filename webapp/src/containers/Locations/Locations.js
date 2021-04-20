@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import locationsHelper from "./LocationsHelper";
 import ReactTable from 'react-table-v6';
 import 'react-table-v6/react-table.css';
-
 import { Header,
 	 LocationsWrapper,
 	 DivForms,
@@ -15,7 +14,6 @@ import { Header,
 	 FormRenderContainer
 	} 
 from "./locations.style";
-
 import i18n from "i18n";
 
 
