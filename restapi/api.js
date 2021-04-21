@@ -1,16 +1,65 @@
-const express = require("express")
-const User = require("./models/users")
-const Location = require("./models/locations")
-const Message = require("./models/messages")
+const express = require("express");
+const User = require("./models/users");
+const Location = require("./models/locations");
+const Message = require("./models/messages");
 var config = require('./config');
 const { MIN_HOUR, MAX_HOUR } = require("./config");
-const router = express.Router()
+const router = express.Router();
+const SolidNodeClient = require("solid-node-client").SolidNodeClient;
+const client = new SolidNodeClient();
+const auth = require('solid-auth-cli');
+const $rdf = require("rdflib");
+const FOAF = $rdf.Namespace("http://xmlns.com/foaf/0.1/");
+const VCARD = $rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
+
+router.post("/user/login", async (req, res) => {
+    let idp = req.body.idp;
+    let user = req.body.user;
+    let password = req.body.password;
+    let session = await logIn(idp, user, password);
+    if (session == null) {
+        res.send({
+            result: false
+        });
+    } else {
+        res.send({
+            result: true
+        });
+    }
+});
+
+async function logIn(idp, user, password) {
+    console.log("Intentando iniciar sesión como: '" + user + "'");
+    try {
+        let session = await auth.login({
+            idp: idp,
+            username: user,
+            password: password
+        });
+        console.log("Inicio de sesión correcto.");
+        return session;
+
+    } catch (error) {
+        console.log("No se ha podido iniciar sesión.");
+        return null;
+    }
+}
+
+async function getName(webId) {
+    const store = $rdf.graph();
+    const fetcher = new $rdf.Fetcher(store);
+    const me = store.sym(user);
+    const profile = me.doc();
+    await fetcher.load(profile);
+    const name = store.any(me, FOAF("name"));
+    console.log(name.value);
+}
 
 // Get all users
 router.get("/users/list", async (req, res) => {
     const users = await User.find({}).sort('-_id') //Inverse order
-	res.send(users)
-})
+    res.send(users)
+});
 
 //register a new user
 router.post("/users/add", async (req, res) => {
@@ -19,8 +68,8 @@ router.post("/users/add", async (req, res) => {
     //Check if the device is already in the db
     let user = await User.findOne({ email: email })
     if (user)
-        res.send({error:"Error: This user is already registered"})
-    else{
+        res.send({ error: "Error: This user is already registered" })
+    else {
         user = new User({
             name: name,
             email: email,
@@ -28,7 +77,7 @@ router.post("/users/add", async (req, res) => {
         await user.save()
         res.send(user)
     }
-})
+});
 
 //Borrar usuario por email
 router.get("/users/delete/:email", async (req, res) => {
@@ -41,7 +90,7 @@ router.get("/users/delete/:email", async (req, res) => {
         let user = await User.deleteOne({ email: req.params.email })
         res.send(user)
     }
-})
+});
 
 //Borrar location
 //Tener en cuenta que una location está vinculada a user
@@ -51,12 +100,12 @@ router.delete("/locations/delete/:_id", async (req, res) => {
     console.log("Voy a borrar: " + idLocation)
     let result = await Location.deleteOne({ _id: idLocation });
 
-    if(result && result.deletedCount > 0){
+    if (result && result.deletedCount > 0) {
         criterio = {
-            locations: { $in: [idLocation] } 
+            locations: { $in: [idLocation] }
         }
-        
-        let user = await User.findOne( criterio ) //En orden inverso
+
+        let user = await User.findOne(criterio) //En orden inverso
         if (!user) {
             res.send({ error: "Error: El usuario no existe" })
             return;
@@ -64,18 +113,18 @@ router.delete("/locations/delete/:_id", async (req, res) => {
         let writeResult = await User.update(
             { '_id': user._id },
             { $pull: { locations: idLocation } })
-       
-            if(writeResult.nModified != 1){
-                res.send({ error: "Error: El usuario no ha sido modificado" })
+
+        if (writeResult.nModified != 1) {
+            res.send({ error: "Error: El usuario no ha sido modificado" })
             return;
-            }
+        }
         res.send(result);
     } else {
         res.send({ error: "Error: La localización no ha sido borrada" })
     }
 
-        
-})
+
+});
 
 // Obtener todas las localizaciones
 router.get("/locations/list", async (req, res) => {
@@ -91,7 +140,7 @@ router.post("/locations/add", async (req, res) => {
     let fecha = req.body.fecha;
     let email = req.body.email;
     console.log("Creando una localización (" + longitud + "," + latitud + ")" + " y fecha: " + fecha + " para " + email);
-    
+
     let user = await User.find({ email }) //En orden inverso
     if (!user) {
         res.send({ error: "Error: El usuario no existe" })
@@ -130,7 +179,7 @@ router.post("/locations/add", async (req, res) => {
     res.send(location)
 
 
-})
+});
 
 //Agregar una nueva localización
 //Es obligatorio añadir una localización con una longitud, latitud, fecha e id de un usuario.
@@ -194,7 +243,7 @@ router.post("/locations/addbyid", async (req, res) => {
         friends: list
     }
     res.send(response);
-})
+});
 
 function distance(lat1, lon1, lat2, lon2) {
     lat1 = parseFloat(lat1);
@@ -235,11 +284,12 @@ router.get("/locations/:email/:fecha?", async (req, res) => {
     if (fecha != undefined) {
 
         criterio = {
-            $and: [{ '_id': { $in: locs } }, { fecha: {
-                                                $gt: fecha + MIN_HOUR,
-                                                $lt: fecha + MAX_HOUR
-                                            } 
-        }]
+            $and: [{ '_id': { $in: locs } }, {
+                fecha: {
+                    $gt: fecha + MIN_HOUR,
+                    $lt: fecha + MAX_HOUR
+                }
+            }]
         }, function (err, locs) {
             console.log(locs);
         }
@@ -254,7 +304,7 @@ router.get("/locations/:email/:fecha?", async (req, res) => {
     locs = await Location.find(criterio);
 
     res.send(locs);
-})
+});
 
 // Obtener todos los usuarios que se encuentran en
 //una latitud y una longitud dentro de un radio
@@ -297,7 +347,7 @@ router.get("/users/:latitud/:longitud/:radio/:fechaMin/:fechaMax", async (req, r
     criterio = { locations: { $in: locs } }
     let users = await User.find(criterio).sort('-_id') //En orden inverso
     res.send(users);
-})
+});
 
 //Agregar un nuevo amigo
 router.post("/users/friends/add/:email1/:email2", async (req, res) => {
@@ -321,7 +371,7 @@ router.post("/users/friends/add/:email1/:email2", async (req, res) => {
         { $push: { friends: receptor._id } }, { new: true, userfindAndModify: false })
 
     res.send(emisor);
-})
+});
 
 //Obtener los amigos de un usuario
 router.get("/users/friends/list/:email1", async (req, res) => {
@@ -344,10 +394,10 @@ router.get("/users/friends/list/:email1", async (req, res) => {
     friends = await User.find(criterio);
 
     res.send(friends);
-})
+});
 
 //Obtener los mensajes de un chat
-router.get("chat/:email1/:email2",async (req, res) => {
+router.get("chat/:email1/:email2", async (req, res) => {
 
     let email1 = req.params.email1;
     let email2 = req.params.email2;
@@ -362,17 +412,17 @@ router.get("chat/:email1/:email2",async (req, res) => {
         res.send({ error: "Error: El receptor no existe" })
     }
 
-    let criterio = { 'emisor':  emisor , 'receptor':receptor }
+    let criterio = { 'emisor': emisor, 'receptor': receptor }
 
     messages = await Message.find(criterio);
 
-      res.send(messages);
+    res.send(messages);
 
-})
+});
 
 //Enviar mensaje
 router.post("/chat/:email1/:email2", async (req, res) => {
-   
+
     let email1 = req.params.email1;
     let email2 = req.params.email2;
     let message = req.body.msn;
@@ -385,6 +435,7 @@ router.post("/chat/:email1/:email2", async (req, res) => {
     await m.save()
     res.send(m)
 
-    
-})
-module.exports = router
+
+});
+
+module.exports = router;

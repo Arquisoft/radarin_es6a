@@ -37,6 +37,31 @@ export var data = {
     user: {
         id: '605f53998a7ec5322c089257',
         logged: false,
+        logIn: async (user, password) => {
+            var uri = "http://" + data.server.ip + ":" + data.server.port + "/api/user/login";
+            log("Iniciando sesión...");
+            var result = await fetch(uri, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                }, body: JSON.stringify({
+                    user: user,
+                    password: password
+                })
+            })
+                .then((response) => response.json())
+                .then((json) => {
+                    log('Resultado de iniciar sesion: ' + json.result);
+                    return false;
+                })
+                .catch((error) => {
+                    log('No se ha podido iniciar sesión.');
+                    log(error);
+                    return false;
+                });
+            return result;
+        },
         notifications: {
             list: [],
             addNotification: async (number, friends, msg) => {

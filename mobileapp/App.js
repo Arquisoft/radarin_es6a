@@ -63,11 +63,16 @@ const SettingsStackScreen = () => {
 class Application extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { logged: data.user.logged };
+    this.state = {
+      logged: data.user.logged,
+      user: "",
+      password: ""
+    };
     this.handleLogIn = this.handleLogIn.bind(this);
   }
-  handleLogIn() {
-    this.setState({ logged: true });
+  async handleLogIn() {
+    var res = await data.user.logIn(this.state.user, this.state.password);
+    this.setState({ logged: res });
   }
   render() {
     if (!this.state.logged)
@@ -146,7 +151,7 @@ class Application extends React.Component {
             keyboardType='default'
             placeholderTextColor="#aaa"
             disabled={false}
-            onChangeText={text => { }} />
+            onChangeText={text => { this.setState({ user: text }) }} />
         </View>
         <View style={styles.inputView} >
           <TextInput
@@ -154,7 +159,7 @@ class Application extends React.Component {
             style={styles.inputText}
             placeholder="Contraseña"
             placeholderTextColor="#aaa"
-            onChangeText={text => { }} />
+            onChangeText={text => { this.setState({ password: text }) }} />
         </View>
         <TouchableOpacity style={styles.loginBtn} onPress={this.handleLogIn}>
           <Text style={styles.loginText}>Iniciar Sesión</Text>
