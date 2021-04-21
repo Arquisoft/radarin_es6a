@@ -22,14 +22,32 @@ router.post("/user/login", async (req, res) => {
             result: false
         });
     } else {
+        let usuario = await User.findOne({
+            email: user,
+            idp: idp
+        });
+        if (!usuario) {
+            console.log("No hay usuario para este pod, creando usuario...");
+            let usuario = new User({
+                email: user,
+                idp: idp
+            });
+            await usuario.save();
+            console.log("Usuario creado.");
+        }
+        let usuario2 = await User.findOne({
+            email: user,
+            idp: idp
+        });
         res.send({
-            result: true
+            result: true,
+            userid: usuario2._id
         });
     }
 });
 
 async function logIn(idp, user, password) {
-    console.log("Intentando iniciar sesión como: '" + user + "'");
+    console.log("Intentando iniciar sesión como: '" + user + "' de " + idp);
     try {
         let session = await auth.login({
             idp: idp,
@@ -38,7 +56,6 @@ async function logIn(idp, user, password) {
         });
         console.log("Inicio de sesión correcto.");
         return session;
-
     } catch (error) {
         console.log("No se ha podido iniciar sesión.");
         return null;
@@ -63,7 +80,7 @@ router.get("/users/list", async (req, res) => {
 
 //register a new user
 router.post("/users/add", async (req, res) => {
-    let name = req.body.name;
+    let idp = req.body.idp;
     let email = req.body.email;
     //Check if the device is already in the db
     let user = await User.findOne({ email: email })
@@ -71,7 +88,7 @@ router.post("/users/add", async (req, res) => {
         res.send({ error: "Error: This user is already registered" })
     else {
         user = new User({
-            name: name,
+            idp: idp,
             email: email,
         })
         await user.save()
@@ -231,7 +248,6 @@ router.post("/locations/addbyid", async (req, res) => {
         if (dis <= 1) {
             count = count + 1;
             list.push({
-                name: u[0].name,
                 email: u[0].email,
                 _id: u[0]._id
             });

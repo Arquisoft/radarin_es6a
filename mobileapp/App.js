@@ -66,12 +66,13 @@ class Application extends React.Component {
     this.state = {
       logged: data.user.logged,
       user: "",
-      password: ""
+      password: "",
+      idp: "https://inrupt.net"
     };
     this.handleLogIn = this.handleLogIn.bind(this);
   }
   async handleLogIn() {
-    var res = await data.user.logIn(this.state.user, this.state.password);
+    var res = await data.user.logIn(this.state.idp, this.state.user, this.state.password);
     this.setState({ logged: res });
   }
   render() {

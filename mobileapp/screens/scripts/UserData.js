@@ -35,9 +35,14 @@ export var data = {
         port: "5000"
     },
     user: {
-        id: '605f53998a7ec5322c089257',
+        id: null,
         logged: false,
-        logIn: async (user, password) => {
+        cred: {
+            idp: null,
+            username: null,
+            password: null
+        },
+        logIn: async (idp, user, password) => {
             var uri = "http://" + data.server.ip + ":" + data.server.port + "/api/user/login";
             log("Iniciando sesión...");
             var result = await fetch(uri, {
@@ -46,6 +51,7 @@ export var data = {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 }, body: JSON.stringify({
+                    idp: idp,
                     user: user,
                     password: password
                 })
@@ -53,6 +59,16 @@ export var data = {
                 .then((response) => response.json())
                 .then((json) => {
                     log('Resultado de iniciar sesion: ' + json.result);
+                    if (json.result) {
+                        data.user.cred = {
+                            idp: idp,
+                            username: user,
+                            password: password
+                        }
+                        data.user.id = json.userid;
+                        log('ID de usuario: ' + json.userid);
+                        return true;
+                    }
                     return false;
                 })
                 .catch((error) => {
