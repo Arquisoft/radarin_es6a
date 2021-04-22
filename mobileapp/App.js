@@ -15,8 +15,6 @@ import { Notifications } from './screens/Notifications';
 import { Profile } from './screens/Profile';
 import { Settings } from './screens/Settings';
 
-data.init();
-
 const Tabs = createBottomTabNavigator();
 const NotificationsStack = createStackNavigator();
 const FriendsStack = createStackNavigator();

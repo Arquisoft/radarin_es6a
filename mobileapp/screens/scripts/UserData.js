@@ -67,6 +67,7 @@ export var data = {
                         }
                         data.user.id = json.userid;
                         log('ID de usuario: ' + json.userid);
+                        data.init();
                         return true;
                     }
                     return false;
