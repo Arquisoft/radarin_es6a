@@ -432,25 +432,8 @@ router.get("chat/:email1/:email2", async (req, res) => {
 
     messages = await Message.find(criterio);
 
+
     res.send(messages);
-
-});
-
-//Enviar mensaje
-router.post("/chat/:email1/:email2", async (req, res) => {
-
-    let email1 = req.params.email1;
-    let email2 = req.params.email2;
-    let message = req.body.msn;
-
-    var m = new Message({
-        emisor: email1,
-        receptor: email2,
-        mensaje: message
-    })
-    await m.save()
-    res.send(m)
-
 
 });
 

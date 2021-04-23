@@ -7,4 +7,4 @@ import GoogleMap from './GoogleMap';
 import Locations from './Locations';
 import friends from './friends'
 
-export { Login, Register, RegistrationSuccess, PageNotFound, Welcome, GoogleMap, Locations, Chat,friends};
+export { Login, Register, RegistrationSuccess, PageNotFound, Welcome, GoogleMap, Locations, Chat, friends};

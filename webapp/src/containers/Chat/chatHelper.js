@@ -19,3 +19,4 @@ class ChatHelper {
 const chatHelper = new ChatHelper();
 
 export default chatHelper;
+
