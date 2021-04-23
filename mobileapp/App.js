@@ -67,9 +67,11 @@ class Application extends React.Component {
       number: 0,
       init: false,
       logged: false,
+      logging: false,
       user: "",
       password: "",
-      idp: "https://inrupt.net"
+      idp: "https://inrupt.net",
+      error: false
     };
     this.handleLogIn = this.handleLogIn.bind(this);
     this.handlePicker = this.handlePicker.bind(this);
@@ -82,13 +84,19 @@ class Application extends React.Component {
   async handleLogIn() {
     if (btnLogIn) {
       btnLogIn = false;
+      this.setState({ logging: true });
+      this.setState({ error: false });
       var res = await data.user.logIn(this.state.idp, this.state.user, this.state.password);
       this.setState({ logged: res });
       if (this.state.logged) {
         this.setState({ user: "" });
         this.setState({ password: "" });
+        this.setState({ error: false });
+      } else {
+        this.setState({ error: true });
       }
       btnLogIn = true;
+      this.setState({ logging: false });
     }
   }
   async handleInit() {
@@ -195,8 +203,11 @@ class Application extends React.Component {
             <Picker.Item label="Solid Community" value="https://solidcommunity.net" />
           </Picker>
         </View>
+        <View style={styles.errorView} >
+          <Text style={styles.error}>{this.state.error ? "El usuario o la contraseña son incorrectos" : ""}</Text>
+        </View>
         <TouchableOpacity style={styles.loginBtn} onPress={this.handleLogIn}>
-          <Text style={styles.loginText}>Iniciar Sesión</Text>
+          <Text style={styles.loginText}>{this.state.logging ? "Iniciando..." : "Iniciar Sesión"}</Text>
         </TouchableOpacity>
       </SafeAreaView>
     );
@@ -248,7 +259,15 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   loginText: {
-    fontSize: 18,
+    fontSize: 16,
     color: "white"
+  },
+  errorView: {
+    width: "80%"
+  },
+  error: {
+    fontSize: 14,
+    color: "red",
+    textAlign: 'center'
   }
 });

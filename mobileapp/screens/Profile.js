@@ -19,7 +19,6 @@ export const Profile = ({ navigation }) => {
     return (
         <ScreenContainer>
             <View style={styles.container}>
-                <Text style={styles.text}>Proximamente...</Text>
                 <Button title="logout" onPress={logout}></Button>
             </View>
         </ScreenContainer>
