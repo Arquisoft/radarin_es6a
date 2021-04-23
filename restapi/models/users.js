@@ -2,15 +2,15 @@ const mongoose = require("mongoose")
 const Location = require("./locations")
 
 const schemaUser = mongoose.Schema({
-    name: String,
+    idp: String,
     email: String,
-    locations : [
+    locations: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "schemaLocation"
         }
     ],
-    friends : [
+    friends: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "schemaUser"
