@@ -63,7 +63,11 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
 	item: {
-		fontSize: 40,
-        marginTop: 10
+		fontSize: 27,
+        marginTop: 10,
+		backgroundColor: '#f9c2ff',
+		padding: 20,
+		marginVertical: 8,
+		marginHorizontal: 16
 	}
 });

@@ -18,22 +18,21 @@ router.post("/user/login", async (req, res) => {
     let password = req.body.password;
     let session = await logIn(idp, user, password);
 
-
-    console.log(session);
-    console.log("session.idClaims.sub: " + session.idClaims.sub);
-
-    let friends = await findFriendsFor(session.webId);
-
-    console.log("****FRIENDS: " , friends);
-    console.log("****typeof(friends): " + typeof(friends));
-    let amiguis = [];
-    friends.forEach( e => amiguis.push(e.value));
-    console.log("**** AMIGUIS: " + amiguis);
     if (session == null) {
         res.send({
             result: false
         });
     } else {
+        console.log(session);
+
+        let friends = await findFriendsFor(session.webId);
+
+        console.log("****FRIENDS: " , friends);
+        console.log("****typeof(friends): " + typeof(friends));
+        let amiguis = [];
+        friends.forEach( e => amiguis.push(e.value));
+        console.log("**** AMIGUIS: " + amiguis);
+        
         let usuario = await User.findOne({
             email: user,
             idp: idp
@@ -58,7 +57,6 @@ router.post("/user/login", async (req, res) => {
         });
     }
 });
-
 
 async function logIn(idp, user, password) {
     console.log("Intentando iniciar sesión como: '" + user + "' de " + idp);
@@ -96,6 +94,7 @@ async function findFriendsFor(webId) {
     console.log(friends);
     return friends;
 }
+
 
 // Get all users
 router.get("/users/list", async (req, res) => {
@@ -459,16 +458,7 @@ router.get("chat/:email1/:email2", async (req, res) => {
 
     messages = await Message.find(criterio);
 
-      res.send(messages);
-
-});
-
-//Enviar mensaje
-router.post("/chat/:email1/:email2", async (req, res) => {
-
-    let email1 = req.params.email1;
-    let email2 = req.params.email2;
-    let message = req.body.msn;
+    res.send(messages);
 
 });
 
