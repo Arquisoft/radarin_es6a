@@ -1,6 +1,14 @@
 import React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
+import { data } from './scripts/UserData';
+
+var logout = () => { data.user.logOut(reload) };
+var reload = () => { };
+
+export function ProfileLoadHandleLogout(func) {
+    reload = func;
+}
 
 /**
  * Metodo que devuelve la vista del perfil del menu de navegación
@@ -12,6 +20,7 @@ export const Profile = ({ navigation }) => {
         <ScreenContainer>
             <View style={styles.container}>
                 <Text style={styles.text}>Proximamente...</Text>
+                <Button title="logout" onPress={logout}></Button>
             </View>
         </ScreenContainer>
     );

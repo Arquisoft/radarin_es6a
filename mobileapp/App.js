@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { default as React, useState } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, TextInput, TouchableOpacity, Button } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, TextInput, TouchableOpacity, Button, Picker } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -12,7 +12,7 @@ import { data } from './screens/scripts/UserData';
 import { Friends } from './screens/Friends';
 import { Home } from './screens/Home';
 import { Notifications } from './screens/Notifications';
-import { Profile } from './screens/Profile';
+import { Profile, ProfileLoadHandleLogout } from './screens/Profile';
 import { Settings } from './screens/Settings';
 
 const Tabs = createBottomTabNavigator();
@@ -62,19 +62,40 @@ class Application extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      logged: data.user.logged,
+      number: 0,
+      init: false,
+      logged: false,
       user: "",
       password: "",
       idp: "https://inrupt.net"
     };
     this.handleLogIn = this.handleLogIn.bind(this);
+    this.handlePicker = this.handlePicker.bind(this);
+    data.init(this.handleInit.bind(this));
+    ProfileLoadHandleLogout(this.reload.bind(this));
+  }
+  async handlePicker(itemValue, itemIndex) {
+    this.setState({ idp: itemValue });
   }
   async handleLogIn() {
     var res = await data.user.logIn(this.state.idp, this.state.user, this.state.password);
     this.setState({ logged: res });
+    if (this.state.logged) {
+      this.setState({ user: "" });
+      this.setState({ password: "" });
+    }
+  }
+  async handleInit() {
+    this.setState({ logged: data.user.logged });
+    this.setState({ init: true });
+  }
+  async reload() {
+    this.setState({ number: this.state.number + 1 });
   }
   render() {
-    if (!this.state.logged)
+    if (!this.state.init)
+      return <SafeAreaView></SafeAreaView>
+    if (!data.user.logged)
       return this.logIn();
     else
       return this.menu();
@@ -141,7 +162,7 @@ class Application extends React.Component {
   }
   logIn() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.logo}>Radarin</Text>
         <View style={styles.inputView} >
           <TextInput
@@ -160,10 +181,18 @@ class Application extends React.Component {
             placeholderTextColor="#aaa"
             onChangeText={text => { this.setState({ password: text }) }} />
         </View>
+        <View style={styles.inputView} >
+          <Picker
+            selectedValue={this.state.idp}
+            onValueChange={(itemValue, itemIndex) => { this.handlePicker(itemValue, itemIndex) }}>
+            <Picker.Item label="Inrupt" value="https://inrupt.net" />
+            <Picker.Item label="Solid Community" value="https://solidcommunity.net" />
+          </Picker>
+        </View>
         <TouchableOpacity style={styles.loginBtn} onPress={this.handleLogIn}>
           <Text style={styles.loginText}>Iniciar Sesión</Text>
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     );
   }
 }
