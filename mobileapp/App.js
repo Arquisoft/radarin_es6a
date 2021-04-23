@@ -58,6 +58,8 @@ const SettingsStackScreen = () => {
   );
 }
 
+var btnLogIn = true;
+
 class Application extends React.Component {
   constructor(props) {
     super(props);
@@ -78,11 +80,15 @@ class Application extends React.Component {
     this.setState({ idp: itemValue });
   }
   async handleLogIn() {
-    var res = await data.user.logIn(this.state.idp, this.state.user, this.state.password);
-    this.setState({ logged: res });
-    if (this.state.logged) {
-      this.setState({ user: "" });
-      this.setState({ password: "" });
+    if (btnLogIn) {
+      btnLogIn = false;
+      var res = await data.user.logIn(this.state.idp, this.state.user, this.state.password);
+      this.setState({ logged: res });
+      if (this.state.logged) {
+        this.setState({ user: "" });
+        this.setState({ password: "" });
+      }
+      btnLogIn = true;
     }
   }
   async handleInit() {
