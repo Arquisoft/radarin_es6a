@@ -27,12 +27,6 @@ router.post("/user/login", async (req, res) => {
 
         let friends = await findFriendsFor(session.webId);
 
-        console.log("****FRIENDS: " , friends);
-        console.log("****typeof(friends): " + typeof(friends));
-        let amiguis = [];
-        friends.forEach( e => amiguis.push(e.value));
-        console.log("**** AMIGUIS: " + amiguis);
-        
         let usuario = await User.findOne({
             email: user,
             idp: idp
@@ -53,7 +47,7 @@ router.post("/user/login", async (req, res) => {
         res.send({
             result: true,
             userid: usuario2._id,
-            friends: amiguis
+            friends: friends
         });
     }
 });
@@ -91,8 +85,10 @@ async function findFriendsFor(webId) {
     const profile = me.doc();
     await fetcher.load(profile);
     let friends = store.each(me, FOAF("knows"));
-    console.log(friends);
-    return friends;
+    let amiguis = [];
+    friends.forEach( e => amiguis.push(e.value));
+    console.log("**** AMIGUIS: " + amiguis);
+    return amiguis;
 }
 
 

@@ -228,11 +228,11 @@ async function fetchLogIn(idp, user, password) {
         .then((json) => {
             log('Resultado de iniciar sesion: ' + json.result);
             if (json.result) {
-                log(' FRIENDS: ' + json.friends);
+                log('FRIENDS: ' + json.friends);
                 data.user.friends = json.friends;
                 return {
                     res: true,
-                    id: json.userid
+                    id: json.userid,
                 };
             }
             return {
