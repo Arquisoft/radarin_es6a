@@ -10,7 +10,7 @@ import { log } from './scripts/Log';
  * @returns Vista de la lista de amigos del usuario
  */
 export const Friends = ({ navigation }) => {
-	log("***** En la lista de amigos " + data.user.friends);
+	log("***** En la lista de amigos " + data);
     return (
 		<ScreenContainer>
 			 <View style={styles.container}>
