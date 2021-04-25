@@ -78,16 +78,23 @@ export var data = {
             log("Iniciando sesión...");
             var result = await fetchLogIn(idp, user, password);
             if (result.res) {
+                log("result" + result);
+                for(var x in result){
+                    log("x: " + x);
+                }
+                log("result.res: " + result.res);
                 data.user.logged = true;
                 data.user.cred.idp = idp;
                 data.user.cred.username = user;
                 data.user.cred.password = password;
                 data.user.id = result.id;
+                data.user.friends = result.friends;
                 data.user.updateId();
                 data.user.cred.updateIdp();
                 data.user.cred.updateUsername();
                 data.user.cred.updatePassword();
                 log('ID de usuario: ' + data.user.id);
+                log('amigos: ' + data.user.friends);
                 return true;
             }
             return false;
@@ -221,9 +228,11 @@ async function fetchLogIn(idp, user, password) {
         .then((json) => {
             log('Resultado de iniciar sesion: ' + json.result);
             if (json.result) {
+                
                 return {
                     res: true,
-                    id: json.userid
+                    id: json.userid,
+                    friends: json.friends
                 };
             }
             return {

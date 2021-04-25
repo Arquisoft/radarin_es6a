@@ -17,11 +17,16 @@ router.post("/user/login", async (req, res) => {
     let user = req.body.user;
     let password = req.body.password;
     let session = await logIn(idp, user, password);
+
     if (session == null) {
         res.send({
             result: false
         });
     } else {
+        console.log(session);
+
+        let friends = await findFriendsFor(session.webId);
+
         let usuario = await User.findOne({
             email: user,
             idp: idp
@@ -41,7 +46,8 @@ router.post("/user/login", async (req, res) => {
         });
         res.send({
             result: true,
-            userid: usuario2._id
+            userid: usuario2._id,
+            friends: friends
         });
     }
 });
@@ -71,6 +77,20 @@ async function getName(webId) {
     const name = store.any(me, FOAF("name"));
     console.log(name.value);
 }
+
+async function findFriendsFor(webId) {
+    const store = $rdf.graph();
+    const fetcher = new $rdf.Fetcher(store);
+    const me = store.sym(webId);
+    const profile = me.doc();
+    await fetcher.load(profile);
+    let friends = store.each(me, FOAF("knows"));
+    let amiguis = [];
+    friends.forEach( e => amiguis.push(e.value));
+    console.log("**** AMIGUIS: " + amiguis);
+    return amiguis;
+}
+
 
 // Get all users
 router.get("/users/list", async (req, res) => {
@@ -205,12 +225,14 @@ router.post("/locations/addbyid", async (req, res) => {
     let latitud = req.body.latitud;
     let fecha = new Date();
     let id = req.body.id;
+    
     console.log("Creando una localización (" + longitud + "," + latitud + ")" + " y fecha: " + fecha + " para " + id);
     let user = await User.find({ _id: id })
     if (!user) {
         res.send({ error: "Error: El usuario no existe" })
         return;
     }
+    
     if (user[0].locations) {
         console.log("Núm locations=" + user[0].locations.length);
         if (user[0].locations.length >= config.MAX_LOCATIONS) {
@@ -432,9 +454,9 @@ router.get("chat/:email1/:email2", async (req, res) => {
 
     messages = await Message.find(criterio);
 
-
     res.send(messages);
 
 });
 
 module.exports = router;
+

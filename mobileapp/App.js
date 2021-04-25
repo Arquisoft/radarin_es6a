@@ -194,6 +194,7 @@ class Application extends React.Component {
             placeholder="Contraseña"
             placeholderTextColor="#aaa"
             onChangeText={text => { this.setState({ password: text }) }} />
+
         </View>
         <View style={styles.inputView} >
           <Picker
