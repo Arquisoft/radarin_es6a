@@ -234,6 +234,7 @@ router.post("/locations/addbyid", async (req, res) => {
     }
     
     if (user[0].locations) {
+        console.log("USER: " + user);
         console.log("Núm locations=" + user[0].locations.length);
         if (user[0].locations.length >= config.MAX_LOCATIONS) {
             let idlocBorrar = user[0].locations[0];
@@ -250,10 +251,12 @@ router.post("/locations/addbyid", async (req, res) => {
         fecha: fecha,
     });
     await location.save();
+
     await User.updateOne(
         { '_id': id },
         { $push: { locations: location._id } }
     );
+
     let friends = user[0].friends;
     let count = 0;
     let list = [];
@@ -310,8 +313,12 @@ function distance(lat1, lon1, lat2, lon2) {
 
 // Obtener las localizaciones para un usuario (email) y una fecha opcional
 router.get("/locations/:email/:fecha?", async (req, res) => {
-    console.log("Emisor: ", req.params.email);
-    let criterio = { email: req.params.email };
+
+    let email = req.params.email.replace(".inrupt.net", "");
+
+    console.log("Emisor: ", email);
+
+    let criterio = { email: email };
 
     let user = await User.find(criterio).sort('-_id') //En orden inverso
 

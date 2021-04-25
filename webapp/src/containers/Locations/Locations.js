@@ -68,7 +68,7 @@ class Locations extends React.Component {
 	async handleShow(event) {
 
 			let email = this.webID.replace("https://", "");
-			email = email.replace(".solid.community/profile/card#me", "");
+			email = email.replace("inrupt.net.solid.community/profile/card#me", "");
 			email = email.replace("/profile/card#me", "");
 
 			this._asyncRequest = locationsHelper.getLocations(email, this.locations_date.current.value).then((data) => {
