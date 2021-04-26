@@ -9,7 +9,7 @@ import {
 	 LabelInput,
 	 TitleChat,
 	 Button,
-	ChatForm,
+	
   MessageChat
 
    } 
@@ -68,7 +68,7 @@ class Chat extends React.Component {
 
 			this._asyncRequest = chatHelper.sendMessages(email,this.user.current.value,this.message.current.value).then((message) => {
 				this._asyncRequest = null;
-				if (message.error && message.error!=undefined) {
+				if (message.error && message.error!==undefined) {
 					alert("ERROR:" + message.error);
 				} else {
 					console.log("Insertado correcto, respuesta=" , message);

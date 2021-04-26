@@ -10,7 +10,7 @@ defineFeature(feature, (test) => {
 		jest.setTimeout(12000000);
 	});
 
-	test("Trying to add a new friend", ({ given, when, then }) => {
+	test("Trying to delete a friend", ({ given, when, then }) => {
 		given("I am a user trying to add a new friend", async () => {
 			browser = await puppeteer.launch({
 				headless: false
@@ -76,20 +76,20 @@ defineFeature(feature, (test) => {
 			});
 		});
 
-		when("Putting the new friend's webID", async () => {
+		when("Selecting the friend I want to delete", async () => {
 			await page.waitFor(500);
 
 			await page.waitForSelector("[id='friendId']", { visible: true });
 			await page.type("[id='friendId']", "https://uo266007.solid.inrupt/");
 		});
 
-		then("Pressing the add button", async () => {
+		then("Pressing the delete button", async () => {
 			await page.evaluate(() => {
-				let submit = document.getElementById("btnAdd");
+				let submit = document.getElementById("deleteFriend");
 				submit.click();
 			});
 			await page.waitForFunction(
-				'document.querySelector("center").innerText.includes("https://uo266007.solid.inrupt/")'
+				'!document.querySelector("center").innerText.includes("https://uo266007.solid.inrupt/")'
 			);
 			await browser.close();
 		});
