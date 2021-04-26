@@ -45,6 +45,28 @@ export var data = {
             }
         },
         logged: false,
+        friends: [],
+        addFriends: async (friends) => {
+            let list = [];
+            let solid = 'https://solidcommunity.net';
+            let inrupt = 'https://inrupt.net';
+            for (var i = 0; i < friends.length; i++) {
+                if (friends[i].includes("solidcommunity.net")) {
+                    list.push({
+                        webID: friends[i],
+                        username: friends[i].replace('https://', '').replace('.solidcommunity.net', ''),
+                        idp: solid
+                    });
+                } else if (friends[i].includes("inrupt.net")) {
+                    list.push({
+                        webID: friends[i],
+                        username: friends[i].replace('https://', '').replace('.inrupt.net', ''),
+                        idp: inrupt
+                    });
+                }
+            }
+            data.user.friends = list;
+        },
         cred: {
             idp: null,
             updateIdp: async () => {
@@ -79,7 +101,7 @@ export var data = {
             var result = await fetchLogIn(idp, user, password);
             if (result.res) {
                 log("result" + result);
-                for(var x in result){
+                for (var x in result) {
                     log("x: " + x);
                 }
                 log("result.res: " + result.res);
@@ -88,13 +110,13 @@ export var data = {
                 data.user.cred.username = user;
                 data.user.cred.password = password;
                 data.user.id = result.id;
-                data.user.friends = result.friends;
+                data.user.addFriends(result.friends);
                 data.user.updateId();
                 data.user.cred.updateIdp();
                 data.user.cred.updateUsername();
                 data.user.cred.updatePassword();
                 log('ID de usuario: ' + data.user.id);
-                log('amigos: ' + data.user.friends);
+                log('Amigos: ' + data.user.friends);
                 return true;
             }
             return false;
@@ -105,7 +127,7 @@ export var data = {
         },
         notifications: {
             list: [],
-            addNotification: async (number, friends, msg) => {
+            addNotification: async (number, friends, msg, callback) => {
                 if (number > 0) {
                     let d = new Date();
                     let obj = {
@@ -128,6 +150,7 @@ export var data = {
                             message: mensaje
                         });
                     }
+                    callback();
                 }
             },
             deleteNotification: async (id) => {
@@ -160,6 +183,7 @@ export var data = {
                     let result = await fetchLogIn(idp, user, pass);
                     if (result.res) {
                         log("Las credenciales guardadas son correctas.");
+                        data.user.addFriends(result.friends);
                         data.user.logged = true;
                         data.user.cred.idp = idp;
                         data.user.cred.username = user;
@@ -228,7 +252,6 @@ async function fetchLogIn(idp, user, password) {
         .then((json) => {
             log('Resultado de iniciar sesion: ' + json.result);
             if (json.result) {
-                
                 return {
                     res: true,
                     id: json.userid,

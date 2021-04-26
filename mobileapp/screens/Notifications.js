@@ -3,11 +3,7 @@ import { StyleSheet, View, FlatList, StatusBar, Text } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
 import { data } from './scripts/UserData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-function useForceUpdate() {
-    const [value, setValue] = useState(0);
-    return () => setValue(value => value + 1);
-}
+import { LocationCallback } from './scripts/Location';
 
 /**
  * Metodo que devuelve la vista de avisos del menu de navegación
@@ -15,39 +11,57 @@ function useForceUpdate() {
  * @returns Vista de avisos
  */
 export var Notifications = ({ navigation }) => {
-    const forceUpdate = useForceUpdate();
     return (
-        <ScreenContainer>
-            <View style={styles.container}>
-                <FlatList
-                    data={data.user.notifications.list}
-                    renderItem={({ item }) => (
-                        <View style={styles.row}>
-                            <View style={styles.item}>
-                                <Text style={styles.date}>
-                                    {item.date}
-                                </Text>
-                            </View>
-                            <View style={styles.item}>
-                                <Text style={styles.title}>{item.mensaje}</Text>
-                                <MaterialCommunityIcons
-                                    name="close-thick" style={styles.x} color={'#999'} size={30}
-                                    onPress={() => {
-                                        data.user.notifications.deleteNotification(item.id);
-                                        forceUpdate();
-                                    }} />
-                            </View>
-                        </View>
-                    )}
-                    keyExtractor={item => item.id}
-                    onRefresh={forceUpdate}
-                    refreshing={false}
-                    extraData={data.user.notifications.list}
-                />
-            </View>
-        </ScreenContainer >
+        <NotificationsView></NotificationsView>
     );
 };
+
+class NotificationsView extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            number: 0
+        };
+        this.reloadScreen = this.reload.bind(this);
+        LocationCallback(this.reloadScreen);
+    }
+    async reload() {
+        this.setState({ number: this.state.number + 1 });
+    }
+    render() {
+        return (
+            <ScreenContainer>
+                <View style={styles.container}>
+                    <FlatList
+                        data={data.user.notifications.list}
+                        renderItem={({ item }) => (
+                            <View style={styles.row}>
+                                <View style={styles.item}>
+                                    <Text style={styles.date}>
+                                        {item.date}
+                                    </Text>
+                                </View>
+                                <View style={styles.item}>
+                                    <Text style={styles.title}>{item.mensaje}</Text>
+                                    <MaterialCommunityIcons
+                                        name="close-thick" style={styles.x} color={'#999'} size={30}
+                                        onPress={() => {
+                                            data.user.notifications.deleteNotification(item.id);
+                                            this.reloadScreen();
+                                        }} />
+                                </View>
+                            </View>
+                        )}
+                        keyExtractor={item => item.id}
+                        onRefresh={this.reloadScreen}
+                        refreshing={false}
+                        extraData={data.user.notifications.list}
+                    />
+                </View>
+            </ScreenContainer >
+        );
+    }
+}
 
 const styles = StyleSheet.create({
     container: {
