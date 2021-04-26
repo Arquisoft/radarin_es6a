@@ -53,7 +53,7 @@ router.post("/user/login", async (req, res) => {
 });
 
 async function logIn(idp, user, password) {
-    console.log("Intentando iniciar sesión como : '" + user + "' de " + idp);
+    console.log("Intentando iniciar sesión como: '" + user + "' de " + idp);
     try {
         let session = await auth.login({
             idp: idp,
