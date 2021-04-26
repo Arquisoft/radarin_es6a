@@ -35,11 +35,99 @@ export var data = {
         port: "5000"
     },
     user: {
-        id: '605f53998a7ec5322c089257',
+        id: null,
+        updateId: async () => {
+            try {
+                await AsyncStorage.setItem('@user-id', JSON.stringify(data.user.cred.idp));
+                log("Se ha actualizado el valor del id de usuario.");
+            } catch (e) {
+                log("No se ha podido actualizar el valor del id de usuario.");
+            }
+        },
         logged: false,
+        friends: [],
+        addFriends: async (friends) => {
+            let list = [];
+            let solid = 'https://solidcommunity.net';
+            let inrupt = 'https://inrupt.net';
+            for (var i = 0; i < friends.length; i++) {
+                if (friends[i].includes("solidcommunity.net")) {
+                    list.push({
+                        webID: friends[i],
+                        username: friends[i].replace('https://', '').replace('.solidcommunity.net', ''),
+                        idp: solid
+                    });
+                } else if (friends[i].includes("inrupt.net")) {
+                    list.push({
+                        webID: friends[i],
+                        username: friends[i].replace('https://', '').replace('.inrupt.net', ''),
+                        idp: inrupt
+                    });
+                }
+            }
+            data.user.friends = list;
+        },
+        cred: {
+            idp: null,
+            updateIdp: async () => {
+                try {
+                    await AsyncStorage.setItem('@user-cred-idp', JSON.stringify(data.user.cred.idp));
+                    log("Se ha actualizado el valor del idp.");
+                } catch (e) {
+                    log("No se ha podido actualizar el valor del idp.");
+                }
+            },
+            username: null,
+            updateUsername: async () => {
+                try {
+                    await AsyncStorage.setItem('@user-cred-username', JSON.stringify(data.user.cred.username));
+                    log("Se ha actualizado el valor del username.");
+                } catch (e) {
+                    log("No se ha podido actualizar el valor del username.");
+                }
+            },
+            password: null,
+            updatePassword: async () => {
+                try {
+                    await AsyncStorage.setItem('@user-cred-password', JSON.stringify(data.user.cred.password));
+                    log("Se ha actualizado el valor de la contraseña.");
+                } catch (e) {
+                    log("No se ha podido actualizar el valor de la contraseña.");
+                }
+            }
+        },
+        logIn: async (idp, user, password) => {
+            log("Iniciando sesión...");
+            var result = await fetchLogIn(idp, user, password);
+            if (result.res) {
+                log("result" + result);
+                for (var x in result) {
+                    log("x: " + x);
+                }
+                log("result.res: " + result.res);
+                data.user.logged = true;
+                data.user.cred.idp = idp;
+                data.user.cred.username = user;
+                data.user.cred.password = password;
+                data.user.id = result.id;
+                data.user.addFriends(result.friends);
+                data.user.updateId();
+                data.user.cred.updateIdp();
+                data.user.cred.updateUsername();
+                data.user.cred.updatePassword();
+                log('ID de usuario: ' + data.user.id);
+                log('Amigos: ' + data.user.friends);
+                return true;
+            }
+            return false;
+        },
+        logOut: async (callback) => {
+            await data.reset();
+            callback();
+        },
         notifications: {
             list: [],
-            addNotification: async (number, friends, msg) => {
+            addNotification: async (number, friends, msg, callback) => {
                 if (number > 0) {
                     let d = new Date();
                     let obj = {
@@ -62,6 +150,7 @@ export var data = {
                             message: mensaje
                         });
                     }
+                    callback();
                 }
             },
             deleteNotification: async (id) => {
@@ -80,23 +169,105 @@ export var data = {
             }
         }
     },
-    init: async () => {
+    init: async (callback) => {
         try {
-            let jsonValue;
-            jsonValue = await AsyncStorage.getItem('@user-notifications')
-            if (jsonValue != null)
-                data.user.notifications.list = JSON.parse(jsonValue);
-            jsonValue = await AsyncStorage.getItem('@settings-geolocation')
-            if (jsonValue != null)
-                data.settings.geolocation = JSON.parse(jsonValue);
-            jsonValue = await AsyncStorage.getItem('@settings-notifications')
-            if (jsonValue != null)
-                data.settings.notifications = JSON.parse(jsonValue);
-            log("Datos de usuario inicializados correctamente.");
-            if (data.settings.geolocation)
-                startBackgroundFunction();
+            let id = await AsyncStorage.getItem('@user-id');
+            if (id != null) {
+                let idp = await AsyncStorage.getItem('@user-cred-idp');
+                let user = await AsyncStorage.getItem('@user-cred-username');
+                let pass = await AsyncStorage.getItem('@user-cred-password');
+                if (idp != null && user != null && pass != null) {
+                    idp = JSON.parse(idp);
+                    user = JSON.parse(user);
+                    pass = JSON.parse(pass);
+                    let result = await fetchLogIn(idp, user, pass);
+                    if (result.res) {
+                        log("Las credenciales guardadas son correctas.");
+                        data.user.addFriends(result.friends);
+                        data.user.logged = true;
+                        data.user.cred.idp = idp;
+                        data.user.cred.username = user;
+                        data.user.cred.password = pass;
+                        data.user.id = result.id;
+                        data.user.updateId();
+                        let jsonValue;
+                        jsonValue = await AsyncStorage.getItem('@user-notifications');
+                        if (jsonValue != null)
+                            data.user.notifications.list = JSON.parse(jsonValue);
+                        jsonValue = await AsyncStorage.getItem('@settings-geolocation');
+                        if (jsonValue != null)
+                            data.settings.geolocation = JSON.parse(jsonValue);
+                        jsonValue = await AsyncStorage.getItem('@settings-notifications');
+                        if (jsonValue != null)
+                            data.settings.notifications = JSON.parse(jsonValue);
+                        log("Datos de usuario inicializados correctamente.");
+                        if (data.settings.geolocation)
+                            startBackgroundFunction();
+                    } else {
+                        log("Las credenciales guardadas ya no son correctas.");
+                    }
+                }
+            } else {
+                log("No hay id guardada por lo que no se inicializan datos.");
+            }
+            callback();
         } catch (e) {
+            log(e);
             log("No se ha podido inicializar los datos de usuario.");
         }
+    },
+    reset: async () => {
+        data.user.id = null;
+        data.user.updateId();
+        data.user.logged = false;
+        data.user.cred.idp = null;
+        data.user.cred.updateIdp();
+        data.user.cred.username = null;
+        data.user.cred.updateUsername();
+        data.user.cred.password = null;
+        data.user.cred.updatePassword();
+        data.settings.geolocation = false;
+        data.settings.updateGeolocation();
+        data.settings.notifications = true;
+        data.settings.updateNotifications();
+        data.user.notifications.list = [];
+        data.user.notifications.updateNotifications();
     }
+}
+
+async function fetchLogIn(idp, user, password) {
+    var uri = "http://" + data.server.ip + ":" + data.server.port + "/api/user/login";
+    var result = await fetch(uri, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        }, body: JSON.stringify({
+            idp: idp,
+            user: user,
+            password: password
+        })
+    })
+        .then((response) => response.json())
+        .then((json) => {
+            log('Resultado de iniciar sesion: ' + json.result);
+            if (json.result) {
+                return {
+                    res: true,
+                    id: json.userid,
+                    friends: json.friends
+                };
+            }
+            return {
+                res: false
+            };
+        })
+        .catch((error) => {
+            log('No se ha podido iniciar sesión.');
+            log(error);
+            return {
+                res: false
+            };
+        });
+    return result;
 }
