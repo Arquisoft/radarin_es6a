@@ -9,6 +9,7 @@ import { data } from './UserData';
 function handleLocation(location) {
     var uri = "http://" + data.server.ip + ":" + data.server.port + "/api/locations/addbyid";
     log("Coordenadas:" + location.longitude + "," + location.latitude);
+    console.log(data.user.friends);
     fetch(uri, {
         method: 'POST',
         headers: {

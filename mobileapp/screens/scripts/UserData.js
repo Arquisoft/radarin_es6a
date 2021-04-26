@@ -45,6 +45,7 @@ export var data = {
             }
         },
         logged: false,
+        friends: [],
         cred: {
             idp: null,
             updateIdp: async () => {
@@ -79,7 +80,7 @@ export var data = {
             var result = await fetchLogIn(idp, user, password);
             if (result.res) {
                 log("result" + result);
-                for(var x in result){
+                for (var x in result) {
                     log("x: " + x);
                 }
                 log("result.res: " + result.res);
@@ -160,6 +161,7 @@ export var data = {
                     let result = await fetchLogIn(idp, user, pass);
                     if (result.res) {
                         log("Las credenciales guardadas son correctas.");
+                        data.user.friends = result.friends;
                         data.user.logged = true;
                         data.user.cred.idp = idp;
                         data.user.cred.username = user;
@@ -228,7 +230,6 @@ async function fetchLogIn(idp, user, password) {
         .then((json) => {
             log('Resultado de iniciar sesion: ' + json.result);
             if (json.result) {
-                
                 return {
                     res: true,
                     id: json.userid,

@@ -11,17 +11,18 @@ import { log } from './scripts/Log';
  */
 export const Friends = ({ navigation }) => {
 	log("***** En la lista de amigos " + data);
-    return (
+	return (
 		<ScreenContainer>
-			 <View style={styles.container}>
-			   <FlatList
+			<View style={styles.container}>
+				<FlatList
+					keyExtractor={item => item}
 					data={data.user.friends}
-					renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+					renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
 				/>
 			</View>
 		</ScreenContainer>
 
-    );
+	);
 };
 
 /* getFriends: async (idp, user, password) => {
@@ -52,19 +53,19 @@ export const Friends = ({ navigation }) => {
 } */
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    text: {
-        textAlign: "center",
-        fontSize: 22,
-        marginTop: 10
-    },
+	container: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	text: {
+		textAlign: "center",
+		fontSize: 22,
+		marginTop: 10
+	},
 	item: {
 		fontSize: 27,
-        marginTop: 10,
+		marginTop: 10,
 		backgroundColor: '#f9c2ff',
 		padding: 20,
 		marginVertical: 8,
