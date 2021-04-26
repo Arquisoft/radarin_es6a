@@ -1,9 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button } from "react-bootstrap";
 import { NotificationContainer, NotificationManager } from "react-notifications";
 import FriendList from "../../components/Friends/friendsList";
-import {ListFriend,ButtonAddFriend,InputAdd,SpanFriend,ModalApp,panelAmigos} from"./myFriends.style.js";
+import {ListFriend,ButtonAddFriend,InputAdd,SpanFriend,ModalApp, AddFriend} from"./myFriends.style.js";
 import { useNotification } from "@inrupt/solid-react-components";
 
 
@@ -105,14 +104,14 @@ export const myFriends = ({ myWebId, service }) => {
         </div>
         <div className="modal-body">
           <SpanFriend className="span-friends">{t("friends.addTitle")}</SpanFriend>
-          <ButtonAddFriend className="add-friends">
+          <AddFriend className="add-friends">
             <InputAdd data-testid="input-add" className="input-add" id="friendId" type="text"
                    placeholder="https://uoxxxxxx.inrupt.net/"></InputAdd>
-          </ButtonAddFriend>
+          </AddFriend>
           <div>
-          <Button id="btnAdd" data-testid="btnAddFriend" className="correct-margin" onClick={addFriend}>
+          <ButtonAddFriend id="btnAdd" data-testid="btnAddFriend" className="correct-margin" onClick={addFriend}>
               {t("friends.add")}
-            </Button>
+            </ButtonAddFriend>
           </div>
           <br/>
           <SpanFriend className="span-friends">{t("friends.deleteTitle")}</SpanFriend>
@@ -120,9 +119,9 @@ export const myFriends = ({ myWebId, service }) => {
             <FriendList  src="user.friends" nameList="friendList" nameCk="friend"></FriendList >
           </ListFriend>
           <div>
-            <Button id="deleteFriend" data-testid="btnDeleteFriend" className="correct-margin" onClick={deleteFriend}>
+            <ButtonAddFriend id="deleteFriend" data-testid="btnDeleteFriend" className="correct-margin" onClick={deleteFriend}>
               {t("friends.delete")}
-            </Button>
+            </ButtonAddFriend>
           </div>
         </div>
       </ModalApp>
