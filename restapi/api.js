@@ -86,7 +86,7 @@ async function findFriendsFor(webId) {
     await fetcher.load(profile);
     let friends = store.each(me, FOAF("knows"));
     let amiguis = [];
-    friends.forEach( e => amiguis.push(e.value));
+    friends.forEach(e => amiguis.push(e.value));
     console.log("**** AMIGUIS: " + amiguis);
     return amiguis;
 }
@@ -225,14 +225,15 @@ router.post("/locations/addbyid", async (req, res) => {
     let latitud = req.body.latitud;
     let fecha = new Date();
     let id = req.body.id;
-    
+    let friends = req.body.friends;
+
     console.log("Creando una localización (" + longitud + "," + latitud + ")" + " y fecha: " + fecha + " para " + id);
     let user = await User.find({ _id: id })
     if (!user) {
         res.send({ error: "Error: El usuario no existe" })
         return;
     }
-    
+
     if (user[0].locations) {
         console.log("Núm locations=" + user[0].locations.length);
         if (user[0].locations.length >= config.MAX_LOCATIONS) {
@@ -254,15 +255,17 @@ router.post("/locations/addbyid", async (req, res) => {
         { '_id': id },
         { $push: { locations: location._id } }
     );
-    let friends = user[0].friends;
     let count = 0;
     let list = [];
     for (var i = 0; i < friends.length; i++) {
         var obj = friends[i];
-        let u = await User.find({ _id: obj });
+        let u = await User.findOne({
+            email: obj.username,
+            idp: obj.idp
+        });
         if (!u)
             continue;
-        let ls = u[0].locations;
+        let ls = u.locations;
         if (ls.length == 0)
             continue;
         let l = await Location.find({ _id: ls[ls.length - 1] });
@@ -270,8 +273,8 @@ router.post("/locations/addbyid", async (req, res) => {
         if (dis <= 1) {
             count = count + 1;
             list.push({
-                email: u[0].email,
-                _id: u[0]._id
+                email: u.email,
+                _id: u._id
             });
         }
     }
