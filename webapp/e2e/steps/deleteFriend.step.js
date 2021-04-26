@@ -1,6 +1,6 @@
 import "jest";
 import { defineFeature, loadFeature } from "jest-cucumber";
-const feature = loadFeature("features/addFriend.feature");
+const feature = loadFeature("features/deleteFriend.feature");
 const puppeteer = require("puppeteer");
 let browser = null;
 let page = null;
@@ -11,7 +11,7 @@ defineFeature(feature, (test) => {
 	});
 
 	test("Trying to delete a friend", ({ given, when, then }) => {
-		given("I am a user trying to add a new friend", async () => {
+		given("I am a user trying to delete a friend", async () => {
 			browser = await puppeteer.launch({
 				headless: false
 			});
