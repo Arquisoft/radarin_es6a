@@ -24,16 +24,9 @@ defineFeature(feature, (test) => {
 				timeout: 0
 			});
 			await page.waitForSelector(".sc-EHOje.cffgrt");
-			await page.type(".sc-EHOje.cffgrt", "https://uo264699.solid.inrupt/profile/card#me");
+			await page.type(".sc-EHOje.cffgrt", "https://uo264699.inrupt.net");
 			
-			await page.evaluate(() => {
-				let btns = [ ...document.querySelectorAll("button") ];
-				btns.forEach(function(btn) {
-					if (btn.innerText === "Log In with Provider") {
-						btn.click();
-					}
-				});
-			}); 
+	
 		
 
 			await page.evaluate(() => {

@@ -13,7 +13,6 @@ export const LoginPanel = styled(Panel)``;
 export const PanelBody = styled.div`
   display: grid;
   flex-direction: column;
-
   .provider-login-component {
     div[role='option'] {
       text-align: left !important;
@@ -37,7 +36,6 @@ export const LoginTitle = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-
   &::before,
   &::after {
     width: 32%;
@@ -47,15 +45,12 @@ export const LoginTitle = styled.span`
     box-sizing: border-box;
     top: 50%;
   }
-
   span {
     padding: 0 5px;
   }
-
   &::before {
     right: 0;
   }
-
   &::after {
     left: 0;
   }

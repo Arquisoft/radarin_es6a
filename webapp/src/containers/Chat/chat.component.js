@@ -59,12 +59,7 @@ class Chat extends React.Component {
 			let email = this.webID.replace("https://", "");
 			email = email.replace(".solid.community/profile/card#me", "");
 			email = email.replace("/profile/card#me", "");
-
-		//	let message_md5 = md5(this.message)
-		
-		//	console.log(message_md5);
 		  
-		
 
 			this._asyncRequest = chatHelper.sendMessages(email,this.user.current.value,this.message.current.value).then((message) => {
 				this._asyncRequest = null;

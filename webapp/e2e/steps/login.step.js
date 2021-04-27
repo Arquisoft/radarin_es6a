@@ -12,7 +12,7 @@ defineFeature(feature, (test) => {
 		jest.setTimeout(12000000);
 	});
 
-	test("Trying to log in", async ({ given, when, and, then }) => {
+	test("Trying to log in", async ({ given, when, then }) => {
 		given("I am a user trying to log in", async () => {
 			browser = await puppeteer.launch({
 				headless: false
@@ -28,7 +28,9 @@ defineFeature(feature, (test) => {
 
 		when("Putting my webId and fill out the form with username and password", async () => {
 			await page.waitForSelector(".sc-EHOje.cffgrt");
-			await page.type(".sc-EHOje.cffgrt", "https://uo264699.solid.inrupt/profile/card#me");
+			await page.type(".sc-EHOje.cffgrt", "https://uo264699.inrupt.net");
+
+		
 
 			await page.evaluate(() => {
 				let btns = [ ...document.querySelectorAll("button") ];
@@ -66,7 +68,7 @@ defineFeature(feature, (test) => {
 			await page.waitForNavigation({
 				waitUntil: "networkidle2"
 			});
-			expect(page.url()).toBe("http://localhost:3000/#/welcome");
+			expect(page.url()).toBe("http://localhost:3000/welcome#");
 			await browser.close();
 		});
 	});
