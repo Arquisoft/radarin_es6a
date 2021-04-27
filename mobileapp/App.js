@@ -15,6 +15,7 @@ import { Home } from './screens/Home';
 import { Notifications } from './screens/Notifications';
 import { Profile, ProfileLoadHandleLogout } from './screens/Profile';
 import { Settings } from './screens/Settings';
+import { log } from './screens/scripts/Log';
 
 const Tabs = createBottomTabNavigator();
 const NotificationsStack = createStackNavigator();
@@ -105,11 +106,15 @@ class Application extends React.Component {
     this.setState({ init: true });
   }
   async reload() {
+    log("Recargando aplicacion");
     this.setState({ number: this.state.number + 1 });
   }
   render() {
     if (!this.state.init)
-      return <SafeAreaView></SafeAreaView>
+      return (
+        <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <Text style={{ fontSize: 18 }}>Cargando aplicación...</Text>
+        </SafeAreaView>);
     if (!data.user.logged)
       return this.logIn();
     else

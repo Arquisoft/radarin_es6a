@@ -16,7 +16,18 @@ export const Friends = ({ navigation }) => {
 				<FlatList
 					keyExtractor={item => item.webID}
 					data={data.user.friends}
-					renderItem={({ item }) => <Text style={styles.item}>{item.webID}</Text>}
+					renderItem={({ item }) => (
+						<View style={styles.row}>
+							<View style={styles.item}>
+								<Text style={styles.date}>
+									{item.idp}
+								</Text>
+							</View>
+							<View style={styles.item}>
+								<Text style={styles.title}>{item.username}</Text>
+							</View>
+						</View>
+					)}
 				/>
 			</View>
 		</ScreenContainer>
@@ -24,50 +35,36 @@ export const Friends = ({ navigation }) => {
 	);
 };
 
-/* getFriends: async (idp, user, password) => {
-	var uri = "http://" + data.server.ip + ":" + data.server.port + "/api/user/friends";
-	var result = await fetch(uri, {
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json'
-		}, body: JSON.stringify({
-		})
-	})
-		.then((response) => response.json())
-		.then((json) => {
-			log('Resultado de iniciar sesion: ' + json.result);
-			if (json.result) {
-				console.log(json.result);
-				return true;
-			}
-			return false;
-		})
-		.catch((error) => {
-			log('No se ha podido iniciar sesión.');
-			log(error);
-			return false;
-		});
-	return result;
-} */
-
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: "center",
-		alignItems: "center"
 	},
-	text: {
-		textAlign: "center",
-		fontSize: 22,
-		marginTop: 10
-	},
-	item: {
-		fontSize: 27,
-		marginTop: 10,
-		backgroundColor: '#f9c2ff',
+	row: {
+		backgroundColor: '#fff',
 		padding: 20,
 		marginVertical: 8,
-		marginHorizontal: 16
+		marginHorizontal: 16,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 3.84,
+		borderRadius: 15,
+		elevation: 5,
+	},
+	item: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+	},
+	title: {
+		fontSize: 20,
+		color: '#333'
+	},
+	date: {
+		fontSize: 14,
+		color: '#333',
+		marginBottom: 4
 	}
 });

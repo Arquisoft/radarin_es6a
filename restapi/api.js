@@ -7,7 +7,7 @@ const { MIN_HOUR, MAX_HOUR } = require("./config");
 const router = express.Router();
 const SolidNodeClient = require("solid-node-client").SolidNodeClient;
 const client = new SolidNodeClient();
-const auth = require('solid-auth-cli');
+var auth = require('solid-auth-cli');
 const $rdf = require("rdflib");
 const FOAF = $rdf.Namespace("http://xmlns.com/foaf/0.1/");
 const VCARD = $rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
@@ -17,13 +17,13 @@ router.post("/user/login", async (req, res) => {
     let user = req.body.user;
     let password = req.body.password;
     let session = await logIn(idp, user, password);
-
+    console.log(session);
     if (session == null) {
         res.send({
             result: false
         });
     } else {
-        console.log(session);
+        let name = await getName(session.webId);
 
         let friends = await findFriendsFor(session.webId);
 
@@ -44,10 +44,12 @@ router.post("/user/login", async (req, res) => {
             email: user,
             idp: idp
         });
+        auth.logout();
         res.send({
             result: true,
             userid: usuario2._id,
-            friends: friends
+            friends: friends,
+            name: name
         });
     }
 });
@@ -71,11 +73,12 @@ async function logIn(idp, user, password) {
 async function getName(webId) {
     const store = $rdf.graph();
     const fetcher = new $rdf.Fetcher(store);
-    const me = store.sym(user);
+    const me = store.sym(webId);
     const profile = me.doc();
     await fetcher.load(profile);
     const name = store.any(me, FOAF("name"));
-    console.log(name.value);
+    console.log("**** NOMBRE: " + name.value);
+    return name + "";
 }
 
 async function findFriendsFor(webId) {
@@ -87,7 +90,7 @@ async function findFriendsFor(webId) {
     let friends = store.each(me, FOAF("knows"));
     let amiguis = [];
     friends.forEach(e => amiguis.push(e.value));
-    console.log("**** AMIGUIS: " + amiguis);
+    console.log("**** AMIGOS: " + amiguis);
     return amiguis;
 }
 

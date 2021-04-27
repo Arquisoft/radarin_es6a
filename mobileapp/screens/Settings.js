@@ -35,8 +35,8 @@ export const Settings = ({ navigation }) => {
                     <Text style={styles.text}>Habilitar geolocalización</Text>
                     <Switch
                         style={styles.botton}
-                        trackColor={{ false: "#767577", true: "#81b0ff" }}
-                        thumbColor={isEnabled ? "#7ca8f2" : "#f4f3f4"}
+                        trackColor={{ false: "#767577", true: "#047cfc" }}
+                        thumbColor={isEnabled ? "#047cfc" : "#f4f3f4"}
                         onValueChange={toggleSwitch}
                         value={isEnabled}
                     />
@@ -45,8 +45,8 @@ export const Settings = ({ navigation }) => {
                     <Text style={styles.text}>Habilitar notificaciones</Text>
                     <Switch
                         style={styles.botton}
-                        trackColor={{ false: "#767577", true: "#81b0ff" }}
-                        thumbColor={isEnabled2 ? "#7ca8f2" : "#f4f3f4"}
+                        trackColor={{ false: "#767577", true: "#047cfc" }}
+                        thumbColor={isEnabled2 ? "#047cfc" : "#f4f3f4"}
                         onValueChange={toggleSwitch2}
                         value={isEnabled2}
                     />

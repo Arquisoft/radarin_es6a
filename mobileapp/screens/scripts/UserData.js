@@ -36,6 +36,7 @@ export var data = {
     },
     user: {
         id: null,
+        name: null,
         updateId: async () => {
             try {
                 await AsyncStorage.setItem('@user-id', JSON.stringify(data.user.cred.idp));
@@ -110,6 +111,7 @@ export var data = {
                 data.user.cred.username = user;
                 data.user.cred.password = password;
                 data.user.id = result.id;
+                data.user.name = result.name;
                 data.user.addFriends(result.friends);
                 data.user.updateId();
                 data.user.cred.updateIdp();
@@ -184,6 +186,7 @@ export var data = {
                     if (result.res) {
                         log("Las credenciales guardadas son correctas.");
                         data.user.addFriends(result.friends);
+                        data.user.name = result.name;
                         data.user.logged = true;
                         data.user.cred.idp = idp;
                         data.user.cred.username = user;
@@ -255,7 +258,8 @@ async function fetchLogIn(idp, user, password) {
                 return {
                     res: true,
                     id: json.userid,
-                    friends: json.friends
+                    friends: json.friends,
+                    name: json.name
                 };
             }
             return {
