@@ -103,6 +103,7 @@ describe('user ', () => {
 
     /**
      * Tests that a location can be created without throwing any errors.
+     * pablo is the email
      */
      it('can be created correctly', async () => {
         longitud = -6.23277;
