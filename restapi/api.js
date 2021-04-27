@@ -346,6 +346,24 @@ router.get("/users/friends/list/:email1", async (req, res) => {
     res.send(friends);
 })
 
+router.post("/chat/:email1/:email2/:mensaje", async (req, res) => {
+
+    let email1 = req.params.email1;
+    let email2 = req.params.email2;
+    let message = req.params.mensaje;
+
+    console.log(message);
+
+    var m = new Message({
+        emisor: email1,
+        receptor: email2,
+        mensaje: message
+    })
+    await m.save()
+    res.send(m)
+    
+})
+
 //Obtener los mensajes de un chat
 router.get("chat/:email1/:email2",async (req, res) => {
 
@@ -369,11 +387,7 @@ router.get("chat/:email1/:email2",async (req, res) => {
 
       res.send(messages);
 
-})
-
-
-}
-)
+});
 
 
 

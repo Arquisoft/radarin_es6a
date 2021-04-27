@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import chatHelper from "./chatHelper";
+//import MessageList from "./chat";
 
 
-import i18n from "i18n";
+//import i18n from "i18n";
 import {
   
   Header,
@@ -19,7 +20,11 @@ import {
  } 
 from "./chat.style";
 
-function Message(props) {
+
+
+
+
+export function Message(props) {
   const {
     data,
     isMine,
@@ -52,35 +57,27 @@ function Message(props) {
   );
 }
 
-  function MessageList(props) {
+export function MessageList(props) {
   const [messages, setMessages] = useState([])
 
   useEffect(() => {
-    getMessages();
+ getMessages(props);
+
   },[])
 
   
-  const getMessages = () => {
+  const getMessages= (props) => {
      var tempMessages = [
         //SACAR MENSAJES DE MONGODB esto es de prueba
 
-        {
-            id: 1,
-            author: 'apple',
-            message: 'Esto es una pruebaaaa del chat para RADARIN 6A',
-            timestamp: new Date().getTime()
-          },
-          {
-            id: 2,
-            author: 'orange',
-            message: 'Holaaa!',
-            timestamp: new Date().getTime()
-          },
+        
+        props
+          
       ]
       setMessages([...messages, ...tempMessages])
   }
 
-  const renderMessages = () => {
+  const renderMessages = (webid) => {
     let i = 0;
     let messageCount = messages.length;
     let tempMessages = [];
@@ -89,7 +86,7 @@ function Message(props) {
       let previous = messages[i - 1];
       let current = messages[i];
       let next = messages[i + 1];
-      let isMine = current.author ==="apple";//=== MY_USER_ID;//OJO HAY QUE PONER EL WEB ID DEL USER
+      let isMine = current.author === webid;//=== MY_USER_ID;//OJO HAY QUE PONER EL WEB ID DEL USER
       let currentMoment = moment(current.timestamp);
       let prevBySameAuthor = false;
       let nextBySameAuthor = false;
@@ -143,10 +140,11 @@ function Message(props) {
     <div className="message-list">
     
 
-      <div className="message-list-container">{renderMessages()}</div>
+      <div className="message-list-container">{renderMessages("albaguerrero.inrupt.net")}</div>
       </div>);
 
 }
+
 
 type Props = {
 	webId: String
@@ -156,31 +154,34 @@ class Chat extends React.Component {
 
   constructor({ webId }: Props) {
 		super();
-	
+    this.webId=webId;
 		this.chat = React.createRef();
+    this.mensajes = React.createRef();
     this.handleShow= this.handleShow.bind(this);
+    //this.handleSubmit= this.handleSubmit.bind(this);
+    this.splitemail="Busca un usuario para empezar a chatear";
 
     this.state = {
 			data: []
 		};
   }
+  
 
 
+	componentWillUnmount() {}
+
+  async  handleShow(event) {
+
+    this.getName();
+
+    let email = this.webId.replace("https://", "");
+    email = email.replace(".solid.community/profile/card#me", "");
+    email = email.replace("/profile/card#me", "");
+
+    console.log("valor delusuario" +this.chat.current.value)
 
 
-async  handleShow(event) {
-
-
-
-  let email = this.webID.replace("https://", "");
-
-  email = email.replace(".solid.community/profile/card#me", "");
-
-  email = email.replace("/profile/card#me", "");
-
-
-
-  this._asyncRequest = chatHelper.getMessages(email, this.chat.current.value).then((data) => {
+  this._asyncRequest = chatHelper.getMessages(email,this.chat.current.value).then((data) => {
 
     
       this._asyncRequest = null;
@@ -202,14 +203,21 @@ async  handleShow(event) {
   });
 }
 
-    
+     getName(){
+       
+    if(this.chat!==null &&  this.chat !==undefined)
+    this.splitemail=this.chat;
+   
+  
+    return this.splitemail;
+    }
 
 
-handleSubmit(event) {
+async handleSubmit(event) {
 
-    
 
-    let email1 = this.webID.replace("https://", "");
+
+    let email1 = this.webId.replace("https://", "");
 
     email1 = email1.replace(".solid.community/profile/card#me", "");
 
@@ -217,7 +225,7 @@ handleSubmit(event) {
 
 
 
-    this._asyncRequest = chatHelper.sendMessages(email1,this.chat).then((message) => {
+    this._asyncRequest = chatHelper.sendMessages(email1,this.chat.current.value,this.mensajes.current.value).then((message) => {
 
         this._asyncRequest = null;
 
@@ -234,17 +242,19 @@ handleSubmit(event) {
     });
   
 
-
+//this.handleShow(event);
 
 }
 
   
-getList(nombre) {
+getList() {
+
+  
   return(
    
   <div className="message-list">
-        <TitleChat> <h1 className="toolbar-title"  > {nombre}</h1> </TitleChat>
-      <div className="message-list-container"><MessageList> </MessageList></div>
+        <TitleChat> {this.splitemail}</TitleChat>
+      <div className="message-list-container"><MessageList {...this.data}> </MessageList></div>
       </div>
 
   
@@ -254,13 +264,15 @@ getList(nombre) {
 getTyperBar(){
 
   return(
-      <div className="escribe">
-        <input
-          type="text"
-          placeholder="Escribe un mensaje"
-        />
+  
+       <LabelInput>
+								<input type="text" placeholder="Escribe un mensaje" id="mensaje" name="mensaje" ref={this.mensajes} />
+						
+						<Button id="send_message" form="form" type="submit" onClick={(e) => this.handleSubmit(e)} >Enviar
+						</Button>
+            </LabelInput>
+          
        
-</div>
       );
 
 }
@@ -268,7 +280,7 @@ render() : React.ReactNode{
   return (
     <ChatWrapper data-testid="chat-component">
 				<Header data-testid="chat-header">
-					<TitleChat>{i18n.t("chat.webid2")}</TitleChat>
+					<TitleChat>{this.webId}</TitleChat>
 					<ChatForm id="chatUser">
 						<DivForms>
 							<LabelInput>
@@ -278,17 +290,17 @@ render() : React.ReactNode{
 						
 					</ChatForm>
 					<DivForms>
-						<Button id="send_message" form="chatUser" type="submit" onClick={(e) => this.handleSubmit(e)} >Ir
+						<Button id="message" form="chatUser" type="submit" onClick={(e) => this.handleShow(e)} >Ir
 						</Button>
 					</DivForms>
 				</Header>
         <MessageChat>
-        {this.getList("webid2")}
+        {this.getList()}
         {this.getTyperBar()}
 
         </MessageChat>
         </ChatWrapper>
- //PASAR AQUI EL WEB ID
+ 
 
       
   );
