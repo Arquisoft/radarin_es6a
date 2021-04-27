@@ -61,9 +61,7 @@ defineFeature(feature, (test) => {
 
 
 
-			await page.goto("http://localhost:3000/welcome", {
-				waitUntil: "networkidle2"
-			});
+		
 			await page.goto("http://localhost:3000/friends", {
 				waitUntil: "networkidle2"
 			});
@@ -73,7 +71,7 @@ defineFeature(feature, (test) => {
 			await page.waitFor(500);
 
 			await page.waitForSelector("[id='friendId']", { visible: true });
-			await page.type("[id='friendId']", "https://uo266007.solid.inrupt/");
+			await page.type("[id='friendId']", "https://uo266007.inrupt.net");
 		});
 
 		then("Pressing the add button", async () => {
@@ -82,7 +80,7 @@ defineFeature(feature, (test) => {
 				submit.click();
 			});
 			await page.waitForFunction(
-				'document.querySelector("center").innerText.includes("https://uo266007.solid.inrupt/")'
+				'document.querySelector("center").innerText.includes("https://uo266007.inrupt.net")'
 			);
 			await browser.close();
 		});
