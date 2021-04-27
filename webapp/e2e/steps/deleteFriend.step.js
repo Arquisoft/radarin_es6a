@@ -24,16 +24,8 @@ defineFeature(feature, (test) => {
 				timeout: 0
 			});
 			await page.waitForSelector(".sc-EHOje.cffgrt");
-			await page.type(".sc-EHOje.cffgrt", "https://uo264699.solid.inrupt/profile/card#me");
+			await page.type(".sc-EHOje.cffgrt", "https://uo264699.inrupt.net");
 			
-			await page.evaluate(() => {
-				let btns = [ ...document.querySelectorAll("button") ];
-				btns.forEach(function(btn) {
-					if (btn.innerText === "Log In with Provider") {
-						btn.click();
-					}
-				});
-			}); 
 		
 
 			await page.evaluate(() => {
@@ -67,10 +59,6 @@ defineFeature(feature, (test) => {
 			});
 
 
-
-			await page.goto("http://localhost:3000/welcome", {
-				waitUntil: "networkidle2"
-			});
 			await page.goto("http://localhost:3000/friends", {
 				waitUntil: "networkidle2"
 			});
@@ -78,9 +66,16 @@ defineFeature(feature, (test) => {
 
 		when("Selecting the friend I want to delete", async () => {
 			await page.waitFor(500);
+			
+			
+			await page.evaluate(() => {
+				 document.getElementById("friendElementInput").check = 1;
+			});
+			
+			
 
-			await page.waitForSelector("[id='friendId']", { visible: true });
-			await page.type("[id='friendId']", "https://uo266007.solid.inrupt/");
+
+			
 		});
 
 		then("Pressing the delete button", async () => {
@@ -89,7 +84,7 @@ defineFeature(feature, (test) => {
 				submit.click();
 			});
 			await page.waitForFunction(
-				'!document.querySelector("center").innerText.includes("https://uo266007.solid.inrupt/")'
+				'document.querySelector("center").innerText.includes("https://uo266007.inrupt.net")'
 			);
 			await browser.close();
 		});
