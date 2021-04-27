@@ -6,6 +6,7 @@ webapp/node_modules
 webapp/package-lock.json
 /.pnp
 .pnp.js
+restapi/package-lock.json
 
 # testing
 /webapp/coverage
@@ -17,7 +18,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-restapi/node_modules
 restapi/data
 
 .eslintcache
