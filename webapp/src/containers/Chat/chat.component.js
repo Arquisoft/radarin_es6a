@@ -10,11 +10,10 @@ import {
 	 TitleChat,
 	 Button,
 	
-  MessageChat
 
    } 
 from "./chat.style";
-
+import './chat.css';
 type Props = {
 	webId: String
 };
@@ -24,6 +23,10 @@ class Chat extends React.Component {
 	constructor({ webId }: Props) {
 			super();
 			this.webID = webId;
+			let email = this.webID.replace("https://", "");
+			email = email.replace(".solid.community/profile/card#me", "");
+			email = email.replace("/profile/card#me", "");
+			this.webIduser = email;
 			this.handleShow= this.handleShow.bind(this);
 			this.handleSubmit = this.handleSubmit.bind(this);
 			this.message = React.createRef();
@@ -70,7 +73,7 @@ class Chat extends React.Component {
 				}
 			});
 
-			this.message = " ";
+			
 			this.handleShow(event);
 
 
@@ -83,7 +86,7 @@ class Chat extends React.Component {
 			
 			  <ChatWrapper data-testid="chat-component">
                   <Header data-testid="chat-header">
-                      <TitleChat>{i18n.t("chat.webid2")}</TitleChat>
+                      <TitleChat></TitleChat>
                       <DivForms id="chatUser">
                           <DivForms>
                               <LabelInput>
@@ -93,38 +96,54 @@ class Chat extends React.Component {
                           
                       </DivForms>
                       <DivForms>
-                          <Button id="send_message" form="chatUser" type="submit" onClick={(e) => this.handleShow(e)} >Ir
+                          <Button id="send_user" form="chatUser" type="submit" onClick={(e) => this.handleShow(e)} >Ir
                           </Button>
                       </DivForms>
+					  <DivForms>
+					  <LabelInput>
+				Mensaje:
+				<input type="text" id="msn" ref={this.message}/>
+			  </LabelInput>
+			  </DivForms>
+		
+			  <DivForms>
+            <Button id="send_message"  type="submit" onClick={(e) => this.handleSubmit(e)}>
+							Enviar mensaje
+						</Button>
+						</DivForms>
                   </Header>
+				  
           <div>
-		  {this.state.data.length && this.state.data.map(m => {
+		  {this.state.data.length && this.state.data.map(m => { 
+
+			  if(m.emisor === this.webIduser ){
 										
-										return (
+				return (
 										
-												
-												<MessageChat >{m.mensaje}</MessageChat>
-											
+						<div>
+							<div className ="message">
+								<div className ="bubble-container">
+        							<div className="bubble" title={m.emisor}>
+          									{ m.mensaje }
+        							</div>
+      
+								</div>
+							</div>
+						</div>
 									
+
 											
-												)
+												)}
 											}
 										)}
           
   
           </div>
+
+
           </ChatWrapper>
 
-		  <label>
-				Mensaje:
-				<input type="text" id="msn" ref={this.message}/>
-			  </label>
-			  
-		
-
-            <Button  type="submit" onClick={(e) => this.handleSubmit(e)}>
-							Enviar mensaje
-						</Button>
+		  
 						
 			
 			</div>
