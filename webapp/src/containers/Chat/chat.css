@@ -1,14 +1,27 @@
-.bubble{
+.bubbleEmisor{
 
     margin: 1px 0px;
     background: #f4f4f8;
     padding: 10px 15px;
     border-radius: 20px;
     max-width: 100%;
-    border-top-left-radius: 2px;
-    border-bottom-left-radius: 2px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.bubbleReceptor{
+
+    margin: 1px 0px;
+    background: #7070b8;
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 100%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
 }
 
 .message {

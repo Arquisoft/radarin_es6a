@@ -123,8 +123,8 @@ class Chat extends React.Component {
 						<div>
 							<div className ="message">
 								<div className ="bubble-container">
-        							<div className="bubble" title={m.emisor}>
-          									{ m.mensaje }
+        							<div className="bubbleEmisor" >
+          								{m.emisor}	{ m.mensaje }
         							</div>
       
 								</div>
@@ -134,6 +134,26 @@ class Chat extends React.Component {
 
 											
 												)}
+												else{
+
+													return (
+										
+														<div>
+															<div className ="message">
+																<div className ="bubble-container">
+																	<div className="bubbleReceptor" >
+																		{m.emisor} :	{ m.mensaje }
+																	</div>
+									  
+																</div>
+															</div>
+														</div>
+																	
+								
+																			
+																				)
+
+												}
 											}
 										)}
           
