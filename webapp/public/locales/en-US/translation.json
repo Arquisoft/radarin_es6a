@@ -50,6 +50,7 @@
     "map": "Mapa",
     "chat": "Chat",
     "locations": "Locations",
+    "usuarios": "Users",
     "friends": "Friends",
     "formModel": "Form Model",
     "logOut": "Log out",
@@ -114,6 +115,9 @@
     "latitud": "Latitude",
     "fecha": "Date",
     "noLocations": "No locations available. Please, start the search."
+	},
+  "usuarios": {
+    "noUsuarios": "No users available."
 	},
   "profile": {
     "successCallback": "Pod updated successfully",
