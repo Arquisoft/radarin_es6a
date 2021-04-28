@@ -312,6 +312,7 @@ function distance(lat1, lon1, lat2, lon2) {
 }
 
 // Obtener las localizaciones para un usuario (email) y una fecha opcional
+// Ejemplo de email: uo234567
 router.get("/locations/:email/:fecha?", async (req, res) => {
     console.log("Emisor: ", req.params.email);
     let criterio = { email: req.params.email };
