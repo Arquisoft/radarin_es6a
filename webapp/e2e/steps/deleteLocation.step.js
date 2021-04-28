@@ -1,6 +1,6 @@
 import "jest";
 import { defineFeature, loadFeature } from "jest-cucumber";
-const feature = loadFeature("features/seeLocations.feature");
+const feature = loadFeature("features/deleteLocation.feature");
 const puppeteer = require("puppeteer");
 let browser = null;
 let page = null;
@@ -10,8 +10,8 @@ defineFeature(feature, (test) => {
 		jest.setTimeout(12000000);
 	});
 
-	test("Trying to see my locations", ({ given, when, then }) => {
-		given("I am a user trying to see my locations", async () => {
+	test("Trying to delete a location", ({ given, when, then }) => {
+		given("I am a user trying to delete a location", async () => {
 			browser = await puppeteer.launch({
 				headless: false
 			});
@@ -67,19 +67,24 @@ defineFeature(feature, (test) => {
 			});
 		});
 
-		when("Putting the location's date I want to see", async () => {
+		when("Putting the location's date I want to see and pressing the show button", async () => {
 			await page.waitFor(500);
 
 			await page.waitForSelector("[id='locations_date']", { visible: true });
 			await page.type("[id='locations_date']", "2023-10-23");
-		});
 
-		then("Pressing the show button", async () => {
-			await page.evaluate(() => {
+            await page.evaluate(() => {
 				let submit = document.getElementById("search_locations");
 				submit.click();
 			});
-	
+		});
+
+		then("Pressing the delete button", async () => {
+			await page.evaluate(() => {
+				let submit = document.getElementById("delete_location");
+				submit.click();
+			});
+			
 			await browser.close();
 		});
 	});
