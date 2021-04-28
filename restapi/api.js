@@ -372,8 +372,8 @@ router.get("/chat/:email1/:email2",async (req, res) => {
     let email1 = req.params.email1;
     let email2 = req.params.email2;
 
-
-    let criterio = { 'emisor':  email1 , 'receptor':email2 }
+    let criterio = {$or: [{'emisor':  email1 ,'receptor':email2}, {'emisor':  email2 ,'receptor':email1}]};
+    
 
     messages = await Message.find(criterio);
 
