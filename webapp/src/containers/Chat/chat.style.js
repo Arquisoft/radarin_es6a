@@ -33,10 +33,8 @@ import styled from "styled-components";
     export const ChatWrapper = styled.section`
     display: flex;
     flex: 1 0 auto;
-    flex-direction: row;
-    #save_route{
-      margin-left:110px;
-    }
+    flex-direction: ;
+    
     @media only screen and (max-width: 900px) {
       padding: auto;
       
@@ -62,7 +60,8 @@ import styled from "styled-components";
   `;
   
   export const Header = styled.div`
-    max-width: 100%;
+    width: 100%;
+    
     align-items: top;
     justify-content: center;
     background: rgb(0, 77, 134);
@@ -145,7 +144,7 @@ import styled from "styled-components";
   export const Button = styled.button`
     max-width: 128px;
     display: inline-block;
-  
+   margin-left:15px;
     &:first-child {
       margin-right: 10px;
     }

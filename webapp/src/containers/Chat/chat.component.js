@@ -1,7 +1,7 @@
 /* eslint-disable constructor-super */
 import React from 'react';
 import chatHelper from "./chatHelper";
-import i18n from "i18n";
+
 import { 
 	Header,
 	 ChatWrapper,
@@ -9,13 +9,12 @@ import {
 	 LabelInput,
 	 TitleChat,
 	 Button,
-	
-
    } 
 from "./chat.style";
 import './chat.css';
 type Props = {
 	webId: String
+
 };
 
 class Chat extends React.Component {
@@ -34,7 +33,8 @@ class Chat extends React.Component {
 			
 			this.state = {
 				data: [],
-				original:[]
+				original:[],
+				
 			};
 		}
 	  
@@ -82,10 +82,11 @@ class Chat extends React.Component {
 		render() {
 		  return (
 			
-			
+			<div className ="container">
 			
 			  <ChatWrapper data-testid="chat-component">
                   <Header data-testid="chat-header">
+				  
                       <TitleChat></TitleChat>
                       <DivForms id="chatUser">
                           <DivForms>
@@ -96,31 +97,30 @@ class Chat extends React.Component {
                           
                       </DivForms>
                       <DivForms>
-                          <Button id="send_user" form="chatUser" type="submit" onClick={(e) => this.handleShow(e)} >Ir
+                          <Button id="send_user" form="chatUser" type="submit" onClick={(e) => this.handleShow(e)} >Chatear
                           </Button>
                       </DivForms>
 					
                   </Header>
 				  
-				  <div className ="message">
-		  {this.state.data.length && this.state.data.map(m => { 
+				 
+		   <div className ="message">
+					  
+		  {this.state.data.map(m => { 
 
 			  if(m.emisor === this.webIduser ){
 										
 				return (
 										
-						
-							
 								<div className ="bubble-container">
         							<div className="bubbleEmisor" >
-          								{m.emisor}	{ m.mensaje }
+          								{ m.mensaje }
         							</div>
       
 								</div>
 						
 						
-									
-
+			
 											
 												)}
 												else{
@@ -128,13 +128,13 @@ class Chat extends React.Component {
 													return (
 										
 														<div>
-															<div className ="message">
+															
 																<div className ="bubble-container">
 																	<div className="bubbleReceptor" >
-																		{m.emisor} :	{ m.mensaje }
+																			{ m.mensaje }
 																	</div>
 									  
-																</div>
+																
 															</div>
 														</div>
 																	
@@ -145,27 +145,27 @@ class Chat extends React.Component {
 												}
 											}
 										)}
-            <DivForms>
-					  <LabelInput>
-				Mensaje:
-				<input type="text" id="msn" ref={this.message}/>
-			  </LabelInput>
-			  </DivForms>
-		
-			  <DivForms>
+           
+  
+          </div>
+		  </ChatWrapper>
+         <div className="send">
+		 
+					  
+				
+				<input class="inputsend" type="text" id="msn" ref={this.message}/>
+			  
+			 
+			  
+			 
             <Button id="send_message"  type="submit" onClick={(e) => this.handleSubmit(e)}>
 							Enviar mensaje
 						</Button>
-						</DivForms>
-  
-          </div>
-
-
-          </ChatWrapper>
-
-		  
 						
-			
+						</div>	
+						
+		  </div>
+		 	
 		
 		  );
 		}

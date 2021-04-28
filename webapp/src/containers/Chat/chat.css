@@ -4,6 +4,7 @@
     background: #f4f4f8;
     padding: 10px 15px;
     border-radius: 20px;
+    margin-left: 300px;
     max-width: 100%;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
@@ -16,21 +17,23 @@
     margin: 1px 0px;
     background: #adadf0;
     padding: 10px 15px;
+    
     border-radius: 20px;
     max-width: 100%;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .message {
     display: flex;
     flex-direction: column;
-    margin-left: 50px;
+    margin-left:200px;
     border:1px;
     border-color: aqua;
-    width: 100%;
+    width: 90%;
+    margin-top: 10px;
   }
 
   .bubble-container {
@@ -38,6 +41,20 @@
     display: flex;
   }
 
-.input-container{
+.container{
+    
+    display: flex;
+    flex-direction: column;
+}
+.send{
+
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    height: 10%;
+    margin-left: 400px;
     
 }
+
+
+
