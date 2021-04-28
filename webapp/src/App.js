@@ -7,6 +7,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import Routes from './routes';
 import theme from './utils/theme';
+import '@inrupt/solid-style-guide';
 import { Toaster } from './App.styled';
 
 library.add(fas);
