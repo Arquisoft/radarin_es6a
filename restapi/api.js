@@ -315,11 +315,11 @@ function distance(lat1, lon1, lat2, lon2) {
 // Ejemplo de email: uo234567
 router.get("/locations/:email/:fecha?", async (req, res) => {
 
-    let email = req.params.email.replace(".inrupt.net", "");
+    let email_user = req.params.email.replace(".inrupt.net", "");
 
-    console.log("Emisor: ", email);
+    console.log("Emisor: ", email_user);
 
-    let criterio = { email: email };
+    let criterio = { email: email_user };
 
     let user = await User.find(criterio).sort('-_id') //En orden inverso
 
