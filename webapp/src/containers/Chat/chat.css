@@ -30,9 +30,14 @@
     margin-left: 50px;
     border:1px;
     border-color: aqua;
+    width: 100%;
   }
 
   .bubble-container {
     font-size: 14px;
     display: flex;
   }
+
+.input-container{
+    
+}

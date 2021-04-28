@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 
-/*
-    export const ChatInputContainer = styled.inputContainer`
+
+     export const ChatInputContainer = styled.div`
   
       backgroundColor: fade(theme.palette.common.white, 0.15),
       '&:hover': {
@@ -14,7 +14,7 @@ import styled from "styled-components";
       width: '100%',
     `;
 
-    export const ChatIconStyle = styled.icon`
+ /**    export const ChatIconStyle = styled.icon`
     
       width: theme.spacing(7),
       height: '100%',
@@ -24,11 +24,12 @@ import styled from "styled-components";
       alignItems: 'center',
       justifyContent: 'center',
   `;
-  export const ChatInputInput = styled.inputInput`
+  */
+ /**  export const ChatInputInput = styled.input`
       padding: theme.spacing(1, 1, 1, 7),
       width: '100%',
     `;
-    */
+  */  
     export const ChatWrapper = styled.section`
     display: flex;
     flex: 1 0 auto;

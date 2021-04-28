@@ -73,7 +73,7 @@ class Chat extends React.Component {
 				}
 			});
 
-			
+		
 			this.handleShow(event);
 
 
@@ -81,7 +81,7 @@ class Chat extends React.Component {
 	  
 		render() {
 		  return (
-			  <div>
+			
 			
 			
 			  <ChatWrapper data-testid="chat-component">
@@ -99,37 +99,26 @@ class Chat extends React.Component {
                           <Button id="send_user" form="chatUser" type="submit" onClick={(e) => this.handleShow(e)} >Ir
                           </Button>
                       </DivForms>
-					  <DivForms>
-					  <LabelInput>
-				Mensaje:
-				<input type="text" id="msn" ref={this.message}/>
-			  </LabelInput>
-			  </DivForms>
-		
-			  <DivForms>
-            <Button id="send_message"  type="submit" onClick={(e) => this.handleSubmit(e)}>
-							Enviar mensaje
-						</Button>
-						</DivForms>
+					
                   </Header>
 				  
-          <div>
+				  <div className ="message">
 		  {this.state.data.length && this.state.data.map(m => { 
 
 			  if(m.emisor === this.webIduser ){
 										
 				return (
 										
-						<div>
-							<div className ="message">
+						
+							
 								<div className ="bubble-container">
         							<div className="bubbleEmisor" >
           								{m.emisor}	{ m.mensaje }
         							</div>
       
 								</div>
-							</div>
-						</div>
+						
+						
 									
 
 											
@@ -156,7 +145,18 @@ class Chat extends React.Component {
 												}
 											}
 										)}
-          
+            <DivForms>
+					  <LabelInput>
+				Mensaje:
+				<input type="text" id="msn" ref={this.message}/>
+			  </LabelInput>
+			  </DivForms>
+		
+			  <DivForms>
+            <Button id="send_message"  type="submit" onClick={(e) => this.handleSubmit(e)}>
+							Enviar mensaje
+						</Button>
+						</DivForms>
   
           </div>
 
@@ -166,7 +166,7 @@ class Chat extends React.Component {
 		  
 						
 			
-			</div>
+		
 		  );
 		}
 	  }
