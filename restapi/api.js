@@ -17,13 +17,13 @@ router.post("/user/login", async (req, res) => {
     let user = req.body.user;
     let password = req.body.password;
     let session = await logIn(idp, user, password);
-    console.log(session);
     if (session == null) {
         res.send({
             result: false
         });
     } else {
         let name = await getName(session.webId);
+        let photo = await getPhoto(session.webId);
 
         let friends = await findFriendsFor(session.webId);
 
@@ -49,7 +49,8 @@ router.post("/user/login", async (req, res) => {
             result: true,
             userid: usuario2._id,
             friends: friends,
-            name: name
+            name: name,
+            photo: photo
         });
     }
 });
@@ -78,7 +79,18 @@ async function getName(webId) {
     await fetcher.load(profile);
     const name = store.any(me, FOAF("name"));
     console.log("**** NOMBRE: " + name.value);
-    return name + "";
+    return name.value;
+}
+
+async function getPhoto(webId) {
+    const store = $rdf.graph();
+    const fetcher = new $rdf.Fetcher(store);
+    const me = store.sym(webId);
+    const profile = me.doc();
+    await fetcher.load(profile);
+    const photo = store.any(me, VCARD("hasPhoto"));
+    console.log("**** FOTO: " + photo.value);
+    return photo ? photo.value : null;
 }
 
 async function findFriendsFor(webId) {
@@ -88,10 +100,10 @@ async function findFriendsFor(webId) {
     const profile = me.doc();
     await fetcher.load(profile);
     let friends = store.each(me, FOAF("knows"));
-    let amiguis = [];
-    friends.forEach(e => amiguis.push(e.value));
-    console.log("**** AMIGOS: " + amiguis);
-    return amiguis;
+    let amigos = [];
+    friends.forEach(e => amigos.push(e.value));
+    console.log("**** AMIGOS: " + amigos);
+    return amigos;
 }
 
 
@@ -276,7 +288,8 @@ router.post("/locations/addbyid", async (req, res) => {
         if (dis <= 1) {
             count = count + 1;
             list.push({
-                email: u.email,
+                username: u.email,
+                idp: u.idp,
                 _id: u._id
             });
         }

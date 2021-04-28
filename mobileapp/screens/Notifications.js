@@ -3,7 +3,7 @@ import { StyleSheet, View, FlatList, StatusBar, Text } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
 import { data } from './scripts/UserData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { LocationCallback } from './scripts/Location';
+import { LocationCallback1 } from './scripts/Location';
 
 /**
  * Metodo que devuelve la vista de avisos del menu de navegación
@@ -23,7 +23,7 @@ class NotificationsView extends React.Component {
             number: 0
         };
         this.reloadScreen = this.reload.bind(this);
-        LocationCallback(this.reloadScreen);
+        LocationCallback1(this.reloadScreen);
     }
     async reload() {
         this.setState({ number: this.state.number + 1 });

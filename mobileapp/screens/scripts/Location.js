@@ -2,10 +2,14 @@ import GetLocation from 'react-native-get-location';
 import { log } from './Log';
 import { data } from './UserData';
 
-var reload = () => { };
+var reload1 = () => { };
+export function LocationCallback1(func) {
+    reload1 = func;
+}
 
-export function LocationCallback(func) {
-    reload = func;
+var reload2 = () => { };
+export function LocationCallback2(func) {
+    reload2 = func;
 }
 
 /**
@@ -36,7 +40,7 @@ function handleLocation(location) {
                 msg = "Hay un amigo cerca"
             else
                 msg = "Hay " + json.number + " amigos cerca"
-            data.user.notifications.addNotification(json.number, json.friends, msg, reload);
+            data.user.notifications.addNotification(json.number, json.friends, msg, reload1, reload2);
         })
         .catch((error) => log('Error en el envio: ' + error));
 }

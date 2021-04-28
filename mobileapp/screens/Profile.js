@@ -10,6 +10,10 @@ export function ProfileLoadHandleLogout(func) {
     reload = func;
 }
 
+function photo() {
+    return data.user.photo == null ? require('../assets/profile.png') : { uri: data.user.photo };
+}
+
 /**
  * Metodo que devuelve la vista del perfil del menu de navegación
  * @param {*} navigation 
@@ -20,7 +24,7 @@ export const Profile = ({ navigation }) => {
         <ScreenContainer>
             <View style={{ alignSelf: "center" }}>
                 <View style={styles.profileImage}>
-                    <Image source={require('../assets/profile.png')} style={styles.image} resizeMode="center"></Image>
+                    <Image source={photo()} style={styles.image} resizeMode="center"></Image>
                 </View>
             </View>
             <View style={styles.nameView}>

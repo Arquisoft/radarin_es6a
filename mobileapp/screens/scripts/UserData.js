@@ -12,7 +12,7 @@ export var data = {
     settings: {
         geolocation: false,
         notifications: true,
-        geolocationTimeInterval: 5,
+        geolocationTimeInterval: 3,
         updateGeolocation: async () => {
             try {
                 await AsyncStorage.setItem('@settings-geolocation', JSON.stringify(data.settings.geolocation));
@@ -37,6 +37,7 @@ export var data = {
     user: {
         id: null,
         name: null,
+        photo: null,
         updateId: async () => {
             try {
                 await AsyncStorage.setItem('@user-id', JSON.stringify(data.user.cred.idp));
@@ -56,7 +57,8 @@ export var data = {
                     list.push({
                         webID: friends[i],
                         username: friends[i].replace('https://', '').replace('.solidcommunity.net', ''),
-                        idp: solid
+                        idp: solid,
+                        near: false
                     });
                 } else if (friends[i].includes("inrupt.net")) {
                     list.push({
@@ -101,17 +103,13 @@ export var data = {
             log("Iniciando sesión...");
             var result = await fetchLogIn(idp, user, password);
             if (result.res) {
-                log("result" + result);
-                for (var x in result) {
-                    log("x: " + x);
-                }
-                log("result.res: " + result.res);
                 data.user.logged = true;
                 data.user.cred.idp = idp;
                 data.user.cred.username = user;
                 data.user.cred.password = password;
                 data.user.id = result.id;
                 data.user.name = result.name;
+                data.user.photo = result.photo;
                 data.user.addFriends(result.friends);
                 data.user.updateId();
                 data.user.cred.updateIdp();
@@ -129,7 +127,7 @@ export var data = {
         },
         notifications: {
             list: [],
-            addNotification: async (number, friends, msg, callback) => {
+            addNotification: async (number, friends, msg, callback1, callback2) => {
                 if (number > 0) {
                     let d = new Date();
                     let obj = {
@@ -140,6 +138,25 @@ export var data = {
                         date: d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()
                     };
                     data.user.notifications.list.push(obj);
+                    for (var k = 0; k < data.user.friends.length; k++) {
+                        data.user.friends[k].near = false;
+                    }
+                    for (var i = 0; i < friends.length; i++) {
+                        for (var j = 0; j < data.user.friends.length; j++) {
+                            if (data.user.friends[j].idp == friends[i].idp && data.user.friends[j].username == friends[i].username) {
+                                data.user.friends[j].near = true;
+                                break;
+                            }
+                        }
+                    }
+                    data.user.friends.sort(function (a, b) {
+                        if (a.near && b.near)
+                            return 0;
+                        else if (a.near)
+                            return -1;
+                        else
+                            return 1;
+                    });
                     data.user.notifications.updateNotifications();
                     if (AppState.currentState != "active" && data.settings.notifications) {
                         var mensaje = "";
@@ -152,7 +169,8 @@ export var data = {
                             message: mensaje
                         });
                     }
-                    callback();
+                    await callback1();
+                    await callback2();
                 }
             },
             deleteNotification: async (id) => {
@@ -187,6 +205,7 @@ export var data = {
                         log("Las credenciales guardadas son correctas.");
                         data.user.addFriends(result.friends);
                         data.user.name = result.name;
+                        data.user.photo = result.photo;
                         data.user.logged = true;
                         data.user.cred.idp = idp;
                         data.user.cred.username = user;
@@ -259,7 +278,8 @@ async function fetchLogIn(idp, user, password) {
                     res: true,
                     id: json.userid,
                     friends: json.friends,
-                    name: json.name
+                    name: json.name,
+                    photo: json.photo
                 };
             }
             return {
