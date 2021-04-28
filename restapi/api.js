@@ -5,13 +5,12 @@ const Message = require("./models/messages");
 var config = require('./config');
 const { MIN_HOUR, MAX_HOUR } = require("./config");
 const router = express.Router();
-const SolidNodeClient = require("solid-node-client").SolidNodeClient;
-const client = new SolidNodeClient();
 const auth = require('solid-auth-cli');
 const $rdf = require("rdflib");
 const FOAF = $rdf.Namespace("http://xmlns.com/foaf/0.1/");
 const VCARD = $rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
 
+// Login
 router.post("/user/login", async (req, res) => {
     let idp = req.body.idp;
     let user = req.body.user;
