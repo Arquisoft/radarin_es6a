@@ -1,19 +1,19 @@
 
 class UsuariosHelper {
-	async getUsuarios(email) {
+	async addUser(email, idp){
 		const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-		console.log(apiEndPoint)
-		let response = await fetch(apiEndPoint+'/users/list')
+		let response = await fetch(apiEndPoint+'/users/add', {
+			method: 'POST',
+			headers: {'Content-Type':'application/json'},
+			body: JSON.stringify({'idp':idp, 'email':email})
+		  })
 		return await response.json()
 	}
 
-	async deleteUsuarios(id) {
-		const requestOptions = {
-			method: 'DELETE'
-		  };
+	async deleteUsuarios(email) {
 		const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-		console.log(apiEndPoint + " " + id)
-		let response = await fetch(apiEndPoint+'/locations/delete/' + id, requestOptions)
+		console.log(apiEndPoint + " " + email)
+		let response = await fetch(apiEndPoint+'/users/delete/' + email)
 		return await response.json()
 	}
 }
