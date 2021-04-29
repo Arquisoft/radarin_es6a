@@ -1,3 +1,6 @@
+import ldflex from "@solid/query-ldflex";
+import { foaf } from "rdf-namespaces";
+import { fetchDocument } from "tripledoc";
 
 class UsersHelper {
 	async addUser(email, idp){
@@ -15,6 +18,12 @@ class UsersHelper {
 		console.log(apiEndPoint + " " + id)
 		let response = await fetch(apiEndPoint+'/users/delete/' + id)
 		return await response.json()
+	}
+
+	async getName(webId) {
+		const doc = await fetchDocument(webId);
+		const me = doc.getSubject(webId);
+		me.getString(foaf.name);
 	}
 }
 const usersHelper = new UsersHelper();

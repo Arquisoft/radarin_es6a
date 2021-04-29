@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import usersHelper from "./UsersHelper";
 import ReactTable from 'react-table-v6'
 import 'react-table-v6/react-table.css'
+import auth from "solid-auth-client";
 
 import { Header,
 	 LocationsWrapper,
@@ -25,6 +26,7 @@ class Users extends React.Component {
 		this.state = { data: [] }
 		this.newIdp = React.createRef();
 		this.newUser = React.createRef();
+		this.email = "";
 	}
 
 	componentDidMount() {
@@ -89,41 +91,77 @@ class Users extends React.Component {
 		
 	}
 
+	async getName() {
+		await auth.trackSession((session) => {
+			if (!session) {
+			  return;
+			} else {
+			  this.webId = session.webId;
+			}
+		  });
+		return this.webId;
+	}
+
 	render() {
+
+		this._asyncRequest = this.getName().then((data) => {
+			console.log("Data: " + data);
+
+			this.email = data.replace("https://", "");
+			this.email = this.email.replace(".inrupt.net/profile/card#me", "");
+			this.email = this.email.replace("/profile/card#me", "");
+
+		});
 		
-		return (
+		console.log("Email: " + this.email)
+		
+		if(this.email == "radarines6a") {
 
-			<LocationsWrapper data-testid="locations-component">
-				<Header data-testid="locations-header">
-					<TitleLocations>{i18n.t("usuarios.usuarios")}</TitleLocations>
-						<LocationsForm id="locationsf">
-							<DivForms>
-									<LabelInput>
-										{i18n.t("usuarios.email")}
-										<input type="text" id="newUser" name="newUser" ref={this.newUser} />
-									</LabelInput>
-								
-							</DivForms>
-							<DivForms>
-									<LabelInput>
-									{i18n.t("usuarios.idp")}
-										<input type="text" id="newIdp" name="newIdp" ref={this.newIdp} />
-									</LabelInput>
-								
-							</DivForms>
-						</LocationsForm>
-					<DivForms>
-						<Button id="add_user" form="addUser" type="submit" onClick={(e) => this.handleSubmitAdd(e)}>
-						{i18n.t("usuarios.add")}
-						</Button>
-					</DivForms>
-				</Header>
-				
-				{this.getList()}
-				
-			</LocationsWrapper>
+			return (
 
-		);
+				<LocationsWrapper data-testid="locations-component">
+					<Header data-testid="locations-header">
+						<TitleLocations>{i18n.t("usuarios.usuarios")}</TitleLocations>
+							<LocationsForm id="locationsf">
+								<DivForms>
+										<LabelInput>
+											{i18n.t("usuarios.email")}
+											<input type="text" id="newUser" name="newUser" ref={this.newUser} />
+										</LabelInput>
+									
+								</DivForms>
+								<DivForms>
+										<LabelInput>
+										{i18n.t("usuarios.idp")}
+											<input type="text" id="newIdp" name="newIdp" ref={this.newIdp} />
+										</LabelInput>
+									
+								</DivForms>
+							</LocationsForm>
+						<DivForms>
+							<Button id="add_user" form="addUser" type="submit" onClick={(e) => this.handleSubmitAdd(e)}>
+							{i18n.t("usuarios.add")}
+							</Button>
+						</DivForms>
+					</Header>
+					
+					{this.getList()}
+					
+				</LocationsWrapper>
+
+			);
+		} else {
+			return (
+				<ResultLocations>
+					<FormRenderContainer id="empty">
+						<h5 align="center">
+							{i18n.t("users.noUsers")}
+						</h5>
+						
+					</FormRenderContainer>	
+				</ResultLocations>
+			);
+		}
 	}
 
 		getList() {
@@ -133,6 +171,7 @@ class Users extends React.Component {
 
 				let rows = [];
 				this.state.data.forEach(m => {
+						
 				rows.push(
 					{
 						email : m.email,

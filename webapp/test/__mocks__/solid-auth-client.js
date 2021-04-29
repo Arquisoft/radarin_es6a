@@ -13,7 +13,7 @@ class SolidAuthClient extends EventEmitter {
 
   popupLogin = () => {};
 
-  logout = () => {};
+  logout = () => { };
 
   trackSession(callback) {
     if (this.session !== undefined) callback(this.session);
