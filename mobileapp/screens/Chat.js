@@ -23,7 +23,7 @@ class ChatView extends React.Component {
         this.state = {
             number: 0,
             friend: props.children,
-            chat: [],
+            chat: [{ id: "1", msg: "Hola", own: false }, { id: "2", msg: "Que tal estas??", own: false }],
             mesagge: null
         };
         log("Accediendo a chat de " + this.state.friend.username + " de " + this.state.friend.idp)
@@ -36,7 +36,7 @@ class ChatView extends React.Component {
     async send() {
         console.log(this.state);
         if (this.state.mesagge != null) {
-            this.state.chat.unshift({ id: uuid.v4(), msg: this.state.mesagge });
+            this.state.chat.unshift({ id: uuid.v4(), msg: this.state.mesagge, own: true });
             this.setState({ mesagge: null });
             this.reloadScreen();
         }
@@ -50,11 +50,21 @@ class ChatView extends React.Component {
                             style={{ transform: [{ scaleY: -1 }] }}
                             keyExtractor={item => item.id}
                             data={this.state.chat}
-                            renderItem={({ item }) => (
-                                <View style={styles.myMessage}>
-                                    <Text style={styles.text}>{item.msg}</Text>
-                                </View>
-                            )}
+                            renderItem={({ item }) => {
+                                if (item.own) {
+                                    return (
+                                        <View style={styles.myMessage}>
+                                            <Text style={styles.myText}>{item.msg}</Text>
+                                        </View>
+                                    );
+                                } else {
+                                    return (
+                                        <View style={styles.hisMessage}>
+                                            <Text style={styles.hisText}>{item.msg}</Text>
+                                        </View>
+                                    );
+                                }
+                            }}
                         />
                     </View>
                     <View style={styles.messageView} >
@@ -86,15 +96,34 @@ const styles = StyleSheet.create({
     chat: {
         flex: 1
     },
-    text: {
-        textAlign: "center",
-        fontSize: 22,
-        marginTop: 10
+    myText: {
+        textAlign: "right",
+        fontSize: 20,
+        margin: 10,
+        backgroundColor: "#0275d8",
+        borderRadius: 10,
+        paddingVertical: 6,
+        paddingHorizontal: 12,
+        color: "white"
+    },
+    hisText: {
+        textAlign: "left",
+        fontSize: 20,
+        margin: 10,
+        backgroundColor: "#fff",
+        borderRadius: 10,
+        paddingVertical: 6,
+        paddingHorizontal: 12,
     },
     myMessage: {
         borderRadius: 10,
-        backgroundColor: "green",
-        transform: [{ scaleY: -1 }]
+        transform: [{ scaleY: -1 }],
+        flexDirection: "row-reverse"
+    },
+    hisMessage: {
+        borderRadius: 10,
+        transform: [{ scaleY: -1 }],
+        flexDirection: "row"
     },
     messageView: {
         margin: 10,
