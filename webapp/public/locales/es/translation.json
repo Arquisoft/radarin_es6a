@@ -47,6 +47,9 @@
   },
   "navBar": {
     "welcome": "Bienvenida",
+    "map": "Mapa",
+    "chat": "Chat",
+    "locations": "Localizaciones",
     "friends": "Amigos",
     "formModel": "Form Model",
     "logOut": "Cerrar Sesión",
@@ -103,6 +106,16 @@
       "maximumFiles": "Disculpe, has excedido la cantidad máxima de archivos permitidos por subida"
     }
   },
+  "locations": {
+		"title": "Localizaciones",
+		"date": "Fecha (<YYYY-mm-dd>) ",
+		"btnLocations": "Buscar",
+    "longitud": "Longitud",
+    "latitud": "Latitud",
+    "fecha": "Fecha",
+    "noLocations": "No hay localizaciones disponibles. Por favor inicie una búsqueda."
+  },
+
   "profile": {
     "successCallback": "Pod actualizado satisfactoriamente",
     "successTitle": "Éxito",

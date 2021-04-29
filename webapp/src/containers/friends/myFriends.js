@@ -1,9 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button } from "react-bootstrap";
 import { NotificationContainer, NotificationManager } from "react-notifications";
 import FriendList from "../../components/Friends/friendsList";
-import "./myFriends.css";
+import {ListFriend,ButtonAddFriend,InputAdd,SpanFriend,ModalApp, AddFriend} from"./myFriends.style.js";
 import { useNotification } from "@inrupt/solid-react-components";
 
 
@@ -98,35 +97,36 @@ export const myFriends = ({ myWebId, service }) => {
   return (
     <center>
     <div data-testid="friendsTest">
-      <div className="modal-app">
+      <ModalApp>
         <div className="modal-header">
           <h2>{t("friends.title")}</h2>
           <hr/>
         </div>
         <div className="modal-body">
-          <span className="span-friends">{t("friends.addTitle")}</span>
-          <div className="add-friends">
-            <input data-testid="input-add" className="input-add" id="friendId" type="text"
-                   placeholder="https://uoxxxxxx.inrupt.net/"></input>
-          </div>
+          <SpanFriend className="span-friends">{t("friends.addTitle")}</SpanFriend>
+          <AddFriend className="add-friends">
+            <InputAdd data-testid="input-add" className="input-add" id="friendId" type="text"
+                   placeholder="https://uoxxxxxx.inrupt.net/"></InputAdd>
+          </AddFriend>
           <div>
-          <Button id="btnAdd" data-testid="btnAddFriend" className="correct-margin" onClick={addFriend}>
+          <ButtonAddFriend id="btnAdd" data-testid="btnAddFriend" className="correct-margin" onClick={addFriend}>
               {t("friends.add")}
-            </Button>
+            </ButtonAddFriend>
           </div>
           <br/>
-          <span className="span-friends">{t("friends.deleteTitle")}</span>
-          <div className="list-friends">
-            <FriendList src="user.friends" nameList="friendList" nameCk="friend"></FriendList>
-          </div>
+          <SpanFriend className="span-friends">{t("friends.deleteTitle")}</SpanFriend>
+          <ListFriend className="list-friends">
+            <FriendList  src="user.friends" nameList="friendList" nameCk="friend"></FriendList >
+          </ListFriend>
           <div>
-            <Button id="deleteFriend" data-testid="btnDeleteFriend" className="correct-margin" onClick={deleteFriend}>
+            <ButtonAddFriend id="deleteFriend" data-testid="btnDeleteFriend" className="correct-margin" onClick={deleteFriend}>
               {t("friends.delete")}
-            </Button>
+            </ButtonAddFriend>
           </div>
         </div>
-      </div>
+      </ModalApp>
       <NotificationContainer/>
+      
     </div>
     </center>
   );

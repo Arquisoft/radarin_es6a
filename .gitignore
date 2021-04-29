@@ -1,9 +1,13 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+
 webapp/node_modules
+webapp/package-lock.json
 /.pnp
 .pnp.js
+node_modules
+restapi/node_modules
 
 # testing
 /webapp/coverage
@@ -15,8 +19,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-restapi/node_modules
-restapi/data
 
 .eslintcache
 <<<<<<< HEAD

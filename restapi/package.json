@@ -16,14 +16,21 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+<<<<<<< HEAD
     "express-prom-bundle": "^6.3.1",
     "mongodb": "^3.6.6",
     "mongoose": "^5.11.11",
     "prom-client": "^13.0.0"
+=======
+    "express-prom-bundle": "^6.3.4",
+    "mongoose": "^5.12.2",
+    "rdflib": "^2.2.0",
+    "solid-auth-cli": "^1.0.15"
+>>>>>>> master
   },
   "devDependencies": {
     "jest": "^26.6.3",
-    "mongodb-memory-server": "^6.9.3",
-    "supertest": "^6.0.1"
+    "mongodb-memory-server": "^6.9.6",
+    "supertest": "^6.1.3"
   }
 }

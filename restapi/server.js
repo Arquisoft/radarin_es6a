@@ -2,7 +2,8 @@ const express = require("express")
 const promBundle = require("express-prom-bundle");
 const cors = require('cors');
 const mongoose = require("mongoose")
-const api = require("./api") 
+const api = require("./api")
+const MAX_LOCATIONS = 5
 
 function connect(){
     //The MONGO_URI variable is the connection string to MongoDB Atlas (for production). This env variable is created in heroku.
@@ -36,5 +37,6 @@ function connect(){
    
 }
 
+
 // Connect to MongoDB database, the wait is for giving time to mongodb to finish loading
-setTimeout(connect,5000)
+setTimeout(connect, 5000)
