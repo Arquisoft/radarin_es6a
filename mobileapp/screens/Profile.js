@@ -22,44 +22,54 @@ function photo() {
 export const Profile = ({ navigation }) => {
     return (
         <ScreenContainer>
-            <View style={{ alignSelf: "center" }}>
-                <View style={styles.profileImage}>
-                    <Image source={photo()} style={styles.image} resizeMode="center"></Image>
+            <View style={styles.panel}>
+                <View style={{ alignSelf: "center" }}>
+                    <View style={styles.profileImage}>
+                        <Image source={photo()} style={styles.image} resizeMode="center"></Image>
+                    </View>
+                </View>
+                <View style={styles.nameView}>
+                    <Text style={styles.name}>{data.user.name}</Text>
                 </View>
             </View>
-            <View style={styles.nameView}>
-                <Text style={styles.name}>{data.user.name}</Text>
-            </View>
-            <View style={styles.elemento}>
-                <View style={styles.espacio}>
+            <View style={styles.panel2}>
+                <View style={styles.panel3}>
+                    <View style={styles.elemento}>
+                        <View style={styles.espacio}>
+                        </View>
+                        <Text style={styles.subText}>Nombre de usuario</Text>
+                    </View>
+                    <View style={styles.elemento2}>
+                        <View style={styles.espacio}>
+                            <View style={styles.indicador}></View>
+                        </View>
+                        <View>
+                            <Text style={styles.text}>{data.user.cred.username}</Text>
+                        </View>
+                    </View>
                 </View>
-                <Text style={styles.subText}>Nombre de usuario</Text>
-            </View>
-            <View style={styles.elemento2}>
-                <View style={styles.espacio}>
-                    <View style={styles.indicador}></View>
+                <View style={styles.panel4}>
+                    <View style={styles.elemento}>
+                        <View style={styles.espacio}>
+                        </View>
+                        <Text style={styles.subText}>Proveedor</Text>
+                    </View>
+                    <View style={styles.elemento2}>
+                        <View style={styles.espacio}>
+                            <View style={styles.indicador}></View>
+                        </View>
+                        <View>
+                            <Text style={styles.text}>{data.user.cred.idp}</Text>
+                        </View>
+                    </View>
                 </View>
-                <View>
-                    <Text style={styles.text}>{data.user.cred.username}</Text>
+                <View style={styles.panel5}>
+                    <View style={{ alignItems: "center" }}>
+                        <TouchableOpacity style={styles.logoutBtn} onPress={logout}>
+                            <Text style={styles.logoutText}>Cerrar Sesión</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
-            <View style={styles.elemento}>
-                <View style={styles.espacio}>
-                </View>
-                <Text style={styles.subText}>Proveedor</Text>
-            </View>
-            <View style={styles.elemento2}>
-                <View style={styles.espacio}>
-                    <View style={styles.indicador}></View>
-                </View>
-                <View>
-                    <Text style={styles.text}>{data.user.cred.idp}</Text>
-                </View>
-            </View>
-            <View style={{ alignItems: "center" }}>
-                <TouchableOpacity style={styles.logoutBtn} onPress={logout}>
-                    <Text style={styles.logoutText}>Cerrar Sesión</Text>
-                </TouchableOpacity>
             </View>
         </ScreenContainer>
     );
@@ -71,6 +81,27 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    panel: {
+        flex: 5.5,
+        borderBottomWidth: 1,
+        borderColor: "#bbb",
+        marginBottom: 10,
+        backgroundColor: "#eee"
+    },
+    panel2: {
+        flex: 4.5
+    },
+    panel3: {
+        flex: 1,
+        marginTop: 20
+    },
+    panel4: {
+        flex: 1
+    },
+    panel5: {
+        flex: 1,
+        marginBottom: 20
+    },
     text: {
         color: "#52575D"
     },
@@ -81,7 +112,8 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         borderWidth: 3,
         borderColor: "#047cfc",
-        marginTop: 20
+        marginTop: 20,
+        backgroundColor: "#fff"
     },
     image: {
         flex: 1,
@@ -89,13 +121,13 @@ const styles = StyleSheet.create({
         height: undefined
     },
     nameView: {
-        marginTop: 20,
-        marginBottom: 30
+        marginBottom: 20,
+        marginTop: 20
     },
     name: {
         textAlign: "center",
-        fontSize: 22,
-        color: "#52575D"
+        fontSize: 24,
+        color: "#444"
     },
     subText: {
         fontSize: 12,
@@ -113,14 +145,14 @@ const styles = StyleSheet.create({
         marginBottom: 22
     },
     indicador: {
-        backgroundColor: "#CABFAB",
+        backgroundColor: "#047cfc",
         padding: 4,
         height: 12,
         width: 12,
         borderRadius: 6,
         marginTop: 3,
         marginRight: 20,
-        marginLeft: 18
+        marginLeft: 40
     },
     espacio: {
         width: "25%",
@@ -133,7 +165,7 @@ const styles = StyleSheet.create({
         height: 40,
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 30,
+        marginTop: 10,
         marginBottom: 10
     },
     logoutText: {

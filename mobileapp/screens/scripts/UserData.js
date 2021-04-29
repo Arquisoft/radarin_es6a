@@ -12,7 +12,7 @@ export var data = {
     settings: {
         geolocation: false,
         notifications: true,
-        geolocationTimeInterval: 3,
+        geolocationTimeInterval: 5,
         updateGeolocation: async () => {
             try {
                 await AsyncStorage.setItem('@settings-geolocation', JSON.stringify(data.settings.geolocation));
@@ -47,7 +47,33 @@ export var data = {
             }
         },
         logged: false,
+        reloadFriends: async () => {
+            var result = await fetchLogIn(data.user.cred.idp, data.user.cred.username, data.user.cred.password);
+            if (result.res) {
+                data.user.addFriends(result.friends);
+                if (data.user.notifications.list.length > 0) {
+                    let list = data.user.notifications.list[0];
+                    for (var i = 0; i < list.friends.length; i++) {
+                        for (var j = 0; j < data.user.friends.length; j++) {
+                            if (data.user.friends[j].idp == list.friends[i].idp && data.user.friends[j].username == list.friends[i].username) {
+                                data.user.friends[j].near = true;
+                                break;
+                            }
+                        }
+                    }
+                    data.user.friends.sort(function (a, b) {
+                        if (a.near && b.near)
+                            return 0;
+                        else if (a.near)
+                            return -1;
+                        else
+                            return 1;
+                    });
+                }
+            }
+        },
         friends: [],
+        lastCheck: null,
         addFriends: async (friends) => {
             let list = [];
             let solid = 'https://solidcommunity.net';
@@ -130,14 +156,20 @@ export var data = {
             addNotification: async (number, friends, msg, callback1, callback2) => {
                 if (number > 0) {
                     let d = new Date();
+                    let date = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " " + d.getHours() + ":";
+                    let min = d.getMinutes() + "";
+                    if (min.length == 1)
+                        min = "0" + min;
+                    date = date + min;
+                    data.user.lastCheck = date;
                     let obj = {
                         id: uuid.v4(),
                         mensaje: msg,
                         number: number,
                         friends: friends,
-                        date: d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()
+                        date: date
                     };
-                    data.user.notifications.list.push(obj);
+                    data.user.notifications.list.unshift(obj);
                     for (var k = 0; k < data.user.friends.length; k++) {
                         data.user.friends[k].near = false;
                     }
@@ -157,7 +189,6 @@ export var data = {
                         else
                             return 1;
                     });
-                    data.user.notifications.updateNotifications();
                     if (AppState.currentState != "active" && data.settings.notifications) {
                         var mensaje = "";
                         if (number == 1)
@@ -177,15 +208,6 @@ export var data = {
                 data.user.notifications.list = data.user.notifications.list.filter(function (obj) {
                     return obj.id !== id;
                 });
-                data.user.notifications.updateNotifications();
-            },
-            updateNotifications: async () => {
-                try {
-                    await AsyncStorage.setItem('@user-notifications', JSON.stringify(data.user.notifications.list));
-                    log("Se ha actualizado el valor de la lista de notificaciones correctamente.");
-                } catch (e) {
-                    log("No se ha podido actualizar el valor de la lista de notificaciones.");
-                }
             }
         }
     },
@@ -240,6 +262,10 @@ export var data = {
     },
     reset: async () => {
         data.user.id = null;
+        data.user.name = null;
+        data.user.photo = null;
+        data.user.lastCheck = null;
+        data.user.friends = [];
         data.user.updateId();
         data.user.logged = false;
         data.user.cred.idp = null;
@@ -253,7 +279,6 @@ export var data = {
         data.settings.notifications = true;
         data.settings.updateNotifications();
         data.user.notifications.list = [];
-        data.user.notifications.updateNotifications();
     }
 }
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList, StatusBar, Text } from "react-native";
+import { StyleSheet, View, FlatList, StatusBar, Text, Alert, TouchableOpacity } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
 import { data } from './scripts/UserData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -29,37 +29,57 @@ class NotificationsView extends React.Component {
         this.setState({ number: this.state.number + 1 });
     }
     render() {
-        return (
-            <ScreenContainer>
-                <View style={styles.container}>
-                    <FlatList
-                        data={data.user.notifications.list}
-                        renderItem={({ item }) => (
-                            <View style={styles.row}>
-                                <View style={styles.item}>
-                                    <Text style={styles.date}>
-                                        {item.date}
-                                    </Text>
-                                </View>
-                                <View style={styles.item}>
-                                    <Text style={styles.title}>{item.mensaje}</Text>
-                                    <MaterialCommunityIcons
-                                        name="close-thick" style={styles.x} color={'#999'} size={30}
-                                        onPress={() => {
-                                            data.user.notifications.deleteNotification(item.id);
-                                            this.reloadScreen();
-                                        }} />
-                                </View>
-                            </View>
-                        )}
-                        keyExtractor={item => item.id}
-                        onRefresh={this.reloadScreen}
-                        refreshing={false}
-                        extraData={data.user.notifications.list}
-                    />
-                </View>
-            </ScreenContainer >
-        );
+        if (data.user.notifications.list.length == 0) {
+            return (
+                <ScreenContainer>
+                    <View style={styles.vacioView}>
+                        <Text style={styles.avisoVacio}>No hay avisos pendientes.</Text>
+                        <MaterialCommunityIcons name="bell-off-outline" color={'#111'} size={40} />
+                    </View>
+                </ScreenContainer>
+            );
+        } else {
+            return (
+                <ScreenContainer>
+                    <View style={styles.container}>
+                        <FlatList
+                            data={data.user.notifications.list}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity style={styles.row} onPress={() => {
+                                    let mensaje = "Tienes " + item.number + (item.number == 1 ? " amigo" : " amigos") + " cerca de tu posición. ";
+                                    mensaje = mensaje + "Puedes acceder a la lista de amigos para " + (item.number == 1 ? "verlo" : "verlos") + "."
+                                    Alert.alert(
+                                        "Aviso de amigos cerca",
+                                        mensaje,
+                                        [
+                                            { text: "Cerrar", onPress: () => { } }
+                                        ]);
+                                }}>
+                                    <View style={styles.item}>
+                                        <Text style={styles.date}>
+                                            {item.date}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.item}>
+                                        <Text style={styles.title}>{item.mensaje}</Text>
+                                        <MaterialCommunityIcons
+                                            name="close-thick" style={styles.x} color={'#999'} size={30}
+                                            onPress={() => {
+                                                data.user.notifications.deleteNotification(item.id);
+                                                this.reloadScreen();
+                                            }} />
+                                    </View>
+                                </TouchableOpacity>
+                            )}
+                            keyExtractor={item => item.id}
+                            onRefresh={this.reloadScreen}
+                            refreshing={false}
+                            extraData={data.user.notifications.list}
+                        />
+                    </View>
+                </ScreenContainer >
+            );
+        }
     }
 }
 
@@ -94,5 +114,15 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#333',
         marginBottom: 4
+    },
+    vacioView: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    avisoVacio: {
+        textAlign: "center",
+        fontSize: 20,
+        marginBottom: 15
     }
 });
