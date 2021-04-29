@@ -33,10 +33,10 @@
     to: '/chat'
   },
   {
-    id: 'usuarios',
+    id: 'users',
     icon: '/img/icon/apps.svg',
     label: 'navBar.usuarios',
-    to: '/usuarios'
+    to: '/users'
   }
 ];
 

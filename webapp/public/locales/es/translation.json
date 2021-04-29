@@ -117,7 +117,11 @@
     "noLocations": "No hay localizaciones disponibles. Por favor inicie una búsqueda."
   },
   "usuarios": {
-    "noUsuarios": "No hay usuarios disponibles."
+    "noUsuarios": "No hay usuarios disponibles.",
+    "usuarios": "Usuarios",
+    "email": "Email (Ej.: UOXXXXX)",
+    "idp" : "Idp (inrupt.net / solid.community.net)",
+    "add" : "Añadir"
 	},
   "profile": {
     "successCallback": "Pod actualizado satisfactoriamente",

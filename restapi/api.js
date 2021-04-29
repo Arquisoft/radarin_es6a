@@ -117,14 +117,14 @@ router.post("/users/add", async (req, res) => {
 });
 
 //Borrar usuario por email
-router.get("/users/delete/:email", async (req, res) => {
+router.get("/users/delete/:_id", async (req, res) => {
     //Comprobar si el usuario está registrado
-    let user = await User.findOne({ email: req.params.email })
+    let user = await User.findOne({ _id: req.params._id })
     console.log(user);
     if (!user)
         res.send({ error: "Error: El usuario no está registrado" })
     else {
-        let user = await User.deleteOne({ email: req.params.email })
+        let user = await User.deleteOne({ _id: req.params._id })
         res.send(user)
     }
 });

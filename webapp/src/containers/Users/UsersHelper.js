@@ -1,5 +1,5 @@
 
-class UsuariosHelper {
+class UsersHelper {
 	async addUser(email, idp){
 		const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 		let response = await fetch(apiEndPoint+'/users/add', {
@@ -10,13 +10,13 @@ class UsuariosHelper {
 		return await response.json()
 	}
 
-	async deleteUsuarios(email) {
+	async deleteUsers(id) {
 		const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-		console.log(apiEndPoint + " " + email)
-		let response = await fetch(apiEndPoint+'/users/delete/' + email)
+		console.log(apiEndPoint + " " + id)
+		let response = await fetch(apiEndPoint+'/users/delete/' + id)
 		return await response.json()
 	}
 }
-const usuariosHelper = new UsuariosHelper();
+const usersHelper = new UsersHelper();
 
-export default usuariosHelper;
+export default usersHelper;
