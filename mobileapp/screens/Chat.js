@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingVertical: 6,
         paddingHorizontal: 12,
-        color: "white"
+        color: "white",
+        marginLeft: 50
     },
     hisText: {
         textAlign: "left",
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingVertical: 6,
         paddingHorizontal: 12,
+        marginRight: 50
     },
     myMessage: {
         borderRadius: 10,
