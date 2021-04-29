@@ -6,10 +6,6 @@ import { log } from './scripts/Log';
 import { LocationCallback2 } from './scripts/Location';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export var selectedFriend = {
-	item: null
-};
-
 /**
  * Metodo que devuelve la vista de amigos del menu de navegación
  * @param {*} navigation 
@@ -61,8 +57,7 @@ class FriendsView extends React.Component {
 				refreshing={this.state.reload}
 				renderItem={({ item }) => (
 					<TouchableOpacity style={styles.row} onPress={() => {
-						selectedFriend.item = item;
-						this.props.nav.push("Mensajes");
+						this.props.nav.navigate("Chat", { friend: item });
 					}}>
 						<View style={styles.item}>
 							<Text style={styles.idp}>

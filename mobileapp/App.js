@@ -1,66 +1,15 @@
-//Imports
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { default as React, useState } from 'react';
 import { SafeAreaView, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-community/picker';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { data } from './screens/scripts/UserData';
-//Screens
-import { Friends } from './screens/Friends';
-import { Chat } from './screens/Chat';
-import { Home } from './screens/Home';
-import { Notifications } from './screens/Notifications';
-import { Profile, ProfileLoadHandleLogout } from './screens/Profile';
-import { Settings } from './screens/Settings';
+import { ProfileLoadHandleLogout } from './screens/Profile';
 import { log } from './screens/scripts/Log';
+import { MainNavigator } from './screens/MainNavigator';
+import { Chat } from './screens/Chat';
 
-const Tabs = createBottomTabNavigator();
-const NotificationsStack = createStackNavigator();
-const FriendsStack = createStackNavigator();
-const HomeStack = createStackNavigator();
-const ProfileStack = createStackNavigator();
-const SettingsStack = createStackNavigator();
-
-const NotificationsStackScreen = () => {
-  return (
-    <NotificationsStack.Navigator>
-      <NotificationsStack.Screen name="Avisos" component={Notifications} />
-    </NotificationsStack.Navigator>
-  );
-}
-const FriendsStackScreen = () => {
-  return (
-    <FriendsStack.Navigator>
-      <FriendsStack.Screen name="Amigos" component={Friends} />
-      <FriendsStack.Screen name="Mensajes" component={Chat} />
-    </FriendsStack.Navigator>
-  );
-}
-const HomeStackScreen = () => {
-  return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Inicio" component={Home} />
-    </HomeStack.Navigator>
-  );
-}
-const ProfileStackScreen = () => {
-  return (
-    <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Perfil" component={Profile} />
-    </ProfileStack.Navigator>
-  );
-}
-const SettingsStackScreen = () => {
-  return (
-    <SettingsStack.Navigator>
-      <SettingsStack.Screen name="Ajustes" component={Settings} />
-    </SettingsStack.Navigator>
-  );
-}
+const Stack = createStackNavigator();
 
 var btnLogIn = true;
 
@@ -126,58 +75,14 @@ class Application extends React.Component {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
-          <Tabs.Navigator initialRouteName="Inicio">
-            <Tabs.Screen
-              name="Avisos"
-              component={NotificationsStackScreen}
-              options={{
-                tabBarLabel: 'Avisos',
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons name="bell" color={color} size={size - 2} />
-                ),
-              }}
+          <Stack.Navigator initialRouteName="Main">
+            <Stack.Screen name="Main" component={MainNavigator} options={{ headerShown: false }} />
+            <Stack.Screen name="Chat" component={Chat}
+              options={({ route }) => ({
+                title: route.params.friend.username
+              })}
             />
-            <Tabs.Screen
-              name="Amigos"
-              component={FriendsStackScreen}
-              options={{
-                tabBarLabel: 'Amigos',
-                tabBarIcon: ({ color, size }) => (
-                  <FontAwesome5Icon name="user-friends" color={color} size={size - 5} />
-                ),
-              }}
-            />
-            <Tabs.Screen
-              name="Inicio"
-              component={HomeStackScreen}
-              options={{
-                tabBarLabel: 'Inicio',
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons name="home" color={color} size={size + 3} />
-                ),
-              }}
-            />
-            <Tabs.Screen
-              name="Perfil"
-              component={ProfileStackScreen}
-              options={{
-                tabBarLabel: 'Perfil',
-                tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons name="account" color={color} size={size + 2} />
-                ),
-              }}
-            />
-            <Tabs.Screen
-              name="Ajustes"
-              component={SettingsStackScreen}
-              options={{
-                tabBarLabel: 'Ajustes',
-                tabBarIcon: ({ color, size }) => (
-                  <Ionicons name="settings-sharp" color={color} size={size - 2} />
-                ),
-              }}
-            />
-          </Tabs.Navigator>
+          </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
     );
