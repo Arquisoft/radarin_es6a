@@ -83,51 +83,51 @@ class Chat extends React.Component {
 		  return (
 			
 			<div className ="container">
-			
-			  <ChatWrapper data-testid="chat-component">
-                  <Header data-testid="chat-header">
+			 <Header data-testid="chat-header">
 				  
-                      <TitleChat></TitleChat>
-                      <DivForms id="chatUser">
-                          <DivForms>
-                              <LabelInput>
-                                  <input type="text" placeholder="Escribe un usuario" id="chat" name="chat" ref={this.user} />
-                              </LabelInput>
-                          </DivForms>
-                          
-                      </DivForms>
-                      <DivForms>
-                          <Button id="send_user" form="chatUser" type="submit" onClick={(e) => this.handleShow(e)} >Chatear
-                          </Button>
-                      </DivForms>
-					
-                  </Header>
-				  
-				 
-		   <div className ="message">
+				  <TitleChat></TitleChat>
+				  <DivForms id="chatUser">
+					  <DivForms>
+						  <LabelInput>
+							  <input type="text" placeholder="Escribe un usuario" id="chat" name="chat" ref={this.user} />
+						  </LabelInput>
+					  </DivForms>
 					  
+				  </DivForms>
+				  <DivForms>
+					  <Button id="send_user" form="chatUser" type="submit" onClick={(e) => this.handleShow(e)} >Chat
+					  </Button>
+				  </DivForms>
+				
+			  </Header>
+			 <div className="chat">
+                 
+				  
+		   <div className ="message">
+		   
 		  {this.state.data.map(m => { 
 
 			  if(m.emisor === this.webIduser ){
 										
 				return (
-										
+						
 								<div className ="bubble-container">
         							<div className="bubbleEmisor" >
           								{ m.mensaje }
         							</div>
-      
-								</div>
+									</div>
+			
 						
 						
 			
 											
 												)}
+												
 												else{
 
 													return (
 										
-														<div>
+														
 															
 																<div className ="bubble-container">
 																	<div className="bubbleReceptor" >
@@ -136,8 +136,8 @@ class Chat extends React.Component {
 									  
 																
 															</div>
-														</div>
-																	
+													
+																
 								
 																			
 																				)
@@ -146,10 +146,8 @@ class Chat extends React.Component {
 											}
 										)}
            
-  
-          </div>
-		  </ChatWrapper>
-         <div className="send">
+		   </div>
+		   <div className="send">
 		 
 					  
 				
@@ -158,15 +156,19 @@ class Chat extends React.Component {
 			 
 			  
 			 
-            <Button id="send_message"  type="submit" onClick={(e) => this.handleSubmit(e)}>
-							Enviar mensaje
+            <Button   type="submit" onClick={(e) => this.handleSubmit(e)}>
+							Send
 						</Button>
 						
 						</div>	
 						
-		  </div>
+		  
 		 	
-		
+						</div>
+		   
+		  </div>
+		  
+         
 		  );
 		}
 	  }
