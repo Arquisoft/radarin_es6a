@@ -11,6 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { data } from './screens/scripts/UserData';
 //Screens
 import { Friends } from './screens/Friends';
+import { Chat } from './screens/Chat';
 import { Home } from './screens/Home';
 import { Notifications } from './screens/Notifications';
 import { Profile, ProfileLoadHandleLogout } from './screens/Profile';
@@ -35,6 +36,7 @@ const FriendsStackScreen = () => {
   return (
     <FriendsStack.Navigator>
       <FriendsStack.Screen name="Amigos" component={Friends} />
+      <FriendsStack.Screen name="Mensajes" component={Chat} />
     </FriendsStack.Navigator>
   );
 }

@@ -1,10 +1,14 @@
 import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from "react-native";
 import { ScreenContainer } from './components/ScreenContainer';
 import { data } from './scripts/UserData';
 import { log } from './scripts/Log';
 import { LocationCallback2 } from './scripts/Location';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+export var selectedFriend = {
+	item: null
+};
 
 /**
  * Metodo que devuelve la vista de amigos del menu de navegación
@@ -13,7 +17,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
  */
 export const Friends = ({ navigation }) => {
 	return (
-		<FriendsView></FriendsView>
+		<FriendsView nav={navigation}></FriendsView>
 	);
 };
 
@@ -56,7 +60,10 @@ class FriendsView extends React.Component {
 				onRefresh={this.reloadFriendsList}
 				refreshing={this.state.reload}
 				renderItem={({ item }) => (
-					<View style={styles.row}>
+					<TouchableOpacity style={styles.row} onPress={() => {
+						selectedFriend.item = item;
+						this.props.nav.push("Mensajes");
+					}}>
 						<View style={styles.item}>
 							<Text style={styles.idp}>
 								{item.idp}
@@ -68,7 +75,7 @@ class FriendsView extends React.Component {
 						<View style={styles.item}>
 							<Text style={styles.title}>{item.username}</Text>
 						</View>
-					</View>
+					</TouchableOpacity>
 				)}
 			/>
 		);
@@ -157,3 +164,5 @@ const styles = StyleSheet.create({
 		marginBottom: 15
 	}
 });
+
+
