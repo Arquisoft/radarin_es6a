@@ -11,21 +11,11 @@ import { Header,
 	 TitleLocations,
 	 Button,
 	 LocationsForm,
-	 ResultLocations ,
-	 FormRenderContainer
+	 ResultLocations
 	} 
 from "./usuarios.style";
 
 import i18n from "i18n";
-
-function getData(callback) {
-	var myRequest = usuariosHelper.getUsuarios();
-	fetch(myRequest)
-	  .then(results => {
-		return results.json();
-	  })
-	  .then(callback);
-  }
 
 class Usuarios extends React.Component {
 	
