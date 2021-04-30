@@ -6,17 +6,18 @@ class ChatHelper {
 		return await response.json()
 	}
 
-	async sendMessages(email1,email2) {
+    async sendMessages(email1,email2,mensaje) {
 		const requestOptions = {
-			method: 'INSERT'
+			method: 'POST'
 		  };
 		const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 		console.log(apiEndPoint )
-		let response = await fetch(apiEndPoint+'/chat/' +email1+ "/" + email2, requestOptions)
+		let response = await fetch(apiEndPoint+'/chat/' +email1+ "/" + email2 + "/" + mensaje, requestOptions)
 		return await response.json()
 	}
+
+	
 }
 const chatHelper = new ChatHelper();
 
 export default chatHelper;
-
