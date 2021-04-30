@@ -53,6 +53,7 @@ jobs:
           heroku_app_name: "radarines6awebapp" #Must be unique in Heroku
           heroku_email: "radarines6a@gmail.com"
           usedocker: true
+          dontuseforce: true
           appdir: "webapp"
           docker_build_args: |
             API_URI
