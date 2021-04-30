@@ -132,14 +132,14 @@ router.post("/users/add", async (req, res) => {
 });
 
 //Borrar usuario por email
-router.get("/users/delete/:email", async (req, res) => {
+router.get("/users/delete/:_id", async (req, res) => {
     //Comprobar si el usuario está registrado
-    let user = await User.findOne({ email: req.params.email })
+    let user = await User.findOne({ _id: req.params._id })
     console.log(user);
     if (!user)
         res.send({ error: "Error: El usuario no está registrado" })
     else {
-        let user = await User.deleteOne({ email: req.params.email })
+        let user = await User.deleteOne({ _id: req.params._id })
         res.send(user)
     }
 });
@@ -328,10 +328,15 @@ function distance(lat1, lon1, lat2, lon2) {
 }
 
 // Obtener las localizaciones para un usuario (email) y una fecha opcional
+// Ejemplo de email: uo234567
 router.get("/locations/:email/:fecha?", async (req, res) => {
-    console.log("Emisor: ", req.params.email);
-    let criterio = { email: req.params.email };
 
+    let email_user = req.params.email.replace(".inrupt.net", "");
+
+    console.log("Emisor: ", email_user);
+
+    let criterio = { email: email_user };
+    
     let user = await User.find(criterio).sort('-_id') //En orden inverso
 
     let locs = user[0].locations;

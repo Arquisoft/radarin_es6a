@@ -50,6 +50,7 @@
     "map": "Map",
     "myfriends": "My Friends",
     "locations": "Locations",
+    "usuarios": "Users",
     "chat": "Chat",
     "logOut": "Log out",
     "profile": "Profile",
@@ -113,6 +114,13 @@
     "latitud": "Latitude",
     "fecha": "Date",
     "noLocations": "No locations available. Please, start the search."
+	},
+  "usuarios": {
+    "noUsuarios": "No users available.",
+    "usuarios": "Users",
+    "email": "Email (E.g.: UOXXXXX)",
+    "idp" : "Idp (inrupt.net / solid.community.net)",
+    "add" : "Add"
 	},
   "profile": {
     "successCallback": "Pod updated successfully",

@@ -31,6 +31,12 @@
     icon: '/img/icon/apps.svg',
     label: 'navBar.chat',
     to: '/chat'
+  },
+  {
+    id: 'users',
+    icon: '/img/icon/apps.svg',
+    label: 'navBar.usuarios',
+    to: '/users'
   }
 ];
 
