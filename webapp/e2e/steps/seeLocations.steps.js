@@ -24,7 +24,7 @@ defineFeature(feature, (test) => {
 				timeout: 0
 			});
 			await page.waitForSelector(".sc-EHOje.cffgrt");
-			await page.type(".sc-EHOje.cffgrt", "https://uo264699.inrupt.net");
+			await page.type(".sc-EHOje.cffgrt", "https://radarines6a.inrupt.net");
 			
 	
 		
@@ -39,11 +39,11 @@ defineFeature(feature, (test) => {
 			});  
 
 			await page.waitForSelector("[id='username']", { visible: true });
-			await page.type("[id='username']", "UO264699");
+			await page.type("[id='username']", "radarines6a");
 
 			await page.waitFor(500);
 			await page.waitForSelector("[id='password']", { visible: true });
-			await page.type("[id='password']", "Karimbenzema9!", { visible: true });
+			await page.type("[id='password']", "R1d1r3n2s6a", { visible: true });
 
 			await page.waitFor(500);
 
@@ -71,7 +71,7 @@ defineFeature(feature, (test) => {
 			await page.waitFor(500);
 
 			await page.waitForSelector("[id='locations_date']", { visible: true });
-			await page.type("[id='locations_date']", "2023-10-23");
+			await page.type("[id='locations_date']", "2021-04-29");
 		});
 
 		then("Pressing the show button", async () => {
@@ -79,6 +79,10 @@ defineFeature(feature, (test) => {
 				let submit = document.getElementById("search_locations");
 				submit.click();
 			});
+
+			await page.waitForFunction(
+				'document.querySelector("center").innerText.includes("https://uo266007.inrupt.net")'
+			);
 	
 			await browser.close();
 		});
