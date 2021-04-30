@@ -35,7 +35,8 @@ router.post("/user/login", async (req, res) => {
             console.log("No hay usuario para este pod, creando usuario...");
             let usuario = new User({
                 email: user,
-                idp: idp
+                idp: idp,
+                webID: user + "." + (idp.replace("https://", ""))
             });
             await usuario.save();
             console.log("Usuario creado.");
@@ -106,7 +107,6 @@ async function findFriendsFor(webId) {
     return amigos;
 }
 
-
 // Get all users
 router.get("/users/list", async (req, res) => {
     const users = await User.find({}).sort('-_id') //Inverse order
@@ -115,8 +115,9 @@ router.get("/users/list", async (req, res) => {
 
 //register a new user
 router.post("/users/add", async (req, res) => {
-    let idp = req.body.idp;
+    let idp = "https://" + req.body.idp;
     let email = req.body.email;
+    let webID = req.body.email + "." + req.body.idp;
     //Check if the device is already in the db
     let user = await User.findOne({ email: email })
     if (user)
@@ -125,11 +126,22 @@ router.post("/users/add", async (req, res) => {
         user = new User({
             idp: idp,
             email: email,
+            webID: webID
         })
         await user.save()
         res.send(user)
     }
 });
+
+async function saveUser(webID) {
+    let usuario = new User({
+        email: webID.replace(".inrupt.net", "").replace(".solidcommunity.net", ""),
+        idp: webID.includes(".inrupt.net") ? "https://inrupt.net" : "https://solidcommunity.net",
+        webID: webID
+    });
+    await usuario.save();
+    console.log("Usuario creado: " + webID);
+}
 
 //Borrar usuario por email
 router.get("/users/delete/:_id", async (req, res) => {
@@ -174,8 +186,6 @@ router.delete("/locations/delete/:_id", async (req, res) => {
     } else {
         res.send({ error: "Error: La localización no ha sido borrada" })
     }
-
-
 });
 
 // Obtener todas las localizaciones
@@ -185,57 +195,8 @@ router.get("/locations/list", async (req, res) => {
 })
 
 //Agregar una nueva localización
-//Es obligatorio añadir una localización con una longitud, latitud, fecha y email de un usuario.
-router.post("/locations/add", async (req, res) => {
-    let longitud = req.body.longitud;
-    let latitud = req.body.latitud;
-    let fecha = req.body.fecha;
-    let email = req.body.email;
-    console.log("Creando una localización (" + longitud + "," + latitud + ")" + " y fecha: " + fecha + " para " + email);
-
-    let user = await User.find({ email }) //En orden inverso
-    if (!user) {
-        res.send({ error: "Error: El usuario no existe" })
-        return;
-    }
-    if (user[0].locations) {
-
-        console.log("Núm locations=" + user[0].locations.length);
-        if (user[0].locations.length >= config.MAX_LOCATIONS) {
-
-            let idlocBorrar = user[0].locations[0];
-            console.log("Borrar location " + idlocBorrar);
-            await Location.deleteOne({ _id: idlocBorrar })
-            await User.update(
-                { '_id': user[0]._id },
-                { $pull: { locations: idlocBorrar } })
-        }
-    }
-
-
-    let location = new Location({
-        longitud: longitud,
-        latitud: latitud,
-        fecha: fecha,
-    })
-
-    await location.save()
-
-    //Registrar la localización para el usuario
-    //Usuario y localización tienen una relación Many to One
-    await User.update(
-        { '_id': user[0]._id },
-        { $push: { locations: location._id } })
-
-
-    res.send(location)
-
-
-});
-
-//Agregar una nueva localización
 //Es obligatorio añadir una localización con una longitud, latitud, fecha e id de un usuario.
-router.post("/locations/addbyid", async (req, res) => {
+router.post("/locations/add", async (req, res) => {
     let longitud = req.body.longitud;
     let latitud = req.body.latitud;
     let fecha = new Date();
@@ -327,45 +288,41 @@ function distance(lat1, lon1, lat2, lon2) {
     }
 }
 
-// Obtener las localizaciones para un usuario (email) y una fecha opcional
-// Ejemplo de email: uo234567
-router.get("/locations/:email/:fecha?", async (req, res) => {
+// Obtener las localizaciones para un usuario (webID) y una fecha opcional
+// Ejemplo de webID: uo234567.inrupt.net
+router.get("/locations/:webID/:fecha?", async (req, res) => {
+    let webID = req.params.webID;
+    console.log("Emisor: ", webID);
+    let criterio = { webID: webID };
 
-    let email_user = req.params.email.replace(".inrupt.net", "");
-
-    console.log("Emisor: ", email_user);
-
-    let criterio = { email: email_user };
-    
-    let user = await User.find(criterio).sort('-_id') //En orden inverso
-
-    let locs = user[0].locations;
-
-    let fecha = req.params.fecha;
-
-    if (fecha != undefined) {
-
-        criterio = {
-            $and: [{ '_id': { $in: locs } }, {
-                fecha: {
-                    $gt: fecha + MIN_HOUR,
-                    $lt: fecha + MAX_HOUR
-                }
-            }]
-        }, function (err, locs) {
-            console.log(locs);
+    let user = await User.find(criterio).sort('-_id')
+    if (user.length > 0) {
+        let locs = user[0].locations;
+        let fecha = req.params.fecha;
+        if (fecha != undefined) {
+            criterio = {
+                $and: [{ '_id': { $in: locs } }, {
+                    fecha: {
+                        $gt: fecha + MIN_HOUR,
+                        $lt: fecha + MAX_HOUR
+                    }
+                }]
+            }, function (err, locs) {
+                console.log(locs);
+            }
+        } else {
+            criterio = {
+                '_id': { $in: locs }
+            }, function (err, locs) {
+                console.log(locs);
+            }
         }
+        locs = await Location.find(criterio);
+        res.send(locs);
     } else {
-        criterio = {
-            '_id': { $in: locs }
-        }, function (err, locs) {
-            console.log(locs);
-        }
+        saveUser(webID);
+        res.send({});
     }
-
-    locs = await Location.find(criterio);
-
-    res.send(locs);
 });
 
 // Obtener todos los usuarios que se encuentran en
@@ -409,53 +366,6 @@ router.get("/users/:latitud/:longitud/:radio/:fechaMin/:fechaMax", async (req, r
     criterio = { locations: { $in: locs } }
     let users = await User.find(criterio).sort('-_id') //En orden inverso
     res.send(users);
-});
-
-//Agregar un nuevo amigo
-router.post("/users/friends/add/:email1/:email2", async (req, res) => {
-    console.log("Emisor: ", req.params.email1);
-    console.log("Receptor: ", req.params.email2);
-    let email1 = req.params.email1;
-    let email2 = req.params.email2;
-
-    let emisor = await User.findOne({ email: email1 })
-    if (!emisor) {
-        res.send({ error: "Error: El emisor no existe" })
-    }
-
-    let receptor = await User.findOne({ email: email2 })
-    if (!receptor) {
-        res.send({ error: "Error: El emisor no existe" })
-    }
-
-    //Registrar un amigo (receptor) para el usuario (emisor)
-    await User.findByIdAndUpdate(emisor._id,
-        { $push: { friends: receptor._id } }, { new: true, userfindAndModify: false })
-
-    res.send(emisor);
-});
-
-//Obtener los amigos de un usuario
-router.get("/users/friends/list/:email1", async (req, res) => {
-    console.log("Emisor: ", req.params.email1);
-    let email1 = req.params.email1;
-
-    let emisor = await User.findOne({ email: email1 })
-    if (!emisor) {
-        res.send({ error: "Error: El emisor no existe" })
-    }
-
-    let user = await User.find(emisor).sort('-_id') //En orden inverso
-
-    let friends = user[0].friends;
-
-    friends.forEach(x => console.log(x))
-
-    let criterio = { '_id': { $in: friends } }
-
-    friends = await User.find(criterio);
-
-    res.send(friends);
 });
 
 //Obtener los mensajes de un chat
