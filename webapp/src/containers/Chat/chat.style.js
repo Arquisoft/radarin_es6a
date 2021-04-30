@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 
-/*
-    export const ChatInputContainer = styled.inputContainer`
+
+     export const ChatInputContainer = styled.div`
   
       backgroundColor: fade(theme.palette.common.white, 0.15),
       '&:hover': {
@@ -14,7 +14,7 @@ import styled from "styled-components";
       width: '100%',
     `;
 
-    export const ChatIconStyle = styled.icon`
+ /**    export const ChatIconStyle = styled.icon`
     
       width: theme.spacing(7),
       height: '100%',
@@ -24,18 +24,18 @@ import styled from "styled-components";
       alignItems: 'center',
       justifyContent: 'center',
   `;
-  export const ChatInputInput = styled.inputInput`
+  */
+ /**  export const ChatInputInput = styled.input`
       padding: theme.spacing(1, 1, 1, 7),
       width: '100%',
     `;
-    */
+  */  
     export const ChatWrapper = styled.section`
+    
     display: flex;
     flex: 1 0 auto;
-    flex-direction: row;
-    #save_route{
-      margin-left:110px;
-    }
+    flex-direction: ;
+    
     @media only screen and (max-width: 900px) {
       padding: auto;
       
@@ -61,7 +61,8 @@ import styled from "styled-components";
   `;
   
   export const Header = styled.div`
-    max-width: 100%;
+    width: 350px;
+  
     align-items: top;
     justify-content: center;
     background: rgb(0, 77, 134);
@@ -142,9 +143,13 @@ import styled from "styled-components";
  
   
   export const Button = styled.button`
-    max-width: 128px;
+    width: 128px;
     display: inline-block;
-  
+   margin-left:15px;
+   margin-right:10px;
+   margin-top:13px;
+  height: 50%;
+   
     &:first-child {
       margin-right: 10px;
     }

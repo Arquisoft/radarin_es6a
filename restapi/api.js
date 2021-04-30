@@ -1,7 +1,7 @@
-const express = require("express");
-const User = require("./models/users");
-const Location = require("./models/locations");
-const Message = require("./models/messages");
+const express = require("express")
+const User = require("./models/users")
+const Location = require("./models/locations")
+const Message = require("./models/messages")
 var config = require('./config');
 const { MIN_HOUR, MAX_HOUR } = require("./config");
 const router = express.Router();
@@ -111,7 +111,7 @@ async function findFriendsFor(webId) {
 router.get("/users/list", async (req, res) => {
     const users = await User.find({}).sort('-_id') //Inverse order
     res.send(users)
-});
+})
 
 //register a new user
 router.post("/users/add", async (req, res) => {
@@ -124,14 +124,14 @@ router.post("/users/add", async (req, res) => {
         res.send({ error: "Error: This user is already registered" })
     else {
         user = new User({
-            idp: idp,
+            name: name,
             email: email,
             webID: webID
         })
         await user.save()
         res.send(user)
     }
-});
+})
 
 async function saveUser(webID) {
     let usuario = new User({
@@ -144,17 +144,17 @@ async function saveUser(webID) {
 }
 
 //Borrar usuario por email
-router.get("/users/delete/:_id", async (req, res) => {
+router.get("/users/delete/:email", async (req, res) => {
     //Comprobar si el usuario está registrado
-    let user = await User.findOne({ _id: req.params._id })
+    let user = await User.findOne({ email: req.params.email })
     console.log(user);
     if (!user)
         res.send({ error: "Error: El usuario no está registrado" })
     else {
-        let user = await User.deleteOne({ _id: req.params._id })
+        let user = await User.deleteOne({ email: req.params.email })
         res.send(user)
     }
-});
+})
 
 //Borrar location
 //Tener en cuenta que una location está vinculada a user
@@ -201,15 +201,12 @@ router.post("/locations/add", async (req, res) => {
     let latitud = req.body.latitud;
     let fecha = new Date();
     let id = req.body.id;
-    let friends = req.body.friends;
-
     console.log("Creando una localización (" + longitud + "," + latitud + ")" + " y fecha: " + fecha + " para " + id);
     let user = await User.find({ _id: id })
     if (!user) {
         res.send({ error: "Error: El usuario no existe" })
         return;
     }
-
     if (user[0].locations) {
         console.log("Núm locations=" + user[0].locations.length);
         if (user[0].locations.length >= config.MAX_LOCATIONS) {
@@ -231,17 +228,15 @@ router.post("/locations/add", async (req, res) => {
         { '_id': id },
         { $push: { locations: location._id } }
     );
+    let friends = user[0].friends;
     let count = 0;
     let list = [];
     for (var i = 0; i < friends.length; i++) {
         var obj = friends[i];
-        let u = await User.findOne({
-            email: obj.username,
-            idp: obj.idp
-        });
+        let u = await User.find({ _id: obj });
         if (!u)
             continue;
-        let ls = u.locations;
+        let ls = u[0].locations;
         if (ls.length == 0)
             continue;
         let l = await Location.find({ _id: ls[ls.length - 1] });
@@ -261,7 +256,7 @@ router.post("/locations/add", async (req, res) => {
         friends: list
     }
     res.send(response);
-});
+})
 
 function distance(lat1, lon1, lat2, lon2) {
     lat1 = parseFloat(lat1);
@@ -366,31 +361,41 @@ router.get("/users/:latitud/:longitud/:radio/:fechaMin/:fechaMax", async (req, r
     criterio = { locations: { $in: locs } }
     let users = await User.find(criterio).sort('-_id') //En orden inverso
     res.send(users);
-});
+})
+
+//Enviar mensaje
+router.post("/chat/:email1/:email2/:mensaje", async (req, res) => {
+
+    let email1 = req.params.email1;
+    let email2 = req.params.email2;
+    let message = req.params.mensaje;
+
+    console.log(message);
+
+    var m = new Message({
+        emisor: email1,
+        receptor: email2,
+        mensaje: message
+    })
+    await m.save()
+    res.send(m)
+
+
+})
 
 //Obtener los mensajes de un chat
-router.get("chat/:email1/:email2", async (req, res) => {
+router.get("/chat/:email1/:email2", async (req, res) => {
 
     let email1 = req.params.email1;
     let email2 = req.params.email2;
 
-    let emisor = await User.findOne({ email: email1 })
-    if (!emisor) {
-        res.send({ error: "Error: El emisor no existe" })
-    }
+    let criterio = { $or: [{ 'emisor': email1, 'receptor': email2 }, { 'emisor': email2, 'receptor': email1 }] };
 
-    let receptor = await User.findOne({ email: email2 })
-    if (!receptor) {
-        res.send({ error: "Error: El receptor no existe" })
-    }
-
-    let criterio = { 'emisor': emisor, 'receptor': receptor }
 
     messages = await Message.find(criterio);
 
     res.send(messages);
 
-});
+})
 
-module.exports = router;
-
+module.exports = router
