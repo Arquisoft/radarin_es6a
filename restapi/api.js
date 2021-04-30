@@ -79,8 +79,8 @@ async function getName(webId) {
     const profile = me.doc();
     await fetcher.load(profile);
     const name = store.any(me, FOAF("name"));
-    console.log("**** NOMBRE: " + name.value);
-    return name.value;
+    console.log("**** NOMBRE: " + (name != null ? name.value : null));
+    return name != null ? name.value : null;
 }
 
 async function getPhoto(webId) {
@@ -90,8 +90,8 @@ async function getPhoto(webId) {
     const profile = me.doc();
     await fetcher.load(profile);
     const photo = store.any(me, VCARD("hasPhoto"));
-    console.log("**** FOTO: " + photo.value);
-    return photo ? photo.value : null;
+    console.log("**** FOTO: " + (photo != null ? photo.value : null));
+    return photo != null ? photo.value : null;
 }
 
 async function findFriendsFor(webId) {
@@ -103,7 +103,7 @@ async function findFriendsFor(webId) {
     let friends = store.each(me, FOAF("knows"));
     let amigos = [];
     friends.forEach(e => amigos.push(e.value));
-    console.log("**** AMIGOS: " + amigos);
+    console.log("**** AMIGOS: " + amigos.length);
     return amigos;
 }
 
@@ -201,6 +201,7 @@ router.post("/locations/add", async (req, res) => {
     let latitud = req.body.latitud;
     let fecha = new Date();
     let id = req.body.id;
+    let friends = req.body.friends;
     console.log("Creando una localización (" + longitud + "," + latitud + ")" + " y fecha: " + fecha + " para " + id);
     let user = await User.find({ _id: id })
     if (!user) {
@@ -228,15 +229,17 @@ router.post("/locations/add", async (req, res) => {
         { '_id': id },
         { $push: { locations: location._id } }
     );
-    let friends = user[0].friends;
     let count = 0;
     let list = [];
     for (var i = 0; i < friends.length; i++) {
         var obj = friends[i];
-        let u = await User.find({ _id: obj });
+        let u = await User.findOne({
+            email: obj.username,
+            idp: obj.idp
+        });
         if (!u)
             continue;
-        let ls = u[0].locations;
+        let ls = u.locations;
         if (ls.length == 0)
             continue;
         let l = await Location.find({ _id: ls[ls.length - 1] });
@@ -364,14 +367,11 @@ router.get("/users/:latitud/:longitud/:radio/:fechaMin/:fechaMax", async (req, r
 })
 
 //Enviar mensaje
-router.post("/chat/:email1/:email2/:mensaje", async (req, res) => {
-
-    let email1 = req.params.email1;
-    let email2 = req.params.email2;
-    let message = req.params.mensaje;
-
-    console.log(message);
-
+router.post("/chat/send", async (req, res) => {
+    let email1 = req.body.email1;
+    let email2 = req.body.email2;
+    let message = req.body.mensaje;
+    console.log("Mensaje de chat: " + message);
     var m = new Message({
         emisor: email1,
         receptor: email2,
@@ -379,21 +379,14 @@ router.post("/chat/:email1/:email2/:mensaje", async (req, res) => {
     })
     await m.save()
     res.send(m)
-
-
 })
 
 //Obtener los mensajes de un chat
-router.get("/chat/:email1/:email2", async (req, res) => {
-
-    let email1 = req.params.email1;
-    let email2 = req.params.email2;
-
+router.post("/chat/list", async (req, res) => {
+    let email1 = req.body.email1;
+    let email2 = req.body.email2;
     let criterio = { $or: [{ 'emisor': email1, 'receptor': email2 }, { 'emisor': email2, 'receptor': email1 }] };
-
-
     messages = await Message.find(criterio);
-
     res.send(messages);
 
 })

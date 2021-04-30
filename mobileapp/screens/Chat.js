@@ -5,6 +5,7 @@ import { useRoute } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { log } from './scripts/Log';
+import { data } from './scripts/UserData';
 
 /**
  * Metodo que devuelve el chat con un amigo
@@ -17,30 +18,84 @@ export const Chat = ({ navigation }) => {
     );
 };
 
+var load = null;
+
 class ChatView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             number: 0,
             friend: props.children,
-            chat: [{ id: "1", msg: "Hola", own: false }, { id: "2", msg: "Que tal estas??", own: false }],
+            chat: [],
             mesagge: null
         };
         log("Accediendo a chat de " + this.state.friend.username + " de " + this.state.friend.idp)
         this.reloadScreen = this.reload.bind(this);
-        this.sendMessage = this.send.bind(this);
+        this.loadMessage = this.load.bind(this);
+    }
+    componentDidMount() {
+        log("Iniciando tarea de recarga automatica de mensajes.");
+        this.load();
+        this.startLoad();
+    }
+    componentWillUnmount() {
+        log("Deteniendo tarea de recarga automatica de mensajes.");
+        this.stopLoad();
     }
     async reload() {
         this.setState({ number: this.state.number + 1 });
     }
     async send() {
-        console.log(this.state);
         if (this.state.mesagge != null) {
             this.state.chat.unshift({ id: uuid.v4(), msg: this.state.mesagge, own: true });
+            let uri = "http://" + data.server.ip + ":" + data.server.port + "/api/chat/send";
+            fetch(uri, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                }, body: JSON.stringify({
+                    email1: data.user.cred.username + "." + (data.user.cred.idp.replace("https://", "")),
+                    email2: this.state.friend.webID.replace("https://", ""),
+                    mensaje: this.state.mesagge
+                })
+            });
             this.setState({ mesagge: null });
             this.reloadScreen();
         }
     }
+    async load() {
+        let uri = "http://" + data.server.ip + ":" + data.server.port + "/api/chat/list";
+        fetch(uri, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify({
+                email1: data.user.cred.username + "." + (data.user.cred.idp.replace("https://", "")),
+                email2: this.state.friend.webID.replace("https://", ""),
+                mensaje: this.state.mesagge
+            })
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                let list = [];
+                let me = data.user.cred.username + "." + (data.user.cred.idp.replace("https://", ""));
+                for (var i = 0; i < json.length; i++) {
+                    list.unshift({ id: uuid.v4(), msg: json[i].mensaje, own: me == json[i].emisor });
+                }
+                this.state.chat = list;
+                this.reloadScreen();
+            })
+            .catch((error) => log('Error en la carga de mensajes: ' + error));
+    }
+    async startLoad() {
+        load = setInterval(this.loadMessage, 2000);
+    }
+    async stopLoad() {
+        clearInterval(load);
+    }
+    async
     render() {
         return (
             <ScreenContainer>
@@ -78,7 +133,7 @@ class ChatView extends React.Component {
                                 value={this.state.mesagge}
                                 onChangeText={text => { this.setState({ mesagge: text }) }} />
                         </View>
-                        <TouchableOpacity style={styles.messageView3} onPress={this.sendMessage}>
+                        <TouchableOpacity style={styles.messageView3} onPress={this.send.bind(this)}>
                             <MaterialCommunityIcons name="send" color={'#eee'} size={25} style={styles.messageSendInput} />
                         </TouchableOpacity>
                     </View>
