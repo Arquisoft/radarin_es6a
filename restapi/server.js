@@ -1,23 +1,18 @@
 const express = require("express")
-const promBundle = require("express-prom-bundle");
 const cors = require('cors');
 const mongoose = require("mongoose")
 const api = require("./api")
 const MAX_LOCATIONS = 5
 
-function connect(){
+function connect() {
     //The MONGO_URI variable is the connection string to MongoDB Atlas (for production). This env variable is created in heroku.
-   // mongo_uri = process.env.MONGO_URI || "mongodb://localhost:27017"
-   mongo_uri = "mongodb+srv://mongouser:mongouser@cluster0.pcdsq.mongodb.net/radarin?retryWrites=true&w=majority"
-    mongoose.connect(mongo_uri, { useNewUrlParser: true,useUnifiedTopology: true }).then(() => {
-      
-        console.log("MONGODB connected...")
-      
-         const app = express()
+    // mongo_uri = process.env.MONGO_URI || "mongodb://localhost:27017"
+    mongo_uri = "mongodb+srv://mongouser:mongouser@cluster0.pcdsq.mongodb.net/radarin?retryWrites=true&w=majority"
+    mongoose.connect(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
 
-        //Monitoring middleware
-        const metricsMiddleware = promBundle({includeMethod: true});
-        app.use(metricsMiddleware);
+        console.log("MONGODB connected...")
+
+        const app = express()
 
         app.use(cors());
         app.options('*', cors());
@@ -26,7 +21,7 @@ function connect(){
 
 
         app.listen(process.env.PORT || 5000, () => {
-            console.log("Server has started! Using db in "+mongo_uri)
+            console.log("Server has started! Using db in " + mongo_uri)
         })
 
         //Descomentar el siguiente código para borrar la collección pasada en collectionsName
@@ -34,7 +29,7 @@ function connect(){
             console.log('collection dropped');
         });*/
     }).catch(err => console.log(err));
-   
+
 }
 
 
