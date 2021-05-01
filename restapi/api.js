@@ -142,15 +142,15 @@ async function saveUser(webID) {
     console.log("Usuario creado: " + webID);
 }
 
-//Borrar usuario por email
-router.get("/users/delete/:email", async (req, res) => {
+//Borrar usuario por webID
+router.get("/users/delete/:webID", async (req, res) => {
     //Comprobar si el usuario está registrado
-    let user = await User.findOne({ email: req.params.email })
+    let user = await User.findOne({ webID: req.params.webID })
     console.log(user);
     if (!user)
         res.send({ error: "Error: El usuario no está registrado" })
     else {
-        let user = await User.deleteOne({ email: req.params.email })
+        let user = await User.deleteOne({ webID: req.params.webID })
         res.send(user)
     }
 })

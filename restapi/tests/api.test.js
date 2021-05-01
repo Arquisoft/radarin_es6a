@@ -34,9 +34,9 @@ describe('user ', () => {
      * Tests that a user can be created through the productService without throwing any errors.
      */
     it('can be created correctly', async () => {
-        idp = 'https://inrupt.net'
+        idp = 'inrupt.net'
         email = 'pablo'
-        const response = await request(app).post('/api/users/add').send({ idp: idp, email: email }).set('Accept', 'application/json')
+        const response = await request(app).post('/api/users/add').send({ idp: "https://" + idp, email: email }).set('Accept', 'application/json')
         expect(response.statusCode).toBe(200);
         expect(response.body.idp).toBe(idp);
         expect(response.body.email).toBe(email);
@@ -46,10 +46,10 @@ describe('user ', () => {
      * Tests that the same user can not be inserted.
      */
     it('can not be created correctly', async () => {
-        idp = 'https://inrupt.net'
+        idp = 'inrupt.net'
         email = 'pablo'
         err = "Error: This user is already registered"
-        const response = await request(app).post('/api/users/add').send({ idp: idp, email: email }).set('Accept', 'application/json')
+        const response = await request(app).post('/api/users/add').send({ idp: "https://" + idp, email: email }).set('Accept', 'application/json')
         expect(response.statusCode).toBe(200);
         expect(response.body.error).toBe(err);
     });
@@ -58,9 +58,8 @@ describe('user ', () => {
      * Tests that a user can be deleted without throwing any errors.
      */
     it('can be deleted correctly', async () => {
-        idp = 'https://inrupt.net'
-        email = 'pablo'
-        const response = await request(app).get('/api/users/delete/pablo');
+        webID = 'pablo.inrupt.ne'
+        const response = await request(app).get('/api/users/delete/' + webID);
         expect(response.statusCode).toBe(200);
     });
 
@@ -68,10 +67,9 @@ describe('user ', () => {
      * Tests that a user can not be deleted because user does not exist.
      */
     it('can not be deleted correctly', async () => {
-        idp = 'https://inrupt.net'
-        email = 'pablo'
+        webID = 'pablo.inrupt.ne'
         err = "Error: El usuario no está registrado"
-        const response = await request(app).get('/api/users/delete/pablo');
+        const response = await request(app).get('/api/users/delete/' + webID);
         expect(response.statusCode).toBe(200);
         expect(response.body.error).toBe(err);
     });
@@ -80,9 +78,9 @@ describe('user ', () => {
      * Remains Pablo in the DB to do next tests
      */
     it('can be created correctly', async () => {
-        idp = 'https://inrupt.net'
+        idp = 'inrupt.net'
         email = 'pablo'
-        const response = await request(app).post('/api/users/add').send({ idp: idp, email: email }).set('Accept', 'application/json')
+        const response = await request(app).post('/api/users/add').send({ idp: "https://" + idp, email: email }).set('Accept', 'application/json')
         expect(response.statusCode).toBe(200);
         expect(response.body.idp).toBe(idp);
         expect(response.body.email).toBe(email);
