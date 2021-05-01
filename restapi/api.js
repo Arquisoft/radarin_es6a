@@ -118,7 +118,7 @@ router.post("/users/add", async (req, res) => {
     let email = req.body.email;
     let webID = req.body.email + "." + req.body.idp;
     //Check if the device is already in the db
-    let user = await User.findOne({ email: email })
+    let user = await User.findOne({ webID: webID })
     if (user)
         res.send({ error: "Error: This user is already registered" })
     else {
@@ -200,10 +200,19 @@ router.post("/locations/add", async (req, res) => {
     let latitud = req.body.latitud;
     let fecha = new Date();
     let id = req.body.id;
+    let webID = req.body.webID;
     let friends = req.body.friends;
-    console.log("Creando una localización (" + longitud + "," + latitud + ")" + " y fecha: " + fecha + " para " + id);
-    let user = await User.find({ _id: id })
-    if (!user) {
+    if (friends == undefined)
+        friends = [];
+    let user;
+    if (id == undefined) {
+        console.log("Creando una localización (" + longitud + "," + latitud + ")" + " y fecha: " + fecha + " para " + webID);
+        user = await User.find({ webID: webID })
+    } else {
+        console.log("Creando una localización (" + longitud + "," + latitud + ")" + " y fecha: " + fecha + " para " + id);
+        user = await User.find({ _id: id })
+    }
+    if (user == null || user.length == 0) {
         res.send({ error: "Error: El usuario no existe" })
         return;
     }
@@ -255,7 +264,9 @@ router.post("/locations/add", async (req, res) => {
     console.log("Amigos cercanos: " + count);
     let response = {
         number: count,
-        friends: list
+        friends: list,
+        longitud: longitud,
+        latitud: latitud
     }
     res.send(response);
 })

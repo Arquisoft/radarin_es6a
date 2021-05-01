@@ -36,9 +36,9 @@ describe('user ', () => {
     it('can be created correctly', async () => {
         idp = 'inrupt.net'
         email = 'pablo'
-        const response = await request(app).post('/api/users/add').send({ idp: "https://" + idp, email: email }).set('Accept', 'application/json')
+        const response = await request(app).post('/api/users/add').send({ idp: idp, email: email }).set('Accept', 'application/json')
         expect(response.statusCode).toBe(200);
-        expect(response.body.idp).toBe(idp);
+        expect(response.body.idp).toBe("https://" + idp);
         expect(response.body.email).toBe(email);
     });
 
@@ -49,7 +49,7 @@ describe('user ', () => {
         idp = 'inrupt.net'
         email = 'pablo'
         err = "Error: This user is already registered"
-        const response = await request(app).post('/api/users/add').send({ idp: "https://" + idp, email: email }).set('Accept', 'application/json')
+        const response = await request(app).post('/api/users/add').send({ idp: idp, email: email }).set('Accept', 'application/json')
         expect(response.statusCode).toBe(200);
         expect(response.body.error).toBe(err);
     });
@@ -58,7 +58,7 @@ describe('user ', () => {
      * Tests that a user can be deleted without throwing any errors.
      */
     it('can be deleted correctly', async () => {
-        webID = 'pablo.inrupt.ne'
+        webID = 'pablo.inrupt.net'
         const response = await request(app).get('/api/users/delete/' + webID);
         expect(response.statusCode).toBe(200);
     });
@@ -67,7 +67,7 @@ describe('user ', () => {
      * Tests that a user can not be deleted because user does not exist.
      */
     it('can not be deleted correctly', async () => {
-        webID = 'pablo.inrupt.ne'
+        webID = 'pablo.inrupt.net'
         err = "Error: El usuario no está registrado"
         const response = await request(app).get('/api/users/delete/' + webID);
         expect(response.statusCode).toBe(200);
@@ -80,9 +80,9 @@ describe('user ', () => {
     it('can be created correctly', async () => {
         idp = 'inrupt.net'
         email = 'pablo'
-        const response = await request(app).post('/api/users/add').send({ idp: "https://" + idp, email: email }).set('Accept', 'application/json')
+        const response = await request(app).post('/api/users/add').send({ idp: idp, email: email }).set('Accept', 'application/json')
         expect(response.statusCode).toBe(200);
-        expect(response.body.idp).toBe(idp);
+        expect(response.body.idp).toBe("https://" + idp);
         expect(response.body.email).toBe(email);
     });
 });
@@ -106,18 +106,15 @@ describe('location ', () => {
     it('can be created correctly', async () => {
         longitud = -6.23277;
         latitud = 34.23;
-        fecha = '2021-03-21T16:20:40.511Z';
-        email = 'pablo';
+        email = 'pablo.inrupt.net';
         const response = await request(app).post('/api/locations/add')
             .send({
                 longitud: longitud,
                 latitud: latitud,
-                fecha: fecha,
-                email: email
+                webID: email
             }).set('Accept', 'application/json')
         expect(response.statusCode).toBe(200);
         expect(response.body.longitud).toBe(longitud);
         expect(response.body.latitud).toBe(latitud);
-        expect(response.body.fecha).toBe(fecha);
     });
 });
