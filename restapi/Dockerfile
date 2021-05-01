@@ -16,7 +16,7 @@ ARG MONGO_URI="mongodb://mongoserver:27017/api"
 ENV MONGO_URI=$MONGO_URI
 
 # Bundle app source
-COPY server.js api.js ./
+COPY server.js api.js config.js ./
 ADD models ./models
 
 CMD [ "node", "server.js" ]
