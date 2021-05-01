@@ -16,7 +16,7 @@ type Props = {
 	webId: String
 
 };
-
+var funcion;
 class Chat extends React.Component {
 	
 	constructor({ webId }: Props) {
@@ -38,8 +38,26 @@ class Chat extends React.Component {
 			};
 		}
 	  
+		componentWillUnmount(){
+
+			clearInterval(funcion);
+			
+		}
+
+		async startChat(){
+ 
+			if(funcion != null){
+
+				clearInterval(funcion);
+			}
+
+			this.handleShow();
+
+			funcion = setInterval(this.handleShow,2000);
+
+		}
 	
-		async handleShow(event) {
+		async handleShow() {
 
 			let email = this.webID.replace("https://", "");
 			email = email.replace(".solid.community/profile/card#me", "");
@@ -57,7 +75,7 @@ class Chat extends React.Component {
 			
 	}
 	  
-		handleSubmit(event) {
+		handleSubmit() {
 
 			let email = this.webID.replace("https://", "");
 			email = email.replace(".solid.community/profile/card#me", "");
@@ -74,7 +92,7 @@ class Chat extends React.Component {
 			});
 
 		
-			this.handleShow(event);
+			this.handleShow();
 
 
 		}
@@ -95,7 +113,7 @@ class Chat extends React.Component {
 					  
 				  </DivForms>
 				  <DivForms>
-					  <Button id="send_user" form="chatUser" type="submit" onClick={(e) => this.handleShow(e)} >Chat
+					  <Button id="send_user" form="chatUser" type="submit" onClick={(e) => this.startChat()} >Chat
 					  </Button>
 				  </DivForms>
 				
@@ -156,7 +174,7 @@ class Chat extends React.Component {
 			 
 			  
 			 
-            <Button   type="submit" onClick={(e) => this.handleSubmit(e)}>
+            <Button   type="submit" onClick={(e) => this.handleSubmit()}>
 							Send
 						</Button>
 						
