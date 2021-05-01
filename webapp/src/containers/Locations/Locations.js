@@ -1,19 +1,22 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import locationsHelper from "./LocationsHelper";
-import ReactTable from 'react-table-v6';
-//import 'react-table-v6/react-table.css';
-import { Header,
-	 LocationsWrapper,
-	 DivForms,
-	 LabelInput,
-	 TitleLocations,
-	 Button,
-	 LocationsForm,
-	 ResultLocations ,
-	 FormRenderContainer
-	} 
-from "./locations.style";
+import ReactTable from 'react-table-v6'
+import 'react-table-v6/react-table.css'
+
+import {
+	Header,
+	LocationsWrapper,
+	DivForms,
+	LabelInput,
+	TitleLocations,
+	Button,
+	LocationsForm,
+	ResultLocations,
+	FormRenderContainer
+}
+	from "./locations.style";
+
 import i18n from "i18n";
 
 
@@ -25,18 +28,18 @@ class Locations extends React.Component {
 	constructor({ webId }: Props) {
 		super();
 		this.webID = webId;
-		this.handleShow= this.handleShow.bind(this);
+		this.handleShow = this.handleShow.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.locations_date = React.createRef();
-		
+
 		this.state = {
 			data: [],
-			original:[]
+			original: []
 		};
 	}
 
-	componentWillUnmount() {}
+	componentWillUnmount() { }
 	handleChange(event) {
 		this.setState({ value: event.target.value });
 	}
@@ -52,11 +55,11 @@ class Locations extends React.Component {
 		if (id === undefined) {
 			id = e.target.parentNode.value;
 		}
-		if (id!==undefined) {
-		
-		
+		if (id !== undefined) {
+
+
 			console.log("Quiero borrar " + id);
-			this.handleDelete(e,  id);
+			this.handleDelete(e, id);
 			this.handleShow(null);
 		} else {
 			console.log("¿Dónde has pinchado ?", e.target)
@@ -65,20 +68,18 @@ class Locations extends React.Component {
 
 	async handleShow(event) {
 
-			let email = this.webID.replace("https://", "");
-			email = email.replace("inrupt.net.solid.community/profile/card#me", "");
-			email = email.replace("/profile/card#me", "");
-
-			this._asyncRequest = locationsHelper.getLocations(email, this.locations_date.current.value).then((data) => {
-				this._asyncRequest = null;
-				this.setState({
-					data: data,
-					original: data
-				});
-				console.log("this.state.data=" , this.state.data);
+		let email = this.webID.replace("https://", "");
+		email = email.replace("/profile/card#me", "");
+		this._asyncRequest = locationsHelper.getLocations(email, this.locations_date.current.value).then((data) => {
+			this._asyncRequest = null;
+			this.setState({
+				data: data,
+				original: data
 			});
-			
-			
+			console.log("this.state.data=", this.state.data);
+		});
+
+
 	}
 
 	async handleDelete(event, id) {
@@ -86,17 +87,17 @@ class Locations extends React.Component {
 		this._asyncRequest = locationsHelper.deleteLocations(id).then((data) => {
 			this._asyncRequest = null
 
-			if (data.error && data.error!==undefined) {
+			if (data.error && data.error !== undefined) {
 				alert("ERROR:" + data.error);
 			} else {
-				console.log("Borrado correcto, respuesta=" , data);
+				console.log("Borrado correcto, respuesta=", data);
 			}
 		});
-		
-		
+
+
 	}
 
-		
+
 	render(): React.ReactNode {
 		return (
 			<LocationsWrapper data-testid="locations-component">
@@ -109,7 +110,7 @@ class Locations extends React.Component {
 								<input type="text" id="locations_date" name="locations_date" ref={this.locations_date} />
 							</LabelInput>
 						</DivForms>
-						
+
 					</LocationsForm>
 					<DivForms>
 						<Button id="search_locations" form="locationsf" type="submit" onClick={(e) => this.handleSubmit(e)}>
@@ -119,9 +120,9 @@ class Locations extends React.Component {
 					</DivForms>
 				</Header>
 
-				
+
 				{this.getList()}
-				
+
 			</LocationsWrapper>
 		);
 	}
@@ -139,29 +140,29 @@ class Locations extends React.Component {
 						longitud: m.longitud,
 						latitud: m.latitud,
 						fecha: m.fecha,
-						eliminar: m._id  
+						eliminar: m._id
 					}
-					);
+				);
 			});
-			
+
 
 			let columns = [
 				{
-				Header:  headerLongitud ,
-				accessor: 'longitud'
-			  	},
-				{
-				Header:  headerLatitud ,
-				accessor: 'latitud'
+					Header: headerLongitud,
+					accessor: 'longitud'
 				},
 				{
-				Header:  headerFecha ,
-				accessor: 'fecha'
+					Header: headerLatitud,
+					accessor: 'latitud'
 				},
 				{
-				Header:  headerVacia ,
-				accessor: 'eliminar',
-				Cell: props => <Button id='delete_location' value={props.value} type='submit' onClick={(e) => this.handleSubmitDelete(e)}  ><FontAwesomeIcon icon='backspace' className='backspace' /></Button> 
+					Header: headerFecha,
+					accessor: 'fecha'
+				},
+				{
+					Header: headerVacia,
+					accessor: 'eliminar',
+					Cell: props => <Button id='delete_location' value={props.value} type='submit' onClick={(e) => this.handleSubmitDelete(e)}  ><FontAwesomeIcon icon='backspace' className='backspace' /></Button>
 				}
 			];
 			return (
@@ -170,7 +171,7 @@ class Locations extends React.Component {
 						data={rows}
 						columns={columns}
 					/>
-					
+
 
 				</ResultLocations>
 			);
@@ -181,8 +182,8 @@ class Locations extends React.Component {
 						<h5 align="center">
 							{i18n.t("locations.noLocations")}
 						</h5>
-						
-					</FormRenderContainer>	
+
+					</FormRenderContainer>
 				</ResultLocations>
 			);
 		}

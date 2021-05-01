@@ -2,27 +2,68 @@
 import React from 'react';
 import chatHelper from "./chatHelper";
 
-class Chat extends React.Component {
+import { 
+	Header,
+	 ChatWrapper,
+	 DivForms,
+	 LabelInput,
+	 TitleChat,
+	 Button,
+   } 
+from "./chat.style";
+import './chat.css';
+type Props = {
+	webId: String
 
-		constructor(props) {
-		  super(props);
-		  this.state = {msn: ''};
-		  this.messages = [];
-	  
-		  this.handleChange = this.handleChange.bind(this);
-		  this.handleSubmit = this.handleSubmit.bind(this);
+};
+var funcion;
+class Chat extends React.Component {
+	
+	constructor({ webId }: Props) {
+			super();
+			this.webID = webId;
+			let email = this.webID.replace("https://", "");
+			email = email.replace(".solid.community/profile/card#me", "");
+			email = email.replace("/profile/card#me", "");
+			this.webIduser = email;
+			this.handleShow= this.handleShow.bind(this);
+			this.handleSubmit = this.handleSubmit.bind(this);
+			this.message = React.createRef();
+			this.user = React.createRef();
+			
+			this.state = {
+				data: [],
+				original:[],
+				
+			};
 		}
 	  
-		handleChange(event) {
-		  this.setState({msn: event.target.msn});
+		componentWillUnmount(){
+
+			clearInterval(funcion);
+			
 		}
-		async handleShow(event,email2) {
+
+		async startChat(){
+ 
+			if(funcion != null){
+
+				clearInterval(funcion);
+			}
+
+			this.handleShow();
+
+			funcion = setInterval(this.handleShow,2000);
+
+		}
+	
+		async handleShow() {
 
 			let email = this.webID.replace("https://", "");
 			email = email.replace(".solid.community/profile/card#me", "");
 			email = email.replace("/profile/card#me", "");
 
-			this._asyncRequest = chatHelper.getMessages(email, email2).then((data) => {
+			this._asyncRequest = chatHelper.getMessages(email,this.user.current.value).then((data) => {
 				this._asyncRequest = null;
 				this.setState({
 					data: data,
@@ -34,14 +75,14 @@ class Chat extends React.Component {
 			
 	}
 	  
-		handleSubmit(event,email1,email2) {
+		handleSubmit() {
 
+			let email = this.webID.replace("https://", "");
+			email = email.replace(".solid.community/profile/card#me", "");
+			email = email.replace("/profile/card#me", "");
+		  
 
-			this.messages.push(this.state.msn)
-
-			document.getElementById("men").innerHTML = this.state.msn
-
-			this._asyncRequest = chatHelper.sendMessages(email1,email2).then((message) => {
+			this._asyncRequest = chatHelper.sendMessages(email,this.user.current.value,this.message.current.value).then((message) => {
 				this._asyncRequest = null;
 				if (message.error && message.error!==undefined) {
 					alert("ERROR:" + message.error);
@@ -50,25 +91,102 @@ class Chat extends React.Component {
 				}
 			});
 
+		
+			this.handleShow();
+
 
 		}
 	  
 		render() {
 		  return (
-			  <div>
-			<form onSubmit={this.handleSubmit}>
-			  <label>
-				Mensaje:
-				<input type="text" value={this.state.msn} onChange={this.handleChange} />
-			  </label>
-			  <input type="submit" value="Submit" />
-			</form>
-
-            <div id="men">
-
-			</div>
 			
-			</div>
+			<div className ="container">
+			 <Header data-testid="chat-header">
+				  
+				  <TitleChat></TitleChat>
+				  <DivForms id="chatUser">
+					  <DivForms>
+						  <LabelInput>
+							  <input type="text" placeholder="Escribe un usuario" id="chat" name="chat" ref={this.user} />
+						  </LabelInput>
+					  </DivForms>
+					  
+				  </DivForms>
+				  <DivForms>
+					  <Button id="send_user" form="chatUser" type="submit" onClick={(e) => this.startChat()} >Chat
+					  </Button>
+				  </DivForms>
+				
+			  </Header>
+			 <div className="chat">
+                 
+				  
+		   <div className ="message">
+		   
+		  {this.state.data.map(m => { 
+
+			  if(m.emisor === this.webIduser ){
+										
+				return (
+						
+								<div className ="bubble-container">
+        							<div className="bubbleEmisor" >
+          								{ m.mensaje }
+        							</div>
+									</div>
+			
+						
+						
+			
+											
+												)}
+												
+												else{
+
+													return (
+										
+														
+															
+																<div className ="bubble-container">
+																	<div className="bubbleReceptor" >
+																			{ m.mensaje }
+																	</div>
+									  
+																
+															</div>
+													
+																
+								
+																			
+																				)
+
+												}
+											}
+										)}
+           
+		   </div>
+		   <div className="send">
+		 
+					  
+				
+				<input class="inputsend" type="text" id="msn" ref={this.message}/>
+			  
+			 
+			  
+			 
+            <Button   type="submit" onClick={(e) => this.handleSubmit()}>
+							Send
+						</Button>
+						
+						</div>	
+						
+		  
+		 	
+						</div>
+		   
+		  </div>
+		  
+         
 		  );
 		}
 	  }

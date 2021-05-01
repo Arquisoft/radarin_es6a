@@ -1,0 +1,82 @@
+.bubbleEmisor{
+
+    
+    margin: 1px 0px;
+    background: #f4f4f8;
+    padding: 10px 15px;
+    border-radius: 20px;
+    margin-left: 100px;
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.bubbleReceptor{
+
+    margin: 1px 0px;
+    background: #c5c5eb;
+    padding: 10px 15px;
+    border-radius: 20px;
+    width: 100%;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    margin-left:100px;
+    width: 700px;
+    height: 80%;
+    border:1px;
+    border-color: aqua;
+    overflow-y: scroll;
+    margin-top: 20px;
+    justify-content: center;
+   
+    
+  }
+
+  .bubble-container {
+    font-size: 14px;
+    display: flex;
+    margin-top: 10px;
+    margin-right: 5px;
+   
+  }
+.chat{
+    display: flex;
+    flex-direction: column;
+}
+.container{
+   
+    display: flex;
+    flex-direction: row;
+}
+.send{
+   
+    display: flex;
+    flex-direction: row;
+    width: 700px;
+    height: 10%;
+    margin-left: 100px;
+    margin-top: 20px;
+    background-color: #adadf0;
+    
+}
+.inputsend{
+   height: 50%;
+   margin-top: 13px;
+   margin-left: 10px;
+}
+
+.messageEmisor,.messageReceptor{
+
+    display: flex;
+    flex-direction: column;
+}
+
