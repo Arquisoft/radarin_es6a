@@ -123,7 +123,7 @@ router.post("/users/add", async (req, res) => {
         res.send({ error: "Error: This user is already registered" })
     else {
         user = new User({
-            name: name,
+            idp: idp,
             email: email,
             webID: webID
         })
