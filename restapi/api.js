@@ -118,15 +118,16 @@ router.post("/users/add", async (req, res) => {
     let idp = "https://" + req.body.idp;
     let email = req.body.email;
     let webID = req.body.email + "." + req.body.idp;
+    let admin = req.body.admin | false;
     //Check if the device is already in the db
     let user = await User.findOne({ email: email })
     if (user)
         res.send({ error: "Error: This user is already registered" })
     else {
         user = new User({
-            name: name,
             email: email,
-            webID: webID
+            webID: webID,
+            admin: admin
         })
         await user.save()
         res.send(user)
@@ -143,18 +144,18 @@ async function saveUser(webID) {
     console.log("Usuario creado: " + webID);
 }
 
-//Borrar usuario por email
-router.get("/users/delete/:email", async (req, res) => {
+//Borrar usuario por id
+router.get("/users/delete/:_id", async (req, res) => {
     //Comprobar si el usuario está registrado
-    let user = await User.findOne({ email: req.params.email })
+    let user = await User.findOne({ _id: req.params._id })
     console.log(user);
     if (!user)
         res.send({ error: "Error: El usuario no está registrado" })
     else {
-        let user = await User.deleteOne({ email: req.params.email })
+        let user = await User.deleteOne({ _id: req.params._id })
         res.send(user)
     }
-})
+});
 
 //Borrar location
 //Tener en cuenta que una location está vinculada a user

@@ -27,6 +27,8 @@ class Users extends React.Component {
 		this.newIdp = React.createRef();
 		this.newUser = React.createRef();
 		this.email = "";
+		this.users = [];
+		this.isAdmin = false;
 	}
 
 	componentDidMount() {
@@ -36,7 +38,8 @@ class Users extends React.Component {
 		fetch(myRequest)
 		.then(response => response.json())
 		.then(data => {
-			console.log(data);
+			this.users = data;
+			console.log(this.users);
 			this.setState({ data: data })
 		})
 	}
@@ -106,16 +109,21 @@ class Users extends React.Component {
 
 		this._asyncRequest = this.getName().then((data) => {
 			console.log("Data: " + data);
-
+			
 			this.email = data.replace("https://", "");
-			this.email = this.email.replace(".inrupt.net/profile/card#me", "");
 			this.email = this.email.replace("/profile/card#me", "");
 
 		});
 		
+		this.users.forEach(m => {
+			if(this.email == m.webID && m.admin){
+				this.isAdmin = true;
+			}
+		});
+		
 		console.log("Email: " + this.email)
 		
-		if(this.email == "radarines6a") {
+		if(this.isAdmin) {
 
 			return (
 
