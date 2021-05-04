@@ -1,44 +1,19 @@
 [[section-system-scope-and-context]]
 == Alcance y contexto del sistema
 
-
-[role="arc42help"]
-****
-
-****
-
-
 === Contexto de negocio
 
-[role="arc42help"]
-****
-
-****
-La aplicación permite a sus usuarios identificarse y añadir amigos, además conocerá la información de la ubicación del usuario y cuando el mismo esté cerca de 
+La aplicación permite a sus usuarios identificarse y añadir amigos, además podrán conocer la información de la ubicación del usuario y cuando el mismo esté cerca de 
 uno de sus amigos, mandará una notificación a ambos para que puedan verse. 
-
-
 
 image:contextodenegocio.png["Contexto de negocio"]
 
 
 === Contexto Técnico
 
-[role="arc42help"]
-****
-.Contents
-Technical interfaces (channels and transmission media) linking your system to its environment. In addition a mapping of domain specific input/output to the channels, i.e. an explanation with I/O uses which channel.
-
-.Motivation
-Many stakeholders make architectural decision based on the technical interfaces between the system and its context. Especially infrastructure or hardware designers decide these technical interfaces.
-
-.Form
-E.g. UML deployment diagram describing channels to neighboring systems,
-together with a mapping table showing the relationships between channels and input/output.
-
-****
 Como hemos comentado nuestro sistema está basado en SOLID, el cuál nos permite la descentralización de la web.Así mismo nos suministra el llamado POD;
-dicho POD nos permite guardar información,como por ejemplo almacenar la localización del usuario de manera segura,por otro lado cada usuario tendrá un POD individualizado.
+dicho POD nos permite guardar información, como por ejemplo almacenar la localización del usuario de manera segura.
+Por otro lado, cada usuario tendrá un POD individualizado.
 
 Todo esto estará integrado a través del framework React, el cuál es una librería de JavaScript, que nos facilita y permite construir la interfaz de usuario.
 

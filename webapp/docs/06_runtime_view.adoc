@@ -3,9 +3,8 @@
 
 === Escenario 1: Inicio de sesión válido
 
-
 * El usuario desea iniciar sesión con su cuenta de Solid.
-* Una vez el usuario ha introducido sus credenciales y ha pulsado el boton de iniciar sesión, la aplicación móvil 
+* Una vez el usuario ha introducido sus credenciales y ha pulsado el botón de iniciar sesión, la aplicación móvil 
 realizará una petición al servidor en la que enviará las credenciales del usuario. 
 * El servidor recibirá la petición y usando las credenciales del usuario intentará iniciar sesión en el pod del usuario.
 * El servidor responderá a la petición con el resultado del inicio de sesión. En caso de que el inicio fuese válido, la aplicación móvil 
@@ -41,12 +40,12 @@ App -> Usuario: Se visualiza la información personal
 * Proceso para que un usario sea notificado de que un amigo esta cerca suyo.
 * Para que un usuario pueda ser notificado de que un amigo suyo se encuentra cerca de su posición este primero debe activar la
 geolocalización en la pestaña de ajustes de la aplicación.
-* Una vez activada la geolocalización, la aplicación envia una petición al servidor donde inclute las coordenadas del usuario.
+* Una vez activada la geolocalización, la aplicación envia una petición al servidor donde incluye las coordenadas del usuario.
 * El servidor recibe dicha petición, almacena las coordenadas del usuario y comprueba que amigos de ese usuario se encuentran 
 cerca de su posición en base a las ultimas coordenadas de cada uno.
 * El servidor responde a la petición de la aplicación móvil con el numero de amigos cerca de su posición, y en caso de que este 
-número sea mayor de 0, tambiés se enviará una lista de que amigos son aquellos que se encuentran cerca.
-* Si el usario ha activado las notificaciones en los ajustes de la aplicación (por defecto esta opción ya se encuentra activada), 
+número sea mayor de 0, también se enviará una lista de qué amigos son aquellos que se encuentran cerca.
+* Si el usuario ha activado las notificaciones en los ajustes de la aplicación (por defecto esta opción ya se encuentra activada), 
 cuando se reciba la respuesta del servidor se lanzará una notificación, si la aplicación se encuentra en segundo plano. Además se 
 podrá visualizar dichos avisos desde la ventana de avisos de la aplicación.
 
