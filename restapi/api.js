@@ -120,7 +120,8 @@ router.post("/users/add", async (req, res) => {
     let webID = req.body.email + "." + req.body.idp;
     let admin = req.body.admin | false;
     //Check if the device is already in the db
-    let user = await User.findOne({ email: email })
+    let user = await User.findOne({ webID: webID })
+    console.log(webID)
     if (user)
         res.send({ error: "Error: This user is already registered" })
     else {

@@ -9,6 +9,7 @@ class UsersHelper {
 			headers: {'Content-Type':'application/json'},
 			body: JSON.stringify({'idp':idp, 'email':email})
 		  })
+		  console.log(response.json());
 		return await response.json()
 	}
 
