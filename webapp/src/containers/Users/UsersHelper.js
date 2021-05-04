@@ -1,4 +1,3 @@
-import ldflex from "@solid/query-ldflex";
 import { foaf } from "rdf-namespaces";
 import { fetchDocument } from "tripledoc";
 

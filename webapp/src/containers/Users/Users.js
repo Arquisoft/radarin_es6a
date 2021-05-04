@@ -108,7 +108,6 @@ class Users extends React.Component {
 	render() {
 
 		this._asyncRequest = this.getName().then((data) => {
-			console.log("Data: " + data);
 			
 			this.email = data.replace("https://", "");
 			this.email = this.email.replace("/profile/card#me", "");
@@ -116,13 +115,11 @@ class Users extends React.Component {
 		});
 		
 		this.users.forEach(m => {
-			if(this.email == m.webID && m.admin){
+			if(this.email === m.webID && m.admin){
 				this.isAdmin = true;
 			}
 		});
-		
-		console.log("Email: " + this.email)
-		
+				
 		if(this.isAdmin) {
 
 			return (
@@ -163,7 +160,7 @@ class Users extends React.Component {
 				<ResultLocations>
 					<FormRenderContainer id="empty">
 						<h5 align="center">
-							{i18n.t("users.noUsers")}
+							{i18n.t("usuarios.accesoNoPermitido")}
 						</h5>
 						
 					</FormRenderContainer>	
@@ -215,7 +212,7 @@ class Users extends React.Component {
 					<ResultLocations>
 						<FormRenderContainer id="empty">
 							<h5 align="center">
-								{i18n.t("users.noUsers")}
+								{i18n.t("users.noUsuarios")}
 							</h5>
 							
 						</FormRenderContainer>	

@@ -4,7 +4,6 @@ import chatHelper from "./chatHelper";
 
 import { 
 	Header,
-	 ChatWrapper,
 	 DivForms,
 	 LabelInput,
 	 TitleChat,
