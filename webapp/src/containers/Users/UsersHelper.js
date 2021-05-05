@@ -14,9 +14,12 @@ class UsersHelper {
 	}
 
 	async deleteUsers(id) {
-		const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+		const requestOptions = {
+			method: 'DELETE'
+		};
+		const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 		console.log(apiEndPoint + " " + id)
-		let response = await fetch(apiEndPoint+'/users/delete/' + id)
+		let response = await fetch(apiEndPoint + '/users/delete/' + id, requestOptions)
 		return await response.json()
 	}
 

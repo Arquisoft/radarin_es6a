@@ -146,16 +146,16 @@ async function saveUser(webID) {
 }
 
 //Borrar usuario por id
-router.get("/users/delete/:_id", async (req, res) => {
+router.delete("/users/delete/:_id", async (req, res) => {
     //Comprobar si el usuario está registrado
-    let user = await User.findOne({ _id: req.params._id })
-    console.log(user);
-    if (!user)
-        res.send({ error: "Error: El usuario no está registrado" })
-    else {
-        let user = await User.deleteOne({ _id: req.params._id })
-        res.send(user)
-    }
+    let idUser = req.params._id;
+    console.log("Voy a borrar: " + idUser)
+    let result = await User.deleteOne({ _id: idUser });
+    if (result && result.deletedCount > 0) {
+        res.send(result);
+    } else {
+        res.send({ error: "Error: La localización no ha sido borrada" })
+    }    
 });
 
 //Borrar location
