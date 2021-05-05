@@ -393,4 +393,54 @@ router.post("/chat/list", async (req, res) => {
 
 })
 
+//Obtener los amigos cercanos y su localización
+router.get("/friends/near/:webId/:longitud/:latitud", async (req, res) => {
+    let usuario = "https://" + req.params.webId + "/profile/card#me";
+    let longitud = req.params.longitud;
+    console.log(usuario);
+    let latitud = req.params.latitud;
+    let friends = await findFriendsFor(usuario);
+    let count = 0;
+    let list = [];
+    console.log(friends);
+    for (var i = 0; i < friends.length; i++) {
+        var obj = friends[i];
+
+        let idepe = obj.includes(".inrupt.net") ? "https://inrupt.net" : "https://solidcommunity.net";
+        let nombre = obj.includes(".inrupt.net") ? obj.substr(8, obj.length - 20) : obj.substr(8, obj.length - 27);
+        let u = await User.findOne({
+            email: nombre,
+            idp: idepe
+        });
+
+        if (!u) {
+            continue;
+        }
+        let ls = u.locations;
+
+        if (ls.length == 0) {
+            continue;
+        }
+        let l = await Location.find({ _id: ls[ls.length - 1] });
+        let dis = distance(latitud, longitud, l[0].latitud, l[0].longitud);
+
+        if (dis <= 1) {
+            count = count + 1;
+            list.push({
+                username: u.email,
+                idp: u.idp,
+                _id: u._id,
+                longitud: l[0].longitud,
+                latitud: l[0].latitud
+            });
+        }
+    }
+    console.log("Amigos cercanos: " + count);
+    let response = {
+        number: count,
+        friends: list
+    }
+    res.send(response);
+})
+
 module.exports = router
