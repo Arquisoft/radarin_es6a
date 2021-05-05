@@ -53,7 +53,7 @@ jobs:
           heroku_app_name: "radarines6awebapp" #Must be unique in Heroku
           heroku_email: "radarines6a@gmail.com"
           procfile: 'web: npm start'
-          #usedocker: true
+        #usedocker: true
           dontuseforce: true
           appdir: "webapp"
           docker_build_args: |
