@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react';
 import googleMapHelper from './googleMapHelper';
 
 
@@ -29,7 +29,7 @@ export class GoogleMap extends Component {
           userLocation: { lat: latitude, lng: longitude },
           loading: false
         });
-        googleMapHelper.getFriendsPosition(this.webId, 37.4219983, -122.084, this.handleFriendsFunc);
+        googleMapHelper.getFriendsPosition(this.webId, this.state.userLocation.lat, this.state.userLocation.lng, this.handleFriendsFunc);
       },
       () => {
         this.setState({ loading: false });
@@ -39,7 +39,7 @@ export class GoogleMap extends Component {
 
   async handleFriends(json) {
     this.setState({ friends: json.friends });
-    this.setState({ friend: json.number > 0 });
+    this.setState({ friend: json.number >= 0 });
   }
 
   render() {
@@ -60,21 +60,36 @@ export class GoogleMap extends Component {
       );
     } else {
       return (
-        <Map google={google} initialCenter={userLocation} zoom={15} style={{ height: '70%' }} >
-          <Marker
-            id={1}
-            title={'La posición del usuario.'}
-            name={'User'}
-            position={{ lat: userLocation.lat, lng: userLocation.lng }} />
-          <Marker
-            id={1}
-            title={'La posición del usuario.'}
-            name={'User'}
-            position={{
-              lat: this.state.friends[0].latitud,
-              lng: this.state.friends[0].longitud
-            }} />
-        </Map>
+        <div>
+          <div style={{ marginLeft: 50, marginTop: 20, marginBottom: 20, alignItems: "center", alignContent: "center" }}>
+            <p style={{ textAlign: "center", fontSize: 18 }}>{'Amigos cerca: ' + this.state.friends.length}</p>
+          </div>
+          <div>
+            <Map google={google} initialCenter={userLocation} zoom={15} style={{ marginBottom: 50, marginRight: 50, marginLeft: 50, height: '70%' }} >
+              <Marker
+                id={1}
+                title={'La posición del usuario.'}
+                name={'User'}
+                position={{ lat: userLocation.lat, lng: userLocation.lng }}>
+              </Marker>
+              {this.state.friends.map((friend, i) => {
+                return (
+                  <Marker
+                    id={friend.username + "-" + friend.idp}
+                    title={'Posición de ' + friend.username}
+                    name={friend.username}
+                    icon={{ url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" }}
+                    position={{
+                      lat: friend.latitud,
+                      lng: friend.longitud
+                    }}
+                  >
+                  </Marker>
+                );
+              })}
+            </Map>
+          </div>
+        </div >
       );
     }
   }
