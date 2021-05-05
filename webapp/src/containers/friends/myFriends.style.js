@@ -18,7 +18,7 @@ export const PanelAmigos = styled.section`
     `;
 
 export const ListFriend = styled.div`
-    border: solid #cbcbcb 1px;
+    background-color: #FFFBFB;
     margin-bottom: .7em;
     border-radius: .2em;
     margin-top: .7em;
