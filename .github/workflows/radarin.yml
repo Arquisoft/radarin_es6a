@@ -12,12 +12,6 @@ jobs:
         working-directory: webapp
     steps:
     - uses: actions/checkout@v2
-    - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "radarines6a" #Must be unique in Heroku
-          heroku_email: "radarines6a@gmail.com"
-          usedocker: true
     - uses: actions/setup-node@v1
       with:
         node-version: 12.14.1
@@ -53,12 +47,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.8.9 # This is the action
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "radarines6awebapp" #Must be unique in Heroku
           heroku_email: "radarines6a@gmail.com"
-          usedocker: true
+          procfile: "web: npm start"
           dontuseforce: true
           appdir: "webapp"
           docker_build_args: |
