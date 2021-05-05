@@ -50,9 +50,9 @@ class Users extends React.Component {
 		window.location.reload();
 	}
 
-	handleSubmitDelete(e, id) {
+	handleSubmitDelete(e) {
 		e.preventDefault();
-		id = e.target.value;
+		let id = e.target.value;
 		console.log(id)
 		if (id!==undefined) {
 			
@@ -63,6 +63,9 @@ class Users extends React.Component {
 			console.log("¿Dónde has pinchado ?", e.target)
 		}
 	}
+
+
+
 
 	async handleAdd(event) {
 		this._asyncRequest = usersHelper.addUser(this.newUser.current.value,
@@ -193,7 +196,7 @@ class Users extends React.Component {
 					{
 						Header:  headerVacia ,
 						accessor: 'eliminar',
-						Cell: props => <Button id='delete_usuario' value={props.value} type='submit' onClick={(e) => this.handleSubmitDelete(e, 'email')}  ><FontAwesomeIcon icon='backspace' className='backspace' /></Button> 
+						Cell: props => <Button id='delete_usuario' value={props.value} type='submit' onClick={(e) => this.handleSubmitDelete(e)}  ><FontAwesomeIcon icon='backspace' className='backspace' /></Button> 
 					}
 				];
 
