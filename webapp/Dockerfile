@@ -15,4 +15,5 @@ RUN gem install asciidoctor asciidoctor-diagram
 RUN npm install shx --save-dev
 #Generate the doc
 #RUN npm run docs
-CMD [ "./start.sh" ]
+RUN chmod +x start.sh
+CMD ["./start.sh"]
