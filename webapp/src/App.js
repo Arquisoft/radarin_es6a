@@ -10,7 +10,6 @@ import theme from './utils/theme';
 import '@inrupt/solid-style-guide';
 import { Toaster } from './App.styled';
 import 'react-toastify/dist/ReactToastify.css';
-//OJO
 import 'flag-icon-css/css/flag-icon.min.css';
 import 'normalize.css';
 import './index.css';

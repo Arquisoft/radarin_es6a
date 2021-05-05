@@ -52,7 +52,8 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "radarines6awebapp" #Must be unique in Heroku
           heroku_email: "radarines6a@gmail.com"
-          usedocker: true
+          procfile: 'web: npm start'
+          #usedocker: true
           dontuseforce: true
           appdir: "webapp"
           docker_build_args: |
