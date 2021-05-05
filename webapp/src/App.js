@@ -9,6 +9,7 @@ import Routes from './routes';
 import theme from './utils/theme';
 import '@inrupt/solid-style-guide';
 import { Toaster } from './App.styled';
+import 'react-toastify/dist/ReactToastify.css';
 
 library.add(fas);
 library.add(faGithub);

@@ -1,7 +1,7 @@
 {
   "name": "webapp",
   "version": "0.1.0",
-  "homepage": ".",
+  "homepage": "https://arquisoft.github.io/radarin_es6a/",
   "private": true,
   "dependencies": {
     "@babel/core": "7.1.6",
