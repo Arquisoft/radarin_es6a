@@ -40,7 +40,7 @@ export const LoginTitle = styled.span`
   &::after {
     width: 32%;
     content: '';
-    background: #656e75;
+    background: #030303;
     height: 1px;
     box-sizing: border-box;
     top: 50%;
