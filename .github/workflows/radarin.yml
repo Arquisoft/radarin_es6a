@@ -50,7 +50,7 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.8.9 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "radarines6awebapp3" #Must be unique in Heroku
+          heroku_app_name: "radarines6awebappSlug" #Must be unique in Heroku
           heroku_email: "radarines6a@gmail.com"
           procfile: 'web: npm start'
         #usedocker: true
@@ -68,7 +68,7 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.8.9 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "radarines6arestapi3" #Must be unique in Heroku
+          heroku_app_name: "radarines6arestapiSlug" #Must be unique in Heroku
           heroku_email: "radarines6a@gmail.com"
           usedocker: true
           appdir: "restapi"

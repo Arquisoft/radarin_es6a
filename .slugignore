@@ -1,0 +1,5 @@
+# testing
+/webapp/coverage
+/restapi/tests
+/webapp/e2e
+/webapp/docs
