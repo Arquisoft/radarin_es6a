@@ -1,0 +1,18 @@
+[[section-testing]]
+== Testing
+Ahora vamos a hablar de los tipos de prueba que hemos llevado a cabo: +
+*Pruebas unitarias:* +
+Hemos hecho diversas pruebas tanto para la webapp como para la restapi. +
+En la webapp, hemos probado los componentes y containers, comprobando que se desplieguen de forma correcta. +
+En la restapi, hemos probado, que se puedan listar los usuarios, que se creen, que no se puedan crear si existe, que se borre correctamente y que pueda ser creado de nuevo. Además, hemos hecho un test para listar las localizaciones y la que se añada una localización. +
+*Test e2e:* +
+Tests de aceptación variados con cucumber. Hemos realizado los siguiente: +
+Añadir un amigo. +
+Añadir un usuario. +
+Prueba de login. +
+Visualizar el chat, localizaciones y mensajes. +
+*Pruebas de carga:* +
+Hemos hecho pruebas de carga con gatling. +
+Para 1 usuario la aplicación web va sin problemas como se puede ver en el diagrama de solicitudes y de respuestas. +
+Para 100 usuarios la cosa se complica… muchas solicitudes fallan y y también hay errores en el número de respuestas.
+
