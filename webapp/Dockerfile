@@ -13,10 +13,10 @@ COPY package-lock.json ./
 ARG API_URI="http://localhost:5000/api"
 ENV REACT_APP_API_URI=$API_URI
 #Create an optimized version of the webapp
-RUN npm install -g serve
+#RUN npm install -g serve
 RUN npm install
 
-RUN npm run build
+#RUN npm run build
 
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
@@ -26,6 +26,7 @@ RUN apt-get update && apt-get -y install ruby openjdk-8-jre
 RUN gem install asciidoctor asciidoctor-diagram
 RUN npm install shx --save-dev
 #Generate the doc
-#RUN npm run docs
-RUN chmod +x start.sh
-CMD ["./start.sh"]
+RUN npm run docs
+#RUN chmod +x start.sh
+#CMD ["./start.sh"]
+CMD ["npm", "start"]
