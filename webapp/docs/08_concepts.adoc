@@ -13,7 +13,9 @@ También, proporcionaremos un diseño atractivo e intuitivo visualmente.
 === Conceptos de seguridad y protección
 
 Tanto la seguridad como la protección son nuestros objetivos fundamentales de calidad.
-Los datos del usuario se almacenaran en su POD, proporcionando así, a su propietario un control total sobre su información, pudiendo este decidir que organizaciones, personas o cualesquiera accedan a sus información, así como revocar estos permisos.
+Los datos del usuario se almacenaran en su POD, proporcionando así, a su propietario un control total sobre su información, pudiendo este decidir que organizaciones, personas o 
+cualesquiera accedan a sus información, así como revocar estos permisos. La única información que no será almacenada en su POD serán las ubicaciones (solo se guardarán un máximo de 5 ubicaciones 
+por usuario y el usuario podrá borrarlas en cualquier momento) y los mensajes entre usuarios.
 
 === Patrones de arquitectura 
 Hemos escogido el patrón de arquitectura por capas, este se divide en :

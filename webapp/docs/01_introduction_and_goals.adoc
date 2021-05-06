@@ -13,7 +13,6 @@ Radarin tiene como objetivo facilitar encuentros entre amigos, accediendo a la i
 |Aplicación web  |Radarin contará con una aplicación web que permitirá gestionar y visualizar las localizaciones, así como gestionar usuarios y monitorizar el estado del servidor en el que funciona dicha aplicación.
 |Aplicación móvil|Radarin contará con una aplicación móvil que enviará localizaciones al servidor y recibirá notificaciones de usuarios amigos y cercanos.
 |Almacenamiento de información|La aplicación web almacenará la información mínima sobre el usuario y sus amigos, el resto de información será almacenada en su pod.
-|Sistema de monitorización|La aplicación móvil contará con un sistema de monitorización
 |===
 
 

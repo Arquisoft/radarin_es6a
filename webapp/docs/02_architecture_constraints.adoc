@@ -6,6 +6,8 @@
 |Restricción|Explicación
 | Uso del framework React | Es una biblioteca de JavaScript de código abierto que facilita
                             la creación de interfaces de usuario cuando se desarrollan aplicaciones web.
+| Uso del framework React Native | Es una biblioteca de JavaScript de código abierto basada en ReactJS que facilita
+                            la creación de aplicaciones nativas multiplataforma.
 | Uso de la tecnología SOLID | Se trata de un sistema de persistencia mediante PODs descentralizados.
 | Uso de Node.js | Es un entorno en tiempo de ejecución multiplataforma, de código abierto, para la capa
                    del servidor basado en el lenguaje de programación JavaScript.

@@ -24,9 +24,9 @@ Comenzamos la descomposición mostrando un cuadro en blanco en nuestra aplicaci�
 [options="header",cols="2,2"]
 |===
 |Nombre|Responsabilidad
-| Radarin Web | Aplicación Web que interactúa con el usuario y SOLID / Servidor Web.
-| Radarin App | Aplicación móvil que interactúa con el usuario y SOLID / Servidor Web.
+| Radarin Web | Aplicación Web que interactúa con el usuario, SOLID y Servidor Web.
+| Radarin App | Aplicación móvil que interactúa con el usuario y y Servidor Web.
 | SOLID | Servidor que guarda los PODs.
 | Servidor web | Infraestructura necesaria para acceder a una base de datos con información no almacenada
-                  en el POD.
+                  en el POD. Además hace de intermediario para la comunicación entre la aplicación móvil y SOLID.
 |===

@@ -70,3 +70,36 @@ Usuario -> App: Accede a la vista de avisos
 App --> Usuario: Se visualiza la lista de avisos
 
 ----
+
+=== Escenario 3: Enviar mensaje de chat desde el móvil
+
+
+* Proceso para que un usario envia un mensaje a uno de sus amigos desde la aplicación móvil.
+* El usuario accede a la lista de amigos. La aplicación recuperará los mensajes haciendo una petición al servidor.
+* Los mensajes serán mostrados al usuario en la vista de la aplicación móvil. A su vez, la aplicación arrancará una tarea asincrona que
+recargará los mensajes cada 2 segundos.
+* Cuando un usuario escriba un mensaje este se almacenará para luego ser enviado al servidor y que este lo almacene.
+
+El diagrama de secuencia es el siguiente:
+ 
+[plantuml,"Sequence diagram 2",png]
+----
+actor Usuario
+entity App as "RADARIN App"
+database Server as "Servidor RADARIN"
+Usuario -> App: Accede a lista de amigos
+App --> Usuario: Se visualiza la lista
+Usuario -> App: Selecciona un amigo
+App -> Server: Se solicita la lista de mensajes entre esos dos usuarios
+Server --> App: Se devuelve la lista de mensajes entre esos dos usuarios
+App -> App: Se inicia la recarga de mensajes en segundo plano
+App --> Usuario: Se muestran los mensajes
+Usuario -> App: Escribe un mensaje
+App -> App: Se almacena el mensaje
+Usuario -> App: Envia el mensaje
+App -> Server: Se envia el mensaje para que se guarde
+Usuario -> App: Sale del chat
+App -> App: Se detiene la recarga de mensajes
+App --> Usuario: Se vuelve a visualizar la lista de amigos
+
+----

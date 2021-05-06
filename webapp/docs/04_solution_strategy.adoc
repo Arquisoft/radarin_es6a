@@ -8,14 +8,15 @@ En la siguiente tabla podremos observar las decisiones tecnológicas adoptadas a
 |===
 |Tecnología usada | Propósito
 
-| GitHub |Facilitar el control de versiones, así como el trabajo en equipo  
-| Asciidoctor | Realizar de la documentación del proyecto de una forma sencilla  |
-Solid POD | Aumenta la seguridad del usuario haciendo que la informacion se almacene en un POD de forma descentralizada. Permitiendo así que el usuario decida quién accede a sus datos, o con quién los comparte |
- Node.js |Framework de javascript para el desarollo del back end de nuestra aplicación
-|Mongo DB | Base de datos NoSQL donde guardaremos la mínima información posible
+| GitHub | Facilitar el control de versiones, así como el trabajo en equipo  
+| Asciidoctor | Realizar de la documentación del proyecto de una forma sencilla  
+| Solid POD | Aumenta la seguridad del usuario haciendo que la informacion se almacene en un POD de forma descentralizada. Permitiendo así que el usuario decida quién accede a sus datos, o con quién los comparte 
+| Node.js | Framework de javascript para el desarollo del back end de nuestra aplicación
+| Mongo DB | Base de datos NoSQL donde guardaremos la mínima información posible
 | React.js | Librería basada en javascript para el desarollo del front end
-|Express |Framework de desarollo de aplicaciones para node|
-Heroku| Plataforma para el despliegue de la aplicación
+| React Native | Librería basada en javascript y reactjs para el desarrollo de aplicaciones nativas
+| Express | Framework de desarollo de aplicaciones para node
+| Heroku | Plataforma para el despliegue de la aplicación
 
 |===
 .Alcanzando los atributos de calidad

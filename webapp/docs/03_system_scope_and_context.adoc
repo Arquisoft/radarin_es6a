@@ -3,10 +3,16 @@
 
 === Contexto de negocio
 
-La aplicación permite a sus usuarios identificarse y añadir amigos, además podrán conocer la información de la ubicación del usuario y cuando el mismo esté cerca de 
-uno de sus amigos, mandará una notificación a ambos para que puedan verse. 
-
-image:contextodenegocio.png["Contexto de negocio"]
+La aplicación web permitirá a los usuarios iniciar sesión con su cuenta de un proveedor de pods (solidcommunity o inrupt). Además, una
+vez el usuario ha iniciado sesión en la web podrá ver sus amigos y añadir nuevos o eliminar los ya añadidos. Toda la información de los 
+amigos se almacenará en el pod del usuario. Además desde la aplicación web se podrá visualizar las localizaciones de los amigos cercanos y 
+se podrá interactuar con ellos desde el chat en tiempo real.
+ +
+ + 
+Por otro lado la aplicación móvil tendrá un inicio de sesión identico de cara al usuario, aunque internamente la aplicación hará una petición
+al servidor para que este inicie sesión en su lugar. Con una sesión iniciada el usuario podrá activar la geolocalización para enviar localizaciones y 
+podrá ver sus datos de perfil, además de pdoer acceder a la lista de amigos y interactuar con ellos usando el chat. El contenido del chat será igual tanto 
+para la aplicación web como para la móvil.
 
 
 === Contexto Técnico
@@ -22,6 +28,7 @@ Todo esto estará integrado a través del framework React, el cuál es una libre
 |Interfaz técnica|Descripción
 | _Solid_ | Base general de la aplicación
 | _POD_ | Cada uno de estos usuarios posee un POD, que mantiene la información de este
-| _React_ | Permite generar la interfaz de la aplicación
+| _React_ | Permite generar la interfaz de la aplicación web
+| _React Native_ | Permite generar la interfaz de la aplicación móvil
 |===
-image::contextoTecnicoDiagrama.PNG[Technical context diagram]
+
