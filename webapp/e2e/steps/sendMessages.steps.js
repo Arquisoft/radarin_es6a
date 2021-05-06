@@ -1,6 +1,6 @@
 import "jest";
 import { defineFeature, loadFeature } from "jest-cucumber";
-const feature = loadFeature("features/deleteLocation.feature");
+const feature = loadFeature("features/sendMessages.feature");
 const puppeteer = require("puppeteer");
 let browser = null;
 let page = null;
@@ -10,8 +10,8 @@ defineFeature(feature, (test) => {
 		jest.setTimeout(12000000);
 	});
 
-	test("Trying to delete a location", ({ given, when, then }) => {
-		given("I am a user trying to delete a location", async () => {
+	test("Trying to send a message", ({ given, when, then }) => {
+		given("I am a user trying to send a message", async () => {
 			browser = await puppeteer.launch({
 				headless: false
 			});
@@ -62,33 +62,42 @@ defineFeature(feature, (test) => {
 
 
 		
-			await page.goto("https://radarines6awebapp.herokuapp.com/locations", {
+			await page.goto("https://radarines6awebapp.herokuapp.com/chat", {
 				waitUntil: "networkidle2"
 			});
 		});
 
-		when("Putting the location's date I want to see and pressing the show button", async () => {
+		when("Putting the user's webID", async () => {
 			await page.waitFor(500);
-
-			await page.waitForSelector("[id='locations_date']", { visible: true });
-			await page.type("[id='locations_date']", "2021-05-06");
+            
+			await page.waitForSelector("[id='chat']", { visible: true });
+			await page.type("[id='chat']", "uo264254.inrupt.net");
 
             await page.evaluate(() => {
-				let submit = document.getElementById("search_locations");
+				let submit = document.getElementById("send_user");
 				submit.click();
 			});
+            
 		});
 
-		then("Pressing the delete button", async () => {
-			await page.evaluate(() => {
-				let submit = document.getElementById("delete_location");
-				submit.click();
-			});
+		then("Sending the message", async () => {
+
+            await page.waitForSelector("[id='msn']", { visible: true });
+			await page.type("[id='msn']", "Esto es una prueba");
+
+            await page.evaluate(() => {
+            let btns = [ ...document.querySelector(".send").querySelectorAll("button") ];
+            btns.forEach(function(btn) {
+                if (btn.innerText === "Send") {
+                    btn.click();
+                }
+            });
+        });
+			
 			await page.waitForFunction(
-				'document.querySelector("div").innerText.includes("NO LOCATIONS AVAILABLE")'
+				'document.querySelector("div").innerText.includes("Esto es una prueba")'
 			);
-			
 			await browser.close();
-			
 		});
-	})})
+	});
+});
