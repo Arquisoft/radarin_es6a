@@ -112,6 +112,28 @@ router.get("/users/list", async (req, res) => {
     res.send(users)
 })
 
+//Borrar usuario por id
+router.delete("/users/delete/:_id", async (req, res) => {
+    //Comprobar si el usuario está registrado
+    let idUser = req.params._id;
+    console.log("Voy a borrar: " + idUser)
+    let result = await User.deleteOne({ _id: idUser });
+    if (result && result.deletedCount > 0) {
+        res.send(result);
+    } else {
+        res.send({ error: "Error: El usuario no está registrado" })
+    }
+});
+
+// Get all users
+router.get("/users/get/:idp/:email", async (req, res) => {
+    let idp = "https://" + req.params.idp;
+    let email = req.params.email;
+    console.log("obtener idp=" + idp + " y email:" + email)
+    const user = await User.findOne({ idp: idp, email: email });
+    res.send(user);
+})
+
 //register a new user
 router.post("/users/add", async (req, res) => {
     let idp = "https://" + req.body.idp;
@@ -145,18 +167,7 @@ async function saveUser(webID) {
     console.log("Usuario creado: " + webID);
 }
 
-//Borrar usuario por id
-router.delete("/users/delete/:_id", async (req, res) => {
-    //Comprobar si el usuario está registrado
-    let idUser = req.params._id;
-    console.log("Voy a borrar: " + idUser)
-    let result = await User.deleteOne({ _id: idUser });
-    if (result && result.deletedCount > 0) {
-        res.send(result);
-    } else {
-        res.send({ error: "Error: La localización no ha sido borrada" })
-    }
-});
+
 
 //Borrar location
 //Tener en cuenta que una location está vinculada a user

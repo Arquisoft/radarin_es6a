@@ -58,20 +58,11 @@ describe('user ', () => {
      * Tests that a user can be deleted without throwing any errors.
      */
     it('can be deleted correctly', async () => {
-        webID = 'pablo.inrupt.net'
-        const response = await request(app).get('/api/users/delete/' + webID);
+        idp = 'inrupt.net'
+        email = 'pablo'
+        let pablo = await request(app).get('/api/users/get/' + idp + "/" + email).set('Accept', 'application/json');
+        const response = await request(app).delete('/api/users/delete/' + pablo.body._id);
         expect(response.statusCode).toBe(200);
-    });
-
-    /**
-     * Tests that a user can not be deleted because user does not exist.
-     */
-    it('can not be deleted correctly', async () => {
-        webID = 'pablo.inrupt.net'
-        err = "Error: El usuario no está registrado"
-        const response = await request(app).get('/api/users/delete/' + webID);
-        expect(response.statusCode).toBe(200);
-        expect(response.body.error).toBe(err);
     });
 
     /**
