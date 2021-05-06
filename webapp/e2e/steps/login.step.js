@@ -19,7 +19,7 @@ defineFeature(feature, (test) => {
 			});
 
 			page = await browser.newPage();
-			await page.goto("http://localhost:3000/#/login", {
+			await page.goto("https://radarines6awebapp.herokuapp.com/login", {
 				waitUntil: "load",
 				// Remove the timeout
 				timeout: 0
@@ -68,7 +68,7 @@ defineFeature(feature, (test) => {
 			await page.waitForNavigation({
 				waitUntil: "networkidle2"
 			});
-			expect(page.url()).toBe("http://localhost:3000/welcome#");
+			expect(page.url()).toBe("https://radarines6awebapp.herokuapp.com/welcome#");
 			await browser.close();
 		});
 	});

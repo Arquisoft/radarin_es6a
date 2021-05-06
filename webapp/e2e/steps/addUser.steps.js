@@ -1,6 +1,6 @@
 import "jest";
 import { defineFeature, loadFeature } from "jest-cucumber";
-const feature = loadFeature("features/seeLocations.feature");
+const feature = loadFeature("features/addUser.feature");
 const puppeteer = require("puppeteer");
 let browser = null;
 let page = null;
@@ -10,8 +10,8 @@ defineFeature(feature, (test) => {
 		jest.setTimeout(12000000);
 	});
 
-	test("Trying to see my locations", ({ given, when, then }) => {
-		given("I am a user trying to see my locations", async () => {
+	test("Trying to add a new user", ({ given, when, then }) => {
+		given("I am the admin trying to add a user", async () => {
 			browser = await puppeteer.launch({
 				headless: false
 			});
@@ -62,28 +62,28 @@ defineFeature(feature, (test) => {
 
 
 		
-			await page.goto("https://radarines6awebapp.herokuapp.com/locations", {
+			await page.goto("https://radarines6awebapp.herokuapp.com/users", {
 				waitUntil: "networkidle2"
 			});
 		});
 
-		when("Putting the location's date I want to see", async () => {
+		when("Putting the new user's webID and the email", async () => {
 			await page.waitFor(500);
-
-			await page.waitForSelector("[id='locations_date']", { visible: true });
-			await page.type("[id='locations_date']", "2021-05-06");
+            
+			await page.waitForSelector("[id='newUser']", { visible: true });
+			await page.type("[id='newUser']", "uo264699");
+            await page.waitForSelector("[id='newIdp']", { visible: true });
+			await page.type("[id='newIdp']", "https://uo264699.inrupt.net");
 		});
 
-		then("Pressing the show button", async () => {
+		then("Pressing the add button", async () => {
 			await page.evaluate(() => {
-				let submit = document.getElementById("search_locations");
+				let submit = document.getElementById("add_user");
 				submit.click();
 			});
-
 			await page.waitForFunction(
-				'document.querySelector("div").innerText.includes("Latitude")'
+				'document.querySelector("div").innerText.includes("uo264699")'
 			);
-	
 			await browser.close();
 		});
 	});

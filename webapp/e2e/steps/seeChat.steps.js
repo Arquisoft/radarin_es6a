@@ -1,6 +1,6 @@
 import "jest";
 import { defineFeature, loadFeature } from "jest-cucumber";
-const feature = loadFeature("features/deleteFriend.feature");
+const feature = loadFeature("features/seeChat.feature");
 const puppeteer = require("puppeteer");
 let browser = null;
 let page = null;
@@ -10,22 +10,23 @@ defineFeature(feature, (test) => {
 		jest.setTimeout(12000000);
 	});
 
-	test("Trying to delete a friend", ({ given, when, then }) => {
-		given("I am a user trying to delete a friend", async () => {
+	test("Trying to see a chat", ({ given, when, then }) => {
+		given("I am a user trying to see a chat", async () => {
 			browser = await puppeteer.launch({
 				headless: false
 			});
 
 			// login
 			page = await browser.newPage();
-			await page.goto("http://localhost:3000/login", {
+			await page.goto("https://radarines6awebapp.herokuapp.com/login", {
 				waitUntil: "load",
 				// Remove the timeout
 				timeout: 0
 			});
 			await page.waitForSelector(".sc-EHOje.cffgrt");
-			await page.type(".sc-EHOje.cffgrt", "https://uo264699.inrupt.net");
+			await page.type(".sc-EHOje.cffgrt", "https://radarines6a.inrupt.net");
 			
+	
 		
 
 			await page.evaluate(() => {
@@ -38,11 +39,11 @@ defineFeature(feature, (test) => {
 			});  
 
 			await page.waitForSelector("[id='username']", { visible: true });
-			await page.type("[id='username']", "UO264699");
+			await page.type("[id='username']", "radarines6a");
 
 			await page.waitFor(500);
 			await page.waitForSelector("[id='password']", { visible: true });
-			await page.type("[id='password']", "Karimbenzema9!", { visible: true });
+			await page.type("[id='password']", "R1d1r3n2s6a", { visible: true });
 
 			await page.waitFor(500);
 
@@ -59,32 +60,28 @@ defineFeature(feature, (test) => {
 			});
 
 
-			await page.goto("http://localhost:3000/friends", {
+
+		
+			await page.goto("https://radarines6awebapp.herokuapp.com/chat", {
 				waitUntil: "networkidle2"
 			});
 		});
 
-		when("Selecting the friend I want to delete", async () => {
+		when("Putting the user's webID", async () => {
 			await page.waitFor(500);
-			
-			
-			await page.evaluate(() => {
-				 document.getElementById("friendElementInput").check = 1;
-			});
-			
-			
-
-
-			
+            
+			await page.waitForSelector("[id='chat']", { visible: true });
+			await page.type("[id='chat']", "uo264254.inrupt.net");
+            
 		});
 
-		then("Pressing the delete button", async () => {
+		then("Pressing the chat button", async () => {
 			await page.evaluate(() => {
-				let submit = document.getElementById("deleteFriend");
+				let submit = document.getElementById("send_user");
 				submit.click();
 			});
 			await page.waitForFunction(
-				'document.querySelector("center").innerText.includes("https://uo266007.inrupt.net")'
+				'document.querySelector("div").innerText.includes("Buenos días")'
 			);
 			await browser.close();
 		});

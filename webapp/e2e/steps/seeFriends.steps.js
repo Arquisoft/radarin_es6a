@@ -1,6 +1,6 @@
 import "jest";
 import { defineFeature, loadFeature } from "jest-cucumber";
-const feature = loadFeature("features/seeLocations.feature");
+const feature = loadFeature("features/seeFriends.feature");
 const puppeteer = require("puppeteer");
 let browser = null;
 let page = null;
@@ -10,8 +10,8 @@ defineFeature(feature, (test) => {
 		jest.setTimeout(12000000);
 	});
 
-	test("Trying to see my locations", ({ given, when, then }) => {
-		given("I am a user trying to see my locations", async () => {
+	test("Trying to see the friends", ({ given, when, then }) => {
+		given("I am a user trying to see my friends", async () => {
 			browser = await puppeteer.launch({
 				headless: false
 			});
@@ -62,28 +62,25 @@ defineFeature(feature, (test) => {
 
 
 		
-			await page.goto("https://radarines6awebapp.herokuapp.com/locations", {
+			
+		});
+
+		when("Go to friends page", async () => {
+			await page.waitFor(500);
+            await page.goto("https://radarines6awebapp.herokuapp.com/friends", {
 				waitUntil: "networkidle2"
 			});
+			
 		});
 
-		when("Putting the location's date I want to see", async () => {
-			await page.waitFor(500);
-
-			await page.waitForSelector("[id='locations_date']", { visible: true });
-			await page.type("[id='locations_date']", "2021-05-06");
-		});
-
-		then("Pressing the show button", async () => {
-			await page.evaluate(() => {
-				let submit = document.getElementById("search_locations");
-				submit.click();
-			});
-
+		then("Seeing my friends", async () => {
+			
 			await page.waitForFunction(
-				'document.querySelector("div").innerText.includes("Latitude")'
+				'document.querySelector("center").innerText.includes("https://uo266007.inrupt.net")'
 			);
-	
+            await page.waitForFunction(
+				'document.querySelector("center").innerText.includes("https://uo264699.inrupt.net")'
+			);
 			await browser.close();
 		});
 	});
