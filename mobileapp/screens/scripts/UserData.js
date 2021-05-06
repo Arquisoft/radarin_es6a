@@ -12,7 +12,7 @@ export var data = {
     settings: {
         geolocation: false,
         notifications: true,
-        geolocationTimeInterval: 5,
+        geolocationTimeInterval: 10,
         updateGeolocation: async () => {
             try {
                 await AsyncStorage.setItem('@settings-geolocation', JSON.stringify(data.settings.geolocation));
@@ -31,8 +31,7 @@ export var data = {
         }
     },
     server: {
-        ip: '10.0.2.2',
-        port: "5000"
+        ip: 'radarines6arestapiheroku.herokuapp.com'
     },
     user: {
         id: null,
@@ -283,7 +282,7 @@ export var data = {
 }
 
 async function fetchLogIn(idp, user, password) {
-    var uri = "http://" + data.server.ip + ":" + data.server.port + "/api/user/login";
+    var uri = "https://" + data.server.ip + "/api/user/login";
     var result = await fetch(uri, {
         method: 'POST',
         headers: {

@@ -17,7 +17,7 @@ export function LocationCallback2(func) {
  * @param {GetLocation.Location} location 
  */
 function handleLocation(location) {
-    var uri = "http://" + data.server.ip + ":" + data.server.port + "/api/locations/add";
+    var uri = "https://" + data.server.ip + "/api/locations/add";
     log("Coordenadas:" + location.longitude + "," + location.latitude);
     fetch(uri, {
         method: 'POST',
