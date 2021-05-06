@@ -29,3 +29,4 @@ RUN npm install shx --save-dev
 #RUN npm run docs
 RUN chmod +x start.sh
 CMD ["./start.sh"]
+#CMD [ "npm", "start" ]
