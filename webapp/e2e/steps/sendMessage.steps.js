@@ -1,6 +1,6 @@
 import "jest";
 import { defineFeature, loadFeature } from "jest-cucumber";
-const feature = loadFeature("features/seeLocations.feature");
+const feature = loadFeature("features/addFriend.feature");
 const puppeteer = require("puppeteer");
 let browser = null;
 let page = null;
@@ -10,21 +10,21 @@ defineFeature(feature, (test) => {
 		jest.setTimeout(12000000);
 	});
 
-	test("Trying to see my locations", ({ given, when, then }) => {
-		given("I am a user trying to see my locations", async () => {
+	test("Trying to send a message", ({ given, when, then }) => {
+		given("I am a user trying to send a message", async () => {
 			browser = await puppeteer.launch({
 				headless: false
 			});
 
 			// login
 			page = await browser.newPage();
-			await page.goto("https://radarines6awebapp.herokuapp.com/login", {
+			await page.goto("http://localhost:3000/login", {
 				waitUntil: "load",
 				// Remove the timeout
 				timeout: 0
 			});
 			await page.waitForSelector(".sc-EHOje.cffgrt");
-			await page.type(".sc-EHOje.cffgrt", "https://radarines6a.inrupt.net");
+			await page.type(".sc-EHOje.cffgrt", "https://uo264699.inrupt.net");
 			
 	
 		
@@ -39,11 +39,11 @@ defineFeature(feature, (test) => {
 			});  
 
 			await page.waitForSelector("[id='username']", { visible: true });
-			await page.type("[id='username']", "radarines6a");
+			await page.type("[id='username']", "UO264699");
 
 			await page.waitFor(500);
 			await page.waitForSelector("[id='password']", { visible: true });
-			await page.type("[id='password']", "R1d1r3n2s6a", { visible: true });
+			await page.type("[id='password']", "Karimbenzema9!", { visible: true });
 
 			await page.waitFor(500);
 
@@ -62,28 +62,26 @@ defineFeature(feature, (test) => {
 
 
 		
-			await page.goto("https://radarines6awebapp.herokuapp.com/locations", {
+			await page.goto("http://localhost:3000/friends", {
 				waitUntil: "networkidle2"
 			});
 		});
 
-		when("Putting the location's date I want to see", async () => {
+		when("Showing the friend's chat who I want to send a message", async () => {
 			await page.waitFor(500);
 
-			await page.waitForSelector("[id='locations_date']", { visible: true });
-			await page.type("[id='locations_date']", "2021-05-04");
+			await page.waitForSelector("[id='friendId']", { visible: true });
+			await page.type("[id='friendId']", "https://uo266007.inrupt.net");
 		});
 
-		then("Pressing the show button", async () => {
+		then("Sending the message", async () => {
 			await page.evaluate(() => {
-				let submit = document.getElementById("search_locations");
+				let submit = document.getElementById("btnAdd");
 				submit.click();
 			});
-
 			await page.waitForFunction(
-				'document.querySelector("div").innerText.includes("2021-05-04")'
+				'document.querySelector("center").innerText.includes("https://uo266007.inrupt.net")'
 			);
-	
 			await browser.close();
 		});
 	});

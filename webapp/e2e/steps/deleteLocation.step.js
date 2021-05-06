@@ -18,13 +18,13 @@ defineFeature(feature, (test) => {
 
 			// login
 			page = await browser.newPage();
-			await page.goto("http://localhost:3000/login", {
+			await page.goto("https://radarines6awebapp.herokuapp.com/login", {
 				waitUntil: "load",
 				// Remove the timeout
 				timeout: 0
 			});
 			await page.waitForSelector(".sc-EHOje.cffgrt");
-			await page.type(".sc-EHOje.cffgrt", "https://uo264699.inrupt.net");
+			await page.type(".sc-EHOje.cffgrt", "https://radarines6a.inrupt.net");
 			
 	
 		
@@ -39,11 +39,11 @@ defineFeature(feature, (test) => {
 			});  
 
 			await page.waitForSelector("[id='username']", { visible: true });
-			await page.type("[id='username']", "UO264699");
+			await page.type("[id='username']", "radarines6a");
 
 			await page.waitFor(500);
 			await page.waitForSelector("[id='password']", { visible: true });
-			await page.type("[id='password']", "Karimbenzema9!", { visible: true });
+			await page.type("[id='password']", "R1d1r3n2s6a", { visible: true });
 
 			await page.waitFor(500);
 
@@ -62,7 +62,7 @@ defineFeature(feature, (test) => {
 
 
 		
-			await page.goto("http://localhost:3000/locations", {
+			await page.goto("https://radarines6awebapp.herokuapp.com/locations", {
 				waitUntil: "networkidle2"
 			});
 		});
@@ -71,7 +71,7 @@ defineFeature(feature, (test) => {
 			await page.waitFor(500);
 
 			await page.waitForSelector("[id='locations_date']", { visible: true });
-			await page.type("[id='locations_date']", "2023-10-23");
+			await page.type("[id='locations_date']", "2021-05-04");
 
             await page.evaluate(() => {
 				let submit = document.getElementById("search_locations");
@@ -83,7 +83,16 @@ defineFeature(feature, (test) => {
 			await page.evaluate(() => {
 				let submit = document.getElementById("delete_location");
 				submit.click();
-			});
+				let btns = [ ...document.querySelector(".form-horizontal.login-up-form").querySelectorAll("button") ];
+				btns.forEach(function(btn) {
+					
+						btn.click();
+					})
+				}),
+
+			await page.waitForFunction(
+				'document.querySelector("center").innerText.includes("NO LOCATIONS AVAILABLE")'
+			);
 			
 			await browser.close();
 		});
