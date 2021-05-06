@@ -26,7 +26,7 @@ export const WelcomePageContent = props => {
     <WelcomeWrapper data-testid="welcome-wrapper">
       <WelcomeCard className="card">
         <WelcomeLogo data-testid="welcome-logo">
-          <img src="/img/logoRadarin.png" alt="Inrupt" style={{ borderRadius: 10 }} />
+          <img src="/img/logoRadarinWelcome.png" alt="Inrupt" style={{ borderRadius: 10 }} />
         </WelcomeLogo>
         <WelcomeProfile data-testid="welcome-profile">
           <h3>
