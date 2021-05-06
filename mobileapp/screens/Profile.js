@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     },
     panel: {
         flex: 5.5,
+        justifyContent: "center",
         borderBottomWidth: 1,
         borderColor: "#bbb",
         marginBottom: 10,

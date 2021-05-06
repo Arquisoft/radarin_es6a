@@ -97,6 +97,9 @@ const styles = StyleSheet.create({
 	},
 	header: {
 		flex: 0.8,
+		backgroundColor: '#fff',
+		marginVertical: 8,
+		marginHorizontal: 16,
 		shadowColor: "#000",
 		shadowOffset: {
 			width: 0,
@@ -105,8 +108,7 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.25,
 		shadowRadius: 3.84,
 		borderRadius: 15,
-		elevation: 3,
-		margin: 5,
+		elevation: 2,
 		marginTop: 10,
 		alignItems: "center",
 		justifyContent: "center"
