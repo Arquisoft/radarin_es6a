@@ -80,15 +80,15 @@ export var data = {
             for (var i = 0; i < friends.length; i++) {
                 if (friends[i].includes("solidcommunity.net")) {
                     list.push({
-                        webID: friends[i],
-                        username: friends[i].replace('https://', '').replace('.solidcommunity.net', ''),
+                        webID: friends[i].replace('.net/', '.net'),
+                        username: friends[i].replace('https://', '').replace('.solidcommunity.net/', '').replace('.solidcommunity.net', ''),
                         idp: solid,
                         near: false
                     });
                 } else if (friends[i].includes("inrupt.net")) {
                     list.push({
-                        webID: friends[i],
-                        username: friends[i].replace('https://', '').replace('.inrupt.net', ''),
+                        webID: friends[i].replace('.net/', '.net'),
+                        username: friends[i].replace('https://', '').replace('.inrupt.net/', '').replace('.inrupt.net', ''),
                         idp: inrupt
                     });
                 }
