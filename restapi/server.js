@@ -1,6 +1,6 @@
 const express = require("express")
 const promBundle = require("express-prom-bundle");
-const  = require('cors');
+const cors = require('cors');
 const mongoose = require("mongoose")
 const api = require("./api")
 const MAX_LOCATIONS = 5
