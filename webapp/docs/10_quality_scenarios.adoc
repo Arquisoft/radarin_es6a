@@ -1,50 +1,16 @@
 [[section-quality-scenarios]]
 == Requerimientos de calidad
 
-
-[role="arc42help"]
-****
-
-.Content
-This section contains all quality requirements as quality tree with scenarios. The most important ones have already been described in section 1.2. (quality goals)
-
-Here you can also capture quality requirements with lesser priority,
-which will not create high risks when they are not fully achieved.
-
-.Motivation
-Since quality requirements will have a lot of influence on architectural
-decisions you should know for every stakeholder what is really important to them,
-concrete and measurable.
-****
-
 === Árbol de calidad
 
 image:arbolAtributosCalidad.png[arc42] 
 
-[role="arc42help"]
-****
-.Content
-The quality tree (as defined in ATAM – Architecture Tradeoff Analysis Method) with quality/evaluation scenarios as leafs.
-
-.Motivation
-The tree structure with priorities provides an overview for a sometimes large number of quality requirements.
-
-.Form
-The quality tree is a high-level overview of the quality goals and requirements:
-
-* tree-like refinement of the term "quality". Use "quality" or "usefulness" as a root
-* a mind map with quality categories as main branches
-
-In any case the tree should include links to the scenarios of the following section.
-****
-
-
 === Escenarios de calidad
 
 
-* 10.2.1 - El usuario podrá acceder a la web y a traves de ella gestionar sus ubicaciones.
-* 10.2.2 - El usuario podrá acceder a la web y a traves de ella visualizar sus ubicaciones.
-* 10.2.3 - El usuario será notificado a traves de la aplicación movil que una persona de su lista de amigos esta proxima a él.
+* 10.2.1 - El usuario podrá acceder a la web y a traves de ella gestionar sus localizaciones.
+* 10.2.2 - El usuario podrá acceder a la web y a traves de ella visualizar sus localizaciones.
+* 10.2.3 - El usuario será notificado a traves de la aplicación movil que una persona de su lista de amigos esta próxima.
 * 10.2.4 - La aplicación movil proporcionará un sistema de monitorización.
 * 10.2.5 - La información personal del usuario exceptuando las ubicaciones no serán almacenadas en el servidor sino en su pod.
 * 10.2.6 - A través de un servidor de integración continua se llevarán a cabo pruebas de forma automatizada.

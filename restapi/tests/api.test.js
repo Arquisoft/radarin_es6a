@@ -86,7 +86,6 @@ describe('user ', () => {
         expect(response.body.email).toBe(email);
     });
 });
-
 /**
  * LOCATION test suite.
  */

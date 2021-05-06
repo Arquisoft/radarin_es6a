@@ -85,6 +85,7 @@
     "postcss-safe-parser": "4.0.1",
     "prettier": "^1.18.2",
     "puppeteer": "^5.5.0",
+    "rdf-namespaces": "^1.9.2",
     "react": "^16.13.1",
     "react-app-polyfill": "^0.2.2",
     "react-bootstrap": "^1.5.1",

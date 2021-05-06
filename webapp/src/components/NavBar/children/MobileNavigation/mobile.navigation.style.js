@@ -5,6 +5,7 @@ export const TopNavigation = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
   margin: 15.5px 0;
+  background-color: #C1050E3;
 
   div:first-child {
     grid-column: 1 / 3;

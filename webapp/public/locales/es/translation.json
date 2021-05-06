@@ -117,6 +117,7 @@
     "noLocations": "No hay localizaciones disponibles. Por favor inicie una búsqueda."
   },
   "usuarios": {
+    "accesoNoPermitido": "Acceso no permitido para esta funcionalidad",
     "noUsuarios": "No hay usuarios disponibles.",
     "usuarios": "Usuarios",
     "email": "Email (Ej.: UOXXXXX)",

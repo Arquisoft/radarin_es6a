@@ -2,36 +2,42 @@
 
 
 == Vista de implementación
-En esta sección, se describe la arquitectura de Radarin, incluyendo la infraestructura de hardware y software para ejecutarla, así como el entorno de ejecución y el middleware que los comunica.
+En esta sección, se describe la arquitectura de Radarin, incluyendo la infraestructura de hardware y software para 
+ejecutarla, así como el entorno de ejecución y el middleware que los comunica.
 
 image:diagramaInfraestructura.png[diagrama Infraestructura] 
 
 === Dispositivo móvil
-Dispositivo desde el que los usuarios accederán a la aplicación móvil.
+Dispositivo desde el que los usuarios accederán a la aplicación móvil. 
+Usando el dispositivo móvil también se podrá acceder a la aplicación web. 
+Este dispositivo podrá disponer tanto de un sistema operativo Android como de un iOS.
 
 === Ordenador
 Dispositivo desde el que se accederá a la aplicación web del sistema.
 
 === Aplicación móvil
-
-Aplicación móvil que enviará datos sobre la ubicación del usuario desde el dispositivo de dicho usuario a la aplicación web del sistema.
-
+Aplicación móvil que enviará datos sobre la ubicación del usuario desde el dispositivo de dicho usuario al 
+servidor web del sistema. Esta aplicación también permitirá acceder a la lista de amigos e interactuar con ellos 
+a través de un chat en tiempo real.
 
 === Aplicación web
+Aplicación web que permite gestionar la lista de amigos del usuario, visualizar las localizaciones de los amigos que se encuentren cerca y 
+interactuar con dichos amigos a través del chat en tiempo real.
 
-Aplicación web que recibe los datos sobre las ubicaciones de los usuarios desde los dispositivos móviles de los usuarios y las almacena en la base de datos Mongo.
+=== Servidor web
+Servidor que se encarga de almacenar en la base de datos Mongo las ubicaciones recibidas de la aplicación móvil. También es el 
+encargado de almacenar los mensajes provenientes de la web y el móvil. El móvil hace uso de este servidor para poder iniciar sesión 
+en SOLID.
 
 === Heroku
-
-Servidor de alojamiento web que albergará las aplicaciones.
+Servidor de alojamiento web que albergará la aplicación web y el servidor.
 
 === Solid
-
 El servidor SOLID donde se encuentran los POD de los usuarios con su información personal al que solo ellos tienen acceso.
 
 === Mongo
-
-Base de datos donde se almacenarán los datos de las ubicaciones de los usuarios recogidas por la aplicación web.
+Base de datos donde se almacenarán los datos de las ubicaciones de los usuarios recogidas por la aplicación web. 
+También almacenará los mensajes de los usuarios.
 
 
 
