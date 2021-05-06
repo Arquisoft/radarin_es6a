@@ -103,6 +103,7 @@ class NavBarProfile extends Component<Props> {
 
       // Remove localStorage
       localStorage.removeItem('solid-auth-client');
+      
 
       // Redirect to login page or to logout confirmation
       window.location = logoutRedirect;

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import usersHelper from "./UsersHelper";
 import ReactTable from 'react-table-v6'
 import 'react-table-v6/react-table.css'
+import auth from "solid-auth-client";
 
 import { Header,
 	 LocationsWrapper,
@@ -25,6 +26,9 @@ class Users extends React.Component {
 		this.state = { data: [] }
 		this.newIdp = React.createRef();
 		this.newUser = React.createRef();
+		this.email = "";
+		this.users = [];
+		this.isAdmin = false;
 	}
 
 	componentDidMount() {
@@ -34,7 +38,8 @@ class Users extends React.Component {
 		fetch(myRequest)
 		.then(response => response.json())
 		.then(data => {
-			console.log(data);
+			this.users = data;
+			console.log(this.users);
 			this.setState({ data: data })
 		})
 	}
@@ -45,9 +50,9 @@ class Users extends React.Component {
 		window.location.reload();
 	}
 
-	handleSubmitDelete(e, id) {
+	handleSubmitDelete(e) {
 		e.preventDefault();
-		id = e.target.value;
+		let id = e.target.value;
 		console.log(id)
 		if (id!==undefined) {
 			
@@ -58,6 +63,9 @@ class Users extends React.Component {
 			console.log("¿Dónde has pinchado ?", e.target)
 		}
 	}
+
+
+
 
 	async handleAdd(event) {
 		this._asyncRequest = usersHelper.addUser(this.newUser.current.value,
@@ -89,41 +97,79 @@ class Users extends React.Component {
 		
 	}
 
+	async getName() {
+		await auth.trackSession((session) => {
+			if (!session) {
+			  return;
+			} else {
+			  this.webId = session.webId;
+			}
+		  });
+		return this.webId;
+	}
+
 	render() {
+
+		this._asyncRequest = this.getName().then((data) => {
+			
+			this.email = data.replace("https://", "");
+			this.email = this.email.replace("/profile/card#me", "");
+
+		});
 		
-		return (
-
-			<LocationsWrapper data-testid="locations-component">
-				<Header data-testid="locations-header">
-					<TitleLocations>{i18n.t("usuarios.usuarios")}</TitleLocations>
-						<LocationsForm id="locationsf">
-							<DivForms>
-									<LabelInput>
-										{i18n.t("usuarios.email")}
-										<input type="text" id="newUser" name="newUser" ref={this.newUser} />
-									</LabelInput>
-								
-							</DivForms>
-							<DivForms>
-									<LabelInput>
-									{i18n.t("usuarios.idp")}
-										<input type="text" id="newIdp" name="newIdp" ref={this.newIdp} />
-									</LabelInput>
-								
-							</DivForms>
-						</LocationsForm>
-					<DivForms>
-						<Button id="add_user" form="addUser" type="submit" onClick={(e) => this.handleSubmitAdd(e)}>
-						{i18n.t("usuarios.add")}
-						</Button>
-					</DivForms>
-				</Header>
+		this.users.forEach(m => {
+			if(this.email === m.webID && m.admin){
+				this.isAdmin = true;
+			}
+		});
 				
-				{this.getList()}
-				
-			</LocationsWrapper>
+		if(this.isAdmin) {
 
-		);
+			return (
+
+				<LocationsWrapper data-testid="locations-component">
+					<Header data-testid="locations-header">
+						<TitleLocations>{i18n.t("usuarios.usuarios")}</TitleLocations>
+							<LocationsForm id="locationsf">
+								<DivForms>
+										<LabelInput>
+											{i18n.t("usuarios.email")}
+											<input type="text" id="newUser" name="newUser" ref={this.newUser} />
+										</LabelInput>
+									
+								</DivForms>
+								<DivForms>
+										<LabelInput>
+										{i18n.t("usuarios.idp")}
+											<input type="text" id="newIdp" name="newIdp" ref={this.newIdp} />
+										</LabelInput>
+									
+								</DivForms>
+							</LocationsForm>
+						<DivForms>
+							<Button id="add_user" form="addUser" type="submit" onClick={(e) => this.handleSubmitAdd(e)}>
+							{i18n.t("usuarios.add")}
+							</Button>
+						</DivForms>
+					</Header>
+					
+					{this.getList()}
+					
+				</LocationsWrapper>
+
+			);
+		} else {
+			return (
+				<ResultLocations>
+					<FormRenderContainer id="empty">
+						<h5 align="center">
+							{i18n.t("usuarios.accesoNoPermitido")}
+						</h5>
+						
+					</FormRenderContainer>	
+				</ResultLocations>
+			);
+		}
 	}
 
 		getList() {
@@ -133,6 +179,7 @@ class Users extends React.Component {
 
 				let rows = [];
 				this.state.data.forEach(m => {
+						
 				rows.push(
 					{
 						email : m.email,
@@ -149,7 +196,7 @@ class Users extends React.Component {
 					{
 						Header:  headerVacia ,
 						accessor: 'eliminar',
-						Cell: props => <Button id='delete_usuario' value={props.value} type='submit' onClick={(e) => this.handleSubmitDelete(e, 'email')}  ><FontAwesomeIcon icon='backspace' className='backspace' /></Button> 
+						Cell: props => <Button id='delete_usuario' value={props.value} type='submit' onClick={(e) => this.handleSubmitDelete(e)}  ><FontAwesomeIcon icon='backspace' className='backspace' /></Button> 
 					}
 				];
 
@@ -168,7 +215,7 @@ class Users extends React.Component {
 					<ResultLocations>
 						<FormRenderContainer id="empty">
 							<h5 align="center">
-								{i18n.t("users.noUsers")}
+								{i18n.t("users.noUsuarios")}
 							</h5>
 							
 						</FormRenderContainer>	

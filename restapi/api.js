@@ -112,20 +112,45 @@ router.get("/users/list", async (req, res) => {
     res.send(users)
 })
 
+//Borrar usuario por id
+router.delete("/users/delete/:_id", async (req, res) => {
+    //Comprobar si el usuario está registrado
+    let idUser = req.params._id;
+    console.log("Voy a borrar: " + idUser)
+    let result = await User.deleteOne({ _id: idUser });
+    if (result && result.deletedCount > 0) {
+        res.send(result);
+    } else {
+        res.send({ error: "Error: El usuario no está registrado" })
+    }
+});
+
+// Get all users
+router.get("/users/get/:idp/:email", async (req, res) => {
+    let idp = "https://" + req.params.idp;
+    let email = req.params.email;
+    console.log("obtener idp=" + idp + " y email:" + email)
+    const user = await User.findOne({ idp: idp, email: email });
+    res.send(user);
+})
+
 //register a new user
 router.post("/users/add", async (req, res) => {
     let idp = "https://" + req.body.idp;
     let email = req.body.email;
     let webID = req.body.email + "." + req.body.idp;
+    let admin = req.body.admin | false;
     //Check if the device is already in the db
     let user = await User.findOne({ webID: webID })
+    console.log(webID)
     if (user)
         res.send({ error: "Error: This user is already registered" })
     else {
         user = new User({
             idp: idp,
             email: email,
-            webID: webID
+            webID: webID,
+            admin: admin
         })
         await user.save()
         res.send(user)
@@ -142,18 +167,7 @@ async function saveUser(webID) {
     console.log("Usuario creado: " + webID);
 }
 
-//Borrar usuario por webID
-router.get("/users/delete/:webID", async (req, res) => {
-    //Comprobar si el usuario está registrado
-    let user = await User.findOne({ webID: req.params.webID })
-    console.log(user);
-    if (!user)
-        res.send({ error: "Error: El usuario no está registrado" })
-    else {
-        let user = await User.deleteOne({ webID: req.params.webID })
-        res.send(user)
-    }
-})
+
 
 //Borrar location
 //Tener en cuenta que una location está vinculada a user
@@ -399,6 +413,56 @@ router.post("/chat/list", async (req, res) => {
     messages = await Message.find(criterio);
     res.send(messages);
 
+})
+
+//Obtener los amigos cercanos y su localización
+router.get("/friends/near/:webId/:longitud/:latitud", async (req, res) => {
+    let usuario = "https://" + req.params.webId + "/profile/card#me";
+    let longitud = req.params.longitud;
+    console.log(usuario);
+    let latitud = req.params.latitud;
+    let friends = await findFriendsFor(usuario);
+    let count = 0;
+    let list = [];
+    console.log(friends);
+    for (var i = 0; i < friends.length; i++) {
+        var obj = friends[i];
+
+        let idepe = obj.includes(".inrupt.net") ? "https://inrupt.net" : "https://solidcommunity.net";
+        let nombre = obj.includes(".inrupt.net") ? obj.substr(8, obj.length - 20) : obj.substr(8, obj.length - 27);
+        let u = await User.findOne({
+            email: nombre,
+            idp: idepe
+        });
+
+        if (!u) {
+            continue;
+        }
+        let ls = u.locations;
+
+        if (ls.length == 0) {
+            continue;
+        }
+        let l = await Location.find({ _id: ls[ls.length - 1] });
+        let dis = distance(latitud, longitud, l[0].latitud, l[0].longitud);
+
+        if (dis <= 1) {
+            count = count + 1;
+            list.push({
+                username: u.email,
+                idp: u.idp,
+                _id: u._id,
+                longitud: l[0].longitud,
+                latitud: l[0].latitud
+            });
+        }
+    }
+    console.log("Amigos cercanos: " + count);
+    let response = {
+        number: count,
+        friends: list
+    }
+    res.send(response);
 })
 
 module.exports = router

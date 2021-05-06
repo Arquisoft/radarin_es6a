@@ -117,6 +117,7 @@
     "noLocations": "No locations available. Please, start the search."
 	},
   "usuarios": {
+    "accesoNoPermitido": "Access to this funcionality is forbidden.",
     "noUsuarios": "No users available.",
     "usuarios": "Users",
     "email": "Email (E.g.: UOXXXXX)",

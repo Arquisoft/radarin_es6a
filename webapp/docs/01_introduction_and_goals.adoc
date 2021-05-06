@@ -12,8 +12,7 @@ Radarin tiene como objetivo facilitar encuentros entre amigos, accediendo a la i
 | Localización |Radarin permitirá a los usuarios ver la localización de sus amigos y viceversa, siempre y cuando estos la tengan activada. 
 |Aplicación web  |Radarin contará con una aplicación web que permitirá gestionar y visualizar las localizaciones, así como gestionar usuarios y monitorizar el estado del servidor en el que funciona dicha aplicación.
 |Aplicación móvil|Radarin contará con una aplicación móvil que enviará localizaciones al servidor y recibirá notificaciones de usuarios amigos y cercanos.
-|Almacenamiento de información|La aplicación web almacenará la información mínima sobre el usuario y sus amigos, el resto de información será almacenada en el pod de este.
-|Sistema de monitorización|La aplicación móvil contará con un sistema de monitorización
+|Almacenamiento de información|La aplicación web almacenará la información mínima sobre el usuario y sus amigos, el resto de información será almacenada en su pod.
 |===
 
 
@@ -32,11 +31,11 @@ Radarin tiene como objetivo facilitar encuentros entre amigos, accediendo a la i
 
 [options="header",cols="1,2"]
 |===
-|Role/Name|Expectations
+|Stakeholder|Escenarios
 |Usuarios experimentados|Mejorar su experiencia anterior con aplicaciones similares a Radarin
 |Nuevos usuarios |Usar la aplicación con facilidad a pesar de ser personas no técnicas.
 |Equipo de desarrollo|Hacer de Radarin un sistema seguro que respete la privacidad de los usuarios y que cumpla con su cometido (facilitar encuentros entre amigos) de la mejor manera posible, pudiendo ser usado por cualquier tipo de usuario.
 |SOLID|Dar visibilidad a las tecnologías descentralizadas y respetar los principios de SOLID a la hora de almacenar la información de los usuarios.
-|Profesores de la asignatura|Un sistema fácilmente usable por personas no técnicas, que facilite encuentros entre amigos, accediendo a la información de la localización del usuario, siempre respetando la privacidad de este y siguiendo una arquitectura descentralizada. 
+|Personas no técnicas|Un sistema fácilmente usable por personas no técnicas, que facilite encuentros entre amigos, accediendo a la información de la localización del usuario, siempre respetando la privacidad de este y siguiendo una arquitectura descentralizada. 
 
 |===
