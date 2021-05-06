@@ -48,7 +48,7 @@ class ChatView extends React.Component {
     async send() {
         if (this.state.mesagge != null) {
             this.state.chat.unshift({ id: uuid.v4(), msg: this.state.mesagge, own: true });
-            let uri = "http://" + data.server.ip + ":" + data.server.port + "/api/chat/send";
+            let uri = "https://" + data.server.ip + "/api/chat/send";
             fetch(uri, {
                 method: 'POST',
                 headers: {
@@ -65,7 +65,7 @@ class ChatView extends React.Component {
         }
     }
     async load() {
-        let uri = "http://" + data.server.ip + ":" + data.server.port + "/api/chat/list";
+        let uri = "https://" + data.server.ip + "/api/chat/list";
         fetch(uri, {
             method: 'POST',
             headers: {
