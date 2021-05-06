@@ -71,7 +71,7 @@ defineFeature(feature, (test) => {
 			await page.waitFor(500);
 
 			await page.waitForSelector("[id='locations_date']", { visible: true });
-			await page.type("[id='locations_date']", "2021-05-04");
+			await page.type("[id='locations_date']", "2021-05-06");
 
             await page.evaluate(() => {
 				let submit = document.getElementById("search_locations");
@@ -83,18 +83,12 @@ defineFeature(feature, (test) => {
 			await page.evaluate(() => {
 				let submit = document.getElementById("delete_location");
 				submit.click();
-				let btns = [ ...document.querySelector(".form-horizontal.login-up-form").querySelectorAll("button") ];
-				btns.forEach(function(btn) {
-					
-						btn.click();
-					})
-				}),
-
+			});
 			await page.waitForFunction(
-				'document.querySelector("center").innerText.includes("NO LOCATIONS AVAILABLE")'
+				'document.querySelector("div").innerText.includes("NO LOCATIONS AVAILABLE")'
 			);
 			
 			await browser.close();
+			
 		});
-	});
-});
+	})})

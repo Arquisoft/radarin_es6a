@@ -71,7 +71,7 @@ defineFeature(feature, (test) => {
 			await page.waitFor(500);
 
 			await page.waitForSelector("[id='locations_date']", { visible: true });
-			await page.type("[id='locations_date']", "2021-05-04");
+			await page.type("[id='locations_date']", "2021-05-06");
 		});
 
 		then("Pressing the show button", async () => {
@@ -81,7 +81,7 @@ defineFeature(feature, (test) => {
 			});
 
 			await page.waitForFunction(
-				'document.querySelector("div").innerText.includes("2021-05-04")'
+				'document.querySelector("div").innerText.includes("Latitude")'
 			);
 	
 			await browser.close();
