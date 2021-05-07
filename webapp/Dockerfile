@@ -26,7 +26,7 @@ RUN apt-get update && apt-get -y install ruby openjdk-8-jre
 RUN gem install asciidoctor asciidoctor-diagram
 RUN npm install shx --save-dev
 #Generate the doc
-#RUN npm run docs
+RUN npm run docs
 RUN chmod +x start.sh
 CMD ["./start.sh"]
 #CMD [ "npm", "start" ]
